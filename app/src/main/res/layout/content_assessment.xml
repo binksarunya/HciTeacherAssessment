@@ -78,7 +78,7 @@
                     android:id="@+id/article_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1/20"
+                    android:text="1/5"
                     android:textSize="15dp"
                     android:layout_gravity="right"
                     android:padding="10dp"/>

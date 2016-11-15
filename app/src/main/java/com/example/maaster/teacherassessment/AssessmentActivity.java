@@ -83,20 +83,17 @@ public class AssessmentActivity extends AppCompatActivity {
 
                                 TextView textView = (TextView) findViewById(R.id.article_text);
                                 textView.setText(answer[k]);
+                                TextView textView1 = (TextView) findViewById(R.id.article_num);
+                                textView1.setText(k+1+"/"+answer.length);
 
                             }
                         }.start();
-
-
-
 
                     }
 
                 }
             });
         }
-
-
 
     }
 
