@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray">
+
+
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_height="150dp"
+        android:background="@drawable/shape">
+
+        <TextView
+            android:text="Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:id="@+id/teacher_name"
+            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp"
+            android:layout_alignTop="@+id/imageView"
+            android:layout_toRightOf="@+id/imageView"
+            android:layout_toEndOf="@+id/imageView"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:text="Course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/course"
+            android:layout_centerVertical="true"
+            android:layout_alignLeft="@+id/teacher_name"
+            android:layout_alignStart="@+id/teacher_name"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:text="Section"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/section"
+            android:textColor="#FFFFFF"
+            android:layout_alignBottom="@+id/imageView"
+            android:layout_alignLeft="@+id/course"
+            android:layout_alignStart="@+id/course"
+            android:layout_marginBottom="11dp" />
+
+        <ImageView
+            android:layout_width="95dp"
+            app:srcCompat="@drawable/teacher_icon"
+            android:id="@+id/imageView"
+            android:layout_height="95dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginStart="17dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
+</RelativeLayout>
