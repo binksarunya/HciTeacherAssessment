@@ -11,26 +11,32 @@ import android.widget.TextView;
 public class CustomListActivity extends ArrayAdapter<String>{
 
     private final Activity context;
-    private final String[] web;
+    private final String[] name;
+    private final String[] course;
+    private final String[] section;
     private final Integer[] imageId;
     public CustomListActivity(Activity context,
-                              String[] web, Integer[] imageId) {
-        super(context, R.layout.list_single, web);
+                              Integer[] imageId, String[] name,String[] course,String[] section) {
+        super(context,R.layout.list_single,name);
         this.context = context;
-        this.web = web;
         this.imageId = imageId;
+        this.name = name;
+        this.course = course;
+        this.section = section;
 
     }
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView= inflater.inflate(R.layout.list_single, null, true);
-        //TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
-
-        //ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
-       /* txtTitle.setText(web[position]);
-
-        imageView.setImageResource(imageId[position]);*/
+        ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
+        TextView txtTeacherName = (TextView) rowView.findViewById(R.id.name);
+        TextView txtCourse = (TextView) rowView.findViewById(R.id.course);
+        TextView txtSection = (TextView) rowView.findViewById(R.id.section);
+        txtTeacherName.setText(name[position]);
+        txtCourse.setText(course[position]);
+        txtSection.setText(section[position]);
+        imageView.setImageResource(imageId[position]);
         return rowView;
     }
 }
