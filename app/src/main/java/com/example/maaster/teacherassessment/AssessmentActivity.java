@@ -79,11 +79,15 @@ public class AssessmentActivity extends AppCompatActivity {
                             @Override
                             public void onFinish() {
 
+                                clearBtn();
+
                                 TextView textView = (TextView) findViewById(R.id.article_text);
                                 textView.setText(answer[k]);
 
                             }
                         }.start();
+
+
 
 
                     }
@@ -94,6 +98,20 @@ public class AssessmentActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public void clearBtn() {
+        RadioButton radioButton = (RadioButton) findViewById(R.id.r1);
+        RadioButton radioButton2 = (RadioButton) findViewById(R.id.r2);
+        RadioButton radioButton3 = (RadioButton) findViewById(R.id.r3);
+        RadioButton radioButton4 = (RadioButton) findViewById(R.id.r4);
+        RadioButton radioButton5 = (RadioButton) findViewById(R.id.r5);
+
+        radioButton.setChecked(false);
+        radioButton2.setChecked(false);
+        radioButton3.setChecked(false);
+        radioButton4.setChecked(false);
+        radioButton5.setChecked(false);
     }
 
 }

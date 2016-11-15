@@ -99,30 +99,35 @@
                     android:padding="15dp">
 
                     <RadioButton
+                        android:id="@+id/r1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         android:padding="10dp"/>
 
                     <RadioButton
+                        android:id="@+id/r2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         android:padding="10dp"/>
 
                     <RadioButton
+                        android:id="@+id/r3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         android:padding="10dp"/>
 
                     <RadioButton
+                        android:id="@+id/r4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         android:padding="10dp"/>
 
                     <RadioButton
+                        android:id="@+id/r5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
