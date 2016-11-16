@@ -75,6 +75,8 @@ public class CustomListActivity extends ArrayAdapter<String>{
 
     public void openAssessmentActivity(View view) {
 
+
+
         Intent intent = new Intent(context, AssessmentActivity.class);
         context.startActivity(intent);
     }
