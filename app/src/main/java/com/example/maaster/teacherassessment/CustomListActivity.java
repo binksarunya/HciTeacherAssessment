@@ -1,6 +1,4 @@
 package com.example.maaster.teacherassessment;
-
-
 import android.app.Activity;
 import android.content.Intent;
 
@@ -53,20 +51,18 @@ public class CustomListActivity extends ArrayAdapter<String>{
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView= inflater.inflate(R.layout.list_single, null, true);
-
+        RelativeLayout completeStatus = (RelativeLayout) rowView.findViewById(R.id.completestatus);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
         TextView txtTeacherName = (TextView) rowView.findViewById(R.id.name);
         TextView txtCourse = (TextView) rowView.findViewById(R.id.course);
         TextView txtSection = (TextView) rowView.findViewById(R.id.section);
         ImageView zoombtn = (ImageView) rowView.findViewById(R.id.zoom);
         zoombtn.setImageResource(R.drawable.zoom_icon);
+        completeStatus.setVisibility(View.INVISIBLE);/*set complete status assessment teacher*/
         txtTeacherName.setText(name[position]);
-        txtCourse.setText(course[position]);
-        txtSection.setText(section[position]);
+        txtCourse.setText("รายวิชา "+course[position]);
+        txtSection.setText("section "+section[position]);
         imageView.setImageResource(imageId[position]);
-
-
-
 
 
         return rowView;
@@ -74,9 +70,6 @@ public class CustomListActivity extends ArrayAdapter<String>{
 
 
     public void openAssessmentActivity(View view) {
-
-
-
         Intent intent = new Intent(context, AssessmentActivity.class);
         context.startActivity(intent);
     }
