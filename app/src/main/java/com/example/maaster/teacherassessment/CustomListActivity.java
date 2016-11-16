@@ -1,11 +1,13 @@
 package com.example.maaster.teacherassessment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class CustomListActivity extends ArrayAdapter<String>{
@@ -33,10 +35,22 @@ public class CustomListActivity extends ArrayAdapter<String>{
         TextView txtTeacherName = (TextView) rowView.findViewById(R.id.name);
         TextView txtCourse = (TextView) rowView.findViewById(R.id.course);
         TextView txtSection = (TextView) rowView.findViewById(R.id.section);
+        ImageView zoombtn = (ImageView) rowView.findViewById(R.id.zoom);
+        zoombtn.setImageResource(R.drawable.zoom_icon);
         txtTeacherName.setText(name[position]);
         txtCourse.setText(course[position]);
         txtSection.setText(section[position]);
         imageView.setImageResource(imageId[position]);
+
+
         return rowView;
     }
+
+    public void openAssessmentActivity(View view) {
+
+        Intent intent = new Intent(context, AssessmentActivity.class);
+        context.startActivity(intent);
+    }
 }
+
+

@@ -60,11 +60,18 @@ public class ListActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+
             }
         });
 
 
 
 
+    }
+
+    public void openAssessmentActivity(View view) {
+
+        Intent intent = new Intent(this, AssessmentActivity.class);
+        startActivity(intent);
     }
 }

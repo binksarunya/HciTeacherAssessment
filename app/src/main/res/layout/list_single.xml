@@ -11,7 +11,9 @@
         android:layout_height="150dp"
         android:background="@drawable/shape"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:id="@+id/teacherprofile"
+        android:onClick="openAssessmentActivity">
 
         <TextView
             android:text="Name"
@@ -63,7 +65,7 @@
             app:srcCompat="@drawable/zoom_icon"
             android:id="@+id/zoom"
             android:layout_height="25dp"
-            android:layout_alignBottom="@+id/section"
+            android:layout_alignBottom="@+id/imageView"
             android:layout_alignRight="@+id/imageView"
             android:layout_alignEnd="@+id/imageView"
             android:layout_marginRight="10dp"
