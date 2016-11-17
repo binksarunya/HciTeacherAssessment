@@ -32,6 +32,8 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
+import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
+
 public class ListActivity extends Activity {
 
     private Student student;
@@ -41,6 +43,8 @@ public class ListActivity extends Activity {
 
     private Context context;
     private ImageView iv, imageView;
+
+
 
 
     Integer[] imageId = {
@@ -59,7 +63,7 @@ public class ListActivity extends Activity {
             "ดร.มนวรรัตน์ ผ่องไพบูลย์",
             "ดร.วนิดา พฤทธิวิทยา",
             "ผศ.ดร.เด่นดวง ประดับสุวรรณ"*/
-    String[] course = {
+    String[] courseName = {
             "CS374",
             "CS374",
             "CS342",
@@ -71,6 +75,8 @@ public class ListActivity extends Activity {
             "60001",
             "20001"
     } ;
+
+
 
 
     @Override
@@ -97,30 +103,26 @@ public class ListActivity extends Activity {
             Teacher teacher = new Teacher(name[i]);
             teacher.setImageId(imageId[i]);
             teachers.add(teacher);
+
         }
 
     }
 
     public void getData(){
 
-        CustomListActivity adapter = new CustomListActivity(ListActivity.this,imageId,name,course,section);
+        CustomListActivity adapter = new CustomListActivity(ListActivity.this,teachers,name,courseName,section);
         ListView list = (ListView)findViewById(R.id.list);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-                    Intent intent = new Intent(ListActivity.this, AssessmentActivity.class).putExtra("teacher" ,teachers.get(position));
-                    startActivity(intent);
-
-
             }
         });
 
-
-
     }
+
+
 
 
 }
