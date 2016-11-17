@@ -7,10 +7,19 @@ package com.example.maaster.teacherassessment.Model;
 public class Course {
     private String name;
     private String section;
+    private Boolean complete;
 
     public Course(String name, String section) {
         this.name = name;
         this.section = section;
+    }
+
+    public void setComplete(Boolean complete) {
+        this.complete = complete;
+    }
+
+    public Boolean getComplete() {
+        return complete;
     }
 
     public String getName() {

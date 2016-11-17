@@ -81,10 +81,11 @@ public class AssessmentActivity extends AppCompatActivity {
             questions.add(new Question((i+1)+"", answer[i]));
         }
     }
+    RadioButton[] radioButtons;
 
     public void assessmentCheck() {
-
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
+
         backIcon = (ImageView) findViewById(R.id.back_icon);
         if(k==0) {
             backIcon = (ImageView) findViewById(R.id.back_icon);
@@ -93,6 +94,7 @@ public class AssessmentActivity extends AppCompatActivity {
         }
         for (int i = 0; i < radioGroup.getChildCount() ; i++) {
             final int j = i;
+
 
             radioGroup.getChildAt(j).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -107,8 +109,9 @@ public class AssessmentActivity extends AppCompatActivity {
                                 try {
 
                                     int answers = j;
+
                                     questions.get(k).setAnswer(answers);
-                                    ((RadioButton)radioGroup.getChildAt(questions.get(k).getAnswer())).setChecked(true);
+
 
                                     k++;
                                     if(k>=questions.size()) {
@@ -125,12 +128,16 @@ public class AssessmentActivity extends AppCompatActivity {
                                                 imageView.setImageDrawable(res.getDrawable(R.drawable.complete_status));
                                                 getSupportActionBar().setTitle("ยืนยันการประเมิน");
 
+                                                for (int l = 0; l < questions.size() ; l++) {
+                                                    Log.d(TAG, "onFinish: " + questions.get(l).getAnswer());
+                                                }
+
                                             }
                                         }.start();
 
                                     } else {
                                         clearBtn();
-                                        Log.d(TAG, "clear: ");
+
                                         backIcon = (ImageView) findViewById(R.id.back_icon);
                                         backIcon.setVisibility(View.VISIBLE);
                                         TextView textView = (TextView) findViewById(R.id.article_text);
@@ -175,13 +182,18 @@ public class AssessmentActivity extends AppCompatActivity {
         TextView textView1 = (TextView) findViewById(R.id.article_num);
         textView1.setText(questions.get(k).getNo()+"/"+questions.size());
 
+        ((RadioButton)radioGroup.getChildAt(0)).setChecked(true);
+        ((RadioButton)radioGroup.getChildAt(1)).setChecked(true);
         ((RadioButton)radioGroup.getChildAt(questions.get(k).getAnswer())).setChecked(true);
+
+
         Log.d(TAG, "backNo: "+ ((RadioButton)radioGroup.getChildAt(questions.get(k).getAnswer())).isChecked());
 
         assessmentCheck();
     }
 
     public void clearBtn() {
+        Log.d(TAG, "clear: ");
         RadioButton radioButton = (RadioButton) findViewById(R.id.r1);
         RadioButton radioButton2 = (RadioButton) findViewById(R.id.r2);
         RadioButton radioButton3 = (RadioButton) findViewById(R.id.r3);
