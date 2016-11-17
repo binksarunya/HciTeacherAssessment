@@ -32,7 +32,7 @@
             android:layout_gravity="center">
 
             <RelativeLayout
-                android:id="@+id/contian"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 

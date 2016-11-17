@@ -92,6 +92,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
             public void onClick(View v) {
                 Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
                 zoomImageFromThumb(zoombtn,getImageUri(context,bitmap));
+                ImageView imageView1 = (ImageView) context.findViewById(R.id.expand_image);
             }
         });
         completeStatus.setVisibility(View.INVISIBLE);/*set complete status assessment teacher*/
@@ -129,7 +130,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
 
         // Load the high-resolution "zoomed-in" image.
         final ImageView expandedImageView = (ImageView) context.findViewById(
-                R.id.expaned_image);
+                R.id.expand_image);
 
         Picasso.with(contxt).load(uri).into(expandedImageView);
 
@@ -147,7 +148,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
         // bounds, since that's the origin for the positioning animation
         // properties (X, Y).
         thumbView.getGlobalVisibleRect(startBounds);
-        context.findViewById(R.id.contian)
+        context.findViewById(R.id.imageprofile)
                 .getGlobalVisibleRect(finalBounds, globalOffset);
         startBounds.offset(-globalOffset.x, -globalOffset.y);
         finalBounds.offset(-globalOffset.x, -globalOffset.y);

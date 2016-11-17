@@ -121,16 +121,9 @@ public class AssessmentActivity extends AppCompatActivity {
                                             public void onTick(long l) {}
                                             @Override
                                             public void onFinish() {
-                                                LinearLayout layout = (LinearLayout) findViewById(R.id.complete_layout);
-                                                layout.setVisibility(View.VISIBLE);
-                                                ImageView imageView = (ImageView) findViewById(R.id.status_image);
-                                                Resources res = getResources();
-                                                imageView.setImageDrawable(res.getDrawable(R.drawable.complete_status));
-                                                getSupportActionBar().setTitle("ยืนยันการประเมิน");
 
-                                                for (int l = 0; l < questions.size() ; l++) {
-                                                    Log.d(TAG, "onFinish: " + questions.get(l).getAnswer());
-                                                }
+                                                completeAssess ();
+
 
                                             }
                                         }.start();
@@ -166,6 +159,17 @@ public class AssessmentActivity extends AppCompatActivity {
                 zoomImageFromThumb(imageView, getImageUri(getBaseContext(), bitmap));
             }
         });
+
+    }
+
+    public void completeAssess () {
+
+        LinearLayout layout = (LinearLayout) findViewById(R.id.complete_layout);
+        layout.setVisibility(View.VISIBLE);
+        ImageView imageView = (ImageView) findViewById(R.id.status_image);
+        Resources res = getResources();
+        imageView.setImageDrawable(res.getDrawable(R.drawable.complete_status));
+        getSupportActionBar().setTitle("ยืนยันการประเมิน");
 
     }
 
@@ -246,7 +250,7 @@ public class AssessmentActivity extends AppCompatActivity {
         // bounds, since that's the origin for the positioning animation
         // properties (X, Y).
         thumbView.getGlobalVisibleRect(startBounds);
-        findViewById(R.id.contian)
+        findViewById(R.id.imageprofile)
                 .getGlobalVisibleRect(finalBounds, globalOffset);
         startBounds.offset(-globalOffset.x, -globalOffset.y);
         finalBounds.offset(-globalOffset.x, -globalOffset.y);
