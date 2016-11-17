@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.maaster.teacherassessment.ListActivity">
+    tools:context="com.example.maaster.teacherassessment.ListActivity"
+    android:weightSum="1">
 
     <LinearLayout
 
@@ -62,19 +63,19 @@
         <RelativeLayout
 
             android:layout_width="match_parent"
-            android:layout_height="309dp">
+            android:layout_height="311dp">
 
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:id="@+id/list"
                 android:divider="@android:color/transparent"
-                android:dividerHeight="10.0sp"/>
+                android:dividerHeight="10.0sp"
+                android:layout_height="match_parent" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="109dp">
+            android:layout_height="match_parent">
 
             <Button
                 android:text="ออกจากระบบ"
@@ -90,6 +91,17 @@
         </RelativeLayout>
 
     </LinearLayout>
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_weight="10.89"
+       android:id="@+id/expand_image">
+
+       <ImageView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent" />
+   </LinearLayout>
 
 
 </RelativeLayout>

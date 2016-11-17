@@ -67,7 +67,7 @@ public class AssessmentActivity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.name_teacher);
 
 
-        imageView.setImageResource(teacher.getImageId());
+       imageView.setImageResource(teacher.getImageId());
         textView.setText(teacher.getName());
 
 
@@ -200,6 +200,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        Log.d(TAG, "getImageUri: "+path);
         return Uri.parse(path);
     }//cast bitmap to uri
 
@@ -217,7 +218,9 @@ public class AssessmentActivity extends AppCompatActivity {
         final ImageView expandedImageView = (ImageView) findViewById(
                 R.id.expaned_image);
 
-        Picasso.with(this).load(uri).into(expandedImageView);
+          Picasso.with(this).load(uri).into(expandedImageView);
+
+
 
         // Calculate the starting and ending bounds for the zoomed-in image.
         // This step involves lots of math. Yay, math.
