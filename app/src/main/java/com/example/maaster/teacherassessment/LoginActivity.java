@@ -4,11 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
 import com.example.maaster.teacherassessment.Model.Course;
+import com.example.maaster.teacherassessment.Model.MongoDBConnection;
 import com.example.maaster.teacherassessment.Model.Student;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 
 import java.util.ArrayList;
 
@@ -16,6 +21,7 @@ public class LoginActivity extends Activity {
 
     private Student student;
     private ArrayList<Course> courses;
+    private MongoDBConnection mongoDBConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,15 @@ public class LoginActivity extends Activity {
     }
 
     public void createStudent() {
+
+       /* mongoDBConnection = new MongoDBConnection("mongodb://172.16.160.172:27017", "Student", "test");
+        DBCursor cursor = mongoDBConnection.getCursor();
+        cursor.next();
+
+        DBObject object = cursor.next();
+        String name = (String) object.get("name");
+
+        Log.d("name", "createStudent: "+name);*/
 
         String[] course = {
                 "CS374",

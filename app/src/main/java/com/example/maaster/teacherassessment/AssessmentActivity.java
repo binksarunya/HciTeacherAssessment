@@ -27,10 +27,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.maaster.teacherassessment.Model.Question;
 import com.example.maaster.teacherassessment.Model.Teacher;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class AssessmentActivity extends AppCompatActivity {
 
@@ -38,9 +40,12 @@ public class AssessmentActivity extends AppCompatActivity {
     private Teacher teacher;
     private final String TAG = "click";
     final String[] answer = {"1.สอนอย่างเป็นระบบ", "2.สอนให้คิดวิเคราะห์ วิจารณ์", "3.วิธีสอนให้น่าสนใจเเละน่าติดตาม", "4.จัดให้แสดงความคิดเห็น", "5.สามารถประเมินความเข้าใจ"};
+    private ArrayList<Question> questions; 
     int k = 0;
     private Animator mCurrentAnimator;
     private int mShortAnimationDuration;
+    private RadioGroup radioGroup;
+    private ImageView backIcon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +56,11 @@ public class AssessmentActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("การประเมิน");
+        
+        
 
         teacher =  getIntent().getExtras().getParcelable("teacher");
+        createQuestion();
         assessmentCheck();
 
         ImageView imageView = (ImageView) findViewById(R.id.image_teacher);
@@ -62,64 +70,83 @@ public class AssessmentActivity extends AppCompatActivity {
         imageView.setImageResource(teacher.getImageId());
         textView.setText(teacher.getName());
 
+
+    }
+    
+    public void createQuestion() {
+        
+        questions = new ArrayList<>();
+
+        for (int i = 0; i <5 ; i++) {
+            questions.add(new Question((i+1)+"", answer[i]));
+        }
     }
 
     public void assessmentCheck() {
 
-        final RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radio_group);
+        radioGroup = (RadioGroup) findViewById(R.id.radio_group);
+        backIcon = (ImageView) findViewById(R.id.back_icon);
+        if(k==0) {
+            backIcon = (ImageView) findViewById(R.id.back_icon);
+            backIcon.setVisibility(View.INVISIBLE);
 
-
+        }
         for (int i = 0; i < radioGroup.getChildCount() ; i++) {
             final int j = i;
 
             radioGroup.getChildAt(j).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    k++;
-                    if(k>=answer.length) {
-
                         new CountDownTimer(500, 700) {
                             @Override
-                            public void onTick(long l) {
-
-                            }
-
-                            @Override
-                            public void onFinish() {
-                                LinearLayout layout = (LinearLayout) findViewById(R.id.complete_layout);
-                                layout.setVisibility(View.VISIBLE);
-                                ImageView imageView = (ImageView) findViewById(R.id.status_image);
-                                Resources res = getResources();
-                                imageView.setImageDrawable(res.getDrawable(R.drawable.complete_status));
-                                getSupportActionBar().setTitle("ยืนยันการประเมิน");
-
-                            }
-                        }.start();
-
-                    } else {
-                        new CountDownTimer(500, 700) {
-                            @Override
-                            public void onTick(long l) {
-
-                            }
+                            public void onTick(long l) {}
 
                             @Override
                             public void onFinish() {
 
-                                clearBtn();
+                                try {
 
-                                TextView textView = (TextView) findViewById(R.id.article_text);
-                                textView.setText(answer[k]);
-                                TextView textView1 = (TextView) findViewById(R.id.article_num);
-                                textView1.setText(k+1+"/"+answer.length);
+                                    int answers = j;
+                                    questions.get(k).setAnswer(answers);
+                                    ((RadioButton)radioGroup.getChildAt(questions.get(k).getAnswer())).setChecked(true);
+
+                                    k++;
+                                    if(k>=questions.size()) {
+
+                                        new CountDownTimer(500, 700) {
+                                            @Override
+                                            public void onTick(long l) {}
+                                            @Override
+                                            public void onFinish() {
+                                                LinearLayout layout = (LinearLayout) findViewById(R.id.complete_layout);
+                                                layout.setVisibility(View.VISIBLE);
+                                                ImageView imageView = (ImageView) findViewById(R.id.status_image);
+                                                Resources res = getResources();
+                                                imageView.setImageDrawable(res.getDrawable(R.drawable.complete_status));
+                                                getSupportActionBar().setTitle("ยืนยันการประเมิน");
+
+                                            }
+                                        }.start();
+
+                                    } else {
+                                        clearBtn();
+                                        Log.d(TAG, "clear: ");
+                                        backIcon = (ImageView) findViewById(R.id.back_icon);
+                                        backIcon.setVisibility(View.VISIBLE);
+                                        TextView textView = (TextView) findViewById(R.id.article_text);
+                                        textView.setText(questions.get(k).getDetail());
+                                        TextView textView1 = (TextView) findViewById(R.id.article_num);
+                                        textView1.setText(questions.get(k).getNo()+"/"+questions.size());
+
+                                    }
+
+                                } catch (Exception e) {
+
+                                }
 
                             }
                         }.start();
-
                     }
-
-                }
             });
         }
 
@@ -133,6 +160,25 @@ public class AssessmentActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void backNo (View view){
+
+        k--;
+        if(k==0) {
+            backIcon = (ImageView) findViewById(R.id.back_icon);
+            backIcon.setVisibility(View.INVISIBLE);
+
+        }
+        TextView textView = (TextView) findViewById(R.id.article_text);
+        textView.setText(questions.get(k).getDetail());
+        TextView textView1 = (TextView) findViewById(R.id.article_num);
+        textView1.setText(questions.get(k).getNo()+"/"+questions.size());
+
+        ((RadioButton)radioGroup.getChildAt(questions.get(k).getAnswer())).setChecked(true);
+        Log.d(TAG, "backNo: "+ ((RadioButton)radioGroup.getChildAt(questions.get(k).getAnswer())).isChecked());
+
+        assessmentCheck();
     }
 
     public void clearBtn() {

@@ -160,6 +160,8 @@
                 </RadioGroup>
 
                 <ImageView
+                    android:visibility="invisible"
+                    android:onClick="backNo"
                     android:id="@+id/back_icon"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
