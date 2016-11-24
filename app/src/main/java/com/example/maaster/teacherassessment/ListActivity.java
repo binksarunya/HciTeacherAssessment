@@ -38,7 +38,7 @@ public class ListActivity extends Activity {
 
     private Student student;
     private ArrayList<Teacher> teachers;
-    private ArrayList<Course> coursesList;
+    private ArrayList<Course> courses;
     private final String TAG = "click";
 
     private Context context;
@@ -84,13 +84,20 @@ public class ListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         teachers = new ArrayList<>();
-        coursesList = new ArrayList<>();
+        courses = new ArrayList<>();
         student = getIntent().getExtras().getParcelable("student");
+        courses = getIntent().getExtras().getParcelableArrayList("course");
+        student.setCourses(courses);
+
 
         context = getBaseContext();
 
         getTeacherFromDB();
         getData();
+
+        for (int i = 0; i < courses.size() ; i++) {
+            Log.d(TAG, "complete " + courses.get(i).getName() + " " + courses.get(i).getComplete());
+        }
 
 
 
@@ -110,7 +117,7 @@ public class ListActivity extends Activity {
 
     public void getData(){
 
-        CustomListActivity adapter = new CustomListActivity(ListActivity.this,teachers,name,courseName,section);
+        CustomListActivity adapter = new CustomListActivity(ListActivity.this,teachers,name,courseName,section,student,courses);
         ListView list = (ListView)findViewById(R.id.list);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){

@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
@@ -27,7 +28,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.maaster.teacherassessment.Model.Course;
 import com.example.maaster.teacherassessment.Model.Question;
+import com.example.maaster.teacherassessment.Model.Student;
 import com.example.maaster.teacherassessment.Model.Teacher;
 import com.squareup.picasso.Picasso;
 
@@ -46,6 +49,11 @@ public class AssessmentActivity extends AppCompatActivity {
     private int mShortAnimationDuration;
     private RadioGroup radioGroup;
     private ImageView backIcon;
+    private Student student;
+    private Course course;
+    private  ArrayList<Course> courses;
+    private int position;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,9 +65,18 @@ public class AssessmentActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("การประเมิน");
         
-        
 
         teacher =  getIntent().getExtras().getParcelable("teacher");
+        student = getIntent().getExtras().getParcelable("student");
+
+        courses = getIntent().getExtras().getParcelableArrayList("course");
+
+        position = getIntent().getExtras().getInt("position");
+        course = courses.get(position);
+
+
+        Log.d(TAG, "onCreate: " + course.getName() + " " +course.getComplete());
+
         createQuestion();
         assessmentCheck();
 
@@ -67,7 +84,7 @@ public class AssessmentActivity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.name_teacher);
 
 
-       imageView.setImageResource(teacher.getImageId());
+        imageView.setImageResource(teacher.getImageId());
         textView.setText(teacher.getName());
 
 
@@ -81,7 +98,7 @@ public class AssessmentActivity extends AppCompatActivity {
             questions.add(new Question((i+1)+"", answer[i]));
         }
     }
-    RadioButton[] radioButtons;
+
 
     public void assessmentCheck() {
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
@@ -162,6 +179,8 @@ public class AssessmentActivity extends AppCompatActivity {
         imageView.setImageDrawable(res.getDrawable(R.drawable.complete_status));
         getSupportActionBar().setTitle("ยืนยันการประเมิน");
 
+        course.setComplete(1);
+
     }
 
     public void backNo (View view){
@@ -200,6 +219,16 @@ public class AssessmentActivity extends AppCompatActivity {
         radioButton3.setChecked(false);
         radioButton4.setChecked(false);
         radioButton5.setChecked(false);
+    }
+
+    public void comfirmAsess(View view) {
+        Intent intent = new Intent(AssessmentActivity.this, ListActivity.class);
+
+        intent.putExtra("student", student);
+        courses.set(position, course);
+        intent.putParcelableArrayListExtra("course", courses);
+
+        startActivity(intent);
     }
 
 
