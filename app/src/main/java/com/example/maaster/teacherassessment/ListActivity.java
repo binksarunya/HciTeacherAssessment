@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -32,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.example.maaster.teacherassessment.Model.Course;
 import com.example.maaster.teacherassessment.Model.Student;
@@ -45,7 +47,7 @@ import java.util.ArrayList;
 
 import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
 
-public class ListActivity extends Activity {
+public class ListActivity extends AppCompatActivity {
 
     private Student student;
     private ArrayList<Teacher> teachers;
@@ -95,6 +97,7 @@ public class ListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
         context = getBaseContext();
         teachers = new ArrayList<>();
         courses = new ArrayList<>();
