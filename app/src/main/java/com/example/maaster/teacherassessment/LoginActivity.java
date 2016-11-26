@@ -22,6 +22,7 @@ public class LoginActivity extends Activity {
     private Student student;
     private ArrayList<Course> courses;
     private MongoDBConnection mongoDBConnection;
+    private final String TAG = "click";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,10 @@ public class LoginActivity extends Activity {
     public void openListTeacher(View view) {
 
         createStudent();
-        Intent intent = new Intent(this, ListActivity.class).putExtra("student", student);
+        Intent intent = new Intent(this, ListActivity.class);
+        intent.putExtra("student", student);
+        intent.putParcelableArrayListExtra("course", courses);
+
         startActivity(intent);
     }
 

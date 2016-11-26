@@ -27,6 +27,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.maaster.teacherassessment.Model.Course;
+import com.example.maaster.teacherassessment.Model.Student;
 import com.example.maaster.teacherassessment.Model.Teacher;
 import com.squareup.picasso.Picasso;
 
@@ -45,12 +47,14 @@ public class CustomListActivity extends ArrayAdapter<String>{
     private final String[] name;
     private Animator mCurrentAnimator;
     private int mShortAnimationDuration;
+    private final Student student;
+    private final ArrayList<Course> courses;
 
 
 
 
     public CustomListActivity(Activity context,
-                              ArrayList<Teacher> teachers,String[] name, String[] course, String[] section) {
+                              ArrayList<Teacher> teachers, String[] name, String[] course, String[] section, Student student, ArrayList<Course> courses) {
 
         super(context,R.layout.list_single,name);
         this.contxt=context;
@@ -59,19 +63,42 @@ public class CustomListActivity extends ArrayAdapter<String>{
         this.course = course;
         this.section = section;
         this.name = name;
+        this.student = student;
+        this.courses = courses;
+
 
     }
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView= inflater.inflate(R.layout.list_single, null, true);
-        RelativeLayout completeStatus = (RelativeLayout) rowView.findViewById(R.id.completestatus);
+
         RelativeLayout teacherProfile = (RelativeLayout) rowView.findViewById(R.id.teacherprofile);
         RelativeLayout imageprofile = (RelativeLayout) rowView.findViewById(R.id.imageprofile);
+
+        RelativeLayout completeStatus = (RelativeLayout) rowView.findViewById(R.id.completestatus);
+
+
+            if(courses.get(position).getComplete() == 1) {
+                completeStatus.setVisibility(View.VISIBLE);
+                Log.d(TAG, "getView: "+ 5);
+
+            }
+
+
         teacherProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, AssessmentActivity.class).putExtra("teacher",teachers.get(position));//put extra
+
+                if(courses.get(position).getComplete() == 1) {
+                    return;
+
+                }
+                Intent intent = new Intent(context, AssessmentActivity.class);//put extra
+                intent.putExtra("teacher", teachers.get(position));
+                intent.putExtra("student", student);
+                intent.putParcelableArrayListExtra("course", courses);
+                intent.putExtra("position", position);
                 context.startActivity(intent);
             }
         });
@@ -95,7 +122,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
                 ImageView imageView1 = (ImageView) context.findViewById(R.id.expand_image);
             }
         });
-        completeStatus.setVisibility(View.INVISIBLE);/*set complete status assessment teacher*/
+
         txtTeacherName.setText(teachers.get(position).getName());
         Log.d(TAG, teachers.get(position).getName());
         txtCourse.setText("รายวิชา "+course[position]);
