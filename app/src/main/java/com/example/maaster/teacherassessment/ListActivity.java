@@ -5,22 +5,33 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
+
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import com.example.maaster.teacherassessment.Model.Course;
 import com.example.maaster.teacherassessment.Model.Student;
@@ -83,20 +94,19 @@ public class ListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        context = getBaseContext();
 
+        String studentname = "นายจอนนี่ บราโว่";
+        String studentid = "5909611745";
+       showStudentDialog(studentname,studentid);
 
 
         teachers = new ArrayList<>();
         courses = new ArrayList<>();
         student = getIntent().getExtras().getParcelable("student");
-<<<<<<< HEAD
-=======
         courses = getIntent().getExtras().getParcelableArrayList("course");
         student.setCourses(courses);
 
-
->>>>>>> 8e04f16d4d1323462f1d4bb5e8908df2c096a2b4
-        context = getBaseContext();
         getTeacherFromDB();
         getData();
 
@@ -104,9 +114,8 @@ public class ListActivity extends Activity {
             Log.d(TAG, "complete " + courses.get(i).getName() + " " + courses.get(i).getComplete());
         }
 
-
-
     }
+
 
     public void getTeacherFromDB() {
 
@@ -131,6 +140,29 @@ public class ListActivity extends Activity {
 
             }
         });
+
+    }
+
+
+    public void showStudentDialog(String name, String id){
+        final Dialog welcomedialog= new Dialog(this);
+        welcomedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        welcomedialog.setContentView(R.layout.welcome_dialog);
+        TextView studentname = (TextView)welcomedialog.findViewById(R.id.studentnameTextview);
+        TextView studentid = (TextView)welcomedialog.findViewById(R.id.studentIdTextview);
+        studentname.setText(name);
+        studentid.setText(id);
+
+        Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept);
+        acceptbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                welcomedialog.dismiss();
+            }
+        });
+
+
+        welcomedialog.show();
 
     }
 

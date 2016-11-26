@@ -8,14 +8,10 @@
 
     <RelativeLayout
         android:layout_centerHorizontal="true"
-<<<<<<< HEAD
         android:layout_height="@dimen/_130sdp"
-        android:layout_width="@dimen/_240sdp">
-=======
-        android:layout_height="150dp"
-        android:layout_width="300dp"
+        android:layout_width="@dimen/_240sdp"
         android:id="@+id/relativeLayout2">
->>>>>>> 8e04f16d4d1323462f1d4bb5e8908df2c096a2b4
+
 
         <RelativeLayout
 
@@ -108,19 +104,8 @@
             android:layout_width="match_parent"
             android:visibility="invisible">
 
-<<<<<<< HEAD
-    <RelativeLayout
-        android:layout_width="@dimen/_240sdp"
-        android:layout_height="@dimen/_130sdp"
-        android:background="@drawable/complete"
-        android:visibility="invisible"
-        android:alpha="0.8"
-        android:id="@+id/completestatus"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
-=======
         </RelativeLayout>
->>>>>>> 8e04f16d4d1323462f1d4bb5e8908df2c096a2b4
+
 
     </RelativeLayout>
 
