@@ -54,6 +54,7 @@ public class ListActivity extends Activity {
 
     private Context context;
     private ImageView iv, imageView;
+    private boolean checkfirst =true;
 
 
 
@@ -95,17 +96,15 @@ public class ListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         context = getBaseContext();
-
-        String studentname = "นายจอนนี่ บราโว่";
-        String studentid = "5909611745";
-       showStudentDialog(studentname,studentid);
-
-
         teachers = new ArrayList<>();
         courses = new ArrayList<>();
         student = getIntent().getExtras().getParcelable("student");
         courses = getIntent().getExtras().getParcelableArrayList("course");
         student.setCourses(courses);
+        checkfirst = getIntent().getExtras().getBoolean("checkfirst");
+        if(checkfirst==true) {
+            showStudentDialog(student);
+        }
 
         getTeacherFromDB();
         getData();
@@ -144,19 +143,20 @@ public class ListActivity extends Activity {
     }
 
 
-    public void showStudentDialog(String name, String id){
+    public void showStudentDialog(Student student){
         final Dialog welcomedialog= new Dialog(this);
         welcomedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         welcomedialog.setContentView(R.layout.welcome_dialog);
         TextView studentname = (TextView)welcomedialog.findViewById(R.id.studentnameTextview);
         TextView studentid = (TextView)welcomedialog.findViewById(R.id.studentIdTextview);
-        studentname.setText(name);
-        studentid.setText(id);
+        studentname.setText(student.getName());
+        studentid.setText(student.getId());
 
         Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept);
         acceptbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 welcomedialog.dismiss();
             }
         });

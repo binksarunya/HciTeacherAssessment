@@ -99,6 +99,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
                 intent.putExtra("student", student);
                 intent.putParcelableArrayListExtra("course", courses);
                 intent.putExtra("position", position);
+
                 context.startActivity(intent);
             }
         });

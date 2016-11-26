@@ -39,7 +39,7 @@ public class LoginActivity extends Activity {
         Intent intent = new Intent(this, ListActivity.class);
         intent.putExtra("student", student);
         intent.putParcelableArrayListExtra("course", courses);
-
+        intent.putExtra("checkfirst",true);
         startActivity(intent);
     }
 

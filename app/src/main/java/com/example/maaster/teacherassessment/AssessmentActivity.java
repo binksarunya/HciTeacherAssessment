@@ -59,6 +59,7 @@ public class AssessmentActivity extends AppCompatActivity {
     private Course course;
     private  ArrayList<Course> courses;
     private int position;
+    private boolean checkfirst;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
         position = getIntent().getExtras().getInt("position");
         course = courses.get(position);
+
 
 
         Log.d(TAG, "onCreate: " + course.getName() + " " +course.getComplete());
@@ -235,7 +237,7 @@ public class AssessmentActivity extends AppCompatActivity {
         intent.putExtra("student", student);
         courses.set(position, course);
         intent.putParcelableArrayListExtra("course", courses);
-
+        intent.putExtra("checkfirst",false);
         startActivity(intent);
     }
 
