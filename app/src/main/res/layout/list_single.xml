@@ -9,13 +9,13 @@
     <RelativeLayout
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_height="150dp"
-        android:layout_width="300dp">
+        android:layout_height="@dimen/_130sdp"
+        android:layout_width="@dimen/_240sdp">
 
         <RelativeLayout
 
             android:layout_marginTop="12dp"
-            android:layout_height="150dp"
+            android:layout_height="@dimen/_130sdp"
             android:background="@drawable/shape"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/section"
                 android:textColor="#FFFFFF"
-                android:layout_width="130dp"
+                android:layout_width="@dimen/_130sdp"
                 android:layout_centerVertical="true"
                 android:layout_alignLeft="@+id/name"
                 android:layout_alignStart="@+id/name" />
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/course"
                 android:textColor="#FFFFFF"
-                android:layout_width="130dp"
+                android:layout_width="@dimen/_130sdp"
                 android:layout_marginTop="13dp"
                 android:layout_below="@+id/section"
                 android:layout_alignLeft="@+id/section"
@@ -49,7 +49,7 @@
                 android:id="@+id/name"
                 android:textColor="#FFFFFF"
                 android:layout_marginBottom="15dp"
-                android:layout_width="185dp"
+                android:layout_width="@dimen/_130sdp"
                 android:layout_above="@+id/section"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
@@ -69,20 +69,20 @@
             android:id="@+id/imageprofile">
 
             <ImageView
-                android:layout_width="95dp"
+                android:layout_width="@dimen/_82sdp"
                 app:srcCompat="@drawable/teacher_icon"
                 android:id="@+id/imageView"
-                android:layout_height="95dp"
+                android:layout_height="@dimen/_82sdp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
             <ImageView
 
-                android:layout_width="25dp"
+                android:layout_width="@dimen/_25sdp"
                 app:srcCompat="@drawable/zoom_icon"
                 android:id="@+id/zoom"
-                android:layout_height="25dp"
+                android:layout_height="@dimen/_25sdp"
                 android:layout_alignBottom="@+id/imageView"
                 android:layout_alignRight="@+id/imageView"
                 android:layout_alignEnd="@+id/imageView"
@@ -93,8 +93,8 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="301dp"
-        android:layout_height="153dp"
+        android:layout_width="@dimen/_240sdp"
+        android:layout_height="@dimen/_130sdp"
         android:background="@drawable/complete"
         android:visibility="invisible"
         android:alpha="0.8"

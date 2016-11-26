@@ -83,12 +83,13 @@ public class ListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+
+
         teachers = new ArrayList<>();
         coursesList = new ArrayList<>();
         student = getIntent().getExtras().getParcelable("student");
-
         context = getBaseContext();
-
         getTeacherFromDB();
         getData();
 
