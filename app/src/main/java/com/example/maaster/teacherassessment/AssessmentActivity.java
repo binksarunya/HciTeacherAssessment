@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -22,13 +24,17 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.maaster.teacherassessment.Model.Course;
+import com.example.maaster.teacherassessment.Model.EditAssesListActivity;
 import com.example.maaster.teacherassessment.Model.Question;
 import com.example.maaster.teacherassessment.Model.Student;
 import com.example.maaster.teacherassessment.Model.Teacher;
@@ -222,6 +228,8 @@ public class AssessmentActivity extends AppCompatActivity {
     }
 
     public void comfirmAsess(View view) {
+
+
         Intent intent = new Intent(AssessmentActivity.this, ListActivity.class);
 
         intent.putExtra("student", student);
@@ -229,6 +237,26 @@ public class AssessmentActivity extends AppCompatActivity {
         intent.putParcelableArrayListExtra("course", courses);
 
         startActivity(intent);
+    }
+
+    public void editAsess(View view) {
+
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.edit_dialog);
+        ListView lv = (ListView ) dialog.findViewById(R.id.lv);
+        EditAssesListActivity adapter = new EditAssesListActivity(this,answer);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
+        dialog.setTitle("คำถาม");
+        dialog.show();
+
+
     }
 
 
