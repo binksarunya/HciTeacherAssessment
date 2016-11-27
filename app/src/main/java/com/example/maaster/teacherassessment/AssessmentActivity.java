@@ -23,6 +23,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -232,18 +233,38 @@ public class AssessmentActivity extends AppCompatActivity {
     public void comfirmAsess(View view) {
 
 
-        Intent intent = new Intent(AssessmentActivity.this, ListActivity.class);
 
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.comfirm_dialog);
+        dialog.setTitle("สรุปผลการทำ");
+        //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        ListView lv = (ListView ) dialog.findViewById(R.id.lv_confirm);
+        EditAssesListActivity adapter = new EditAssesListActivity(this,answer);
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
+
+        dialog.show();
+
+
+       /* Intent intent = new Intent(AssessmentActivity.this, ListActivity.class);
         intent.putExtra("student", student);
         courses.set(position, course);
         intent.putParcelableArrayListExtra("course", courses);
         intent.putExtra("checkfirst",false);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     public void editAsess(View view) {
 
         Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.edit_dialog);
         ListView lv = (ListView ) dialog.findViewById(R.id.lv);
         EditAssesListActivity adapter = new EditAssesListActivity(this,answer);
@@ -255,7 +276,7 @@ public class AssessmentActivity extends AppCompatActivity {
             }
         });
 
-        dialog.setTitle("คำถาม");
+
         dialog.show();
 
 
