@@ -22,9 +22,10 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_160sdp"/>
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_60sdp"
+        android:layout_height="78dp"
         android:background="@drawable/dialog_shape"
         android:orientation="horizontal">
 

@@ -148,6 +148,8 @@ public class AssessmentActivity extends AppCompatActivity {
                                     } else {
                                         clearBtn();
 
+                                        
+
                                         backIcon = (Button) findViewById(R.id.back_icon);
                                         backIcon.setVisibility(View.VISIBLE);
                                         TextView textView = (TextView) findViewById(R.id.article_text);
@@ -276,7 +278,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
                 dialog.dismiss();
                 editAsessAnswer(position);
-               
+
 
 
             }
