@@ -60,6 +60,7 @@ public class AssessmentActivity extends AppCompatActivity {
     private  ArrayList<Course> courses;
     private int position;
     private boolean checkfirst;
+    private int positionNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,14 @@ public class AssessmentActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("การประเมิน");
+
+        createQuestion();
+        if(getIntent().getExtras().getBoolean("checkEdit")) {
+            Log.d(TAG, "num : "+  getIntent().getExtras().getInt("positionAns"));
+            editAsessAnswer( getIntent().getExtras().getInt("positionAns"));
+        } else {
+
+
         
 
         teacher =  getIntent().getExtras().getParcelable("teacher");
@@ -85,8 +94,10 @@ public class AssessmentActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate: " + course.getName() + " " +course.getComplete());
 
-        createQuestion();
+
         assessmentCheck();
+
+
 
         ImageView imageView = (ImageView) findViewById(R.id.image_teacher);
         TextView textView = (TextView) findViewById(R.id.name_teacher);
@@ -94,7 +105,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
         imageView.setImageResource(teacher.getImageId());
         textView.setText(teacher.getName());
-
+    }
 
     }
     
@@ -208,9 +219,6 @@ public class AssessmentActivity extends AppCompatActivity {
         ((RadioButton)radioGroup.getChildAt(1)).setChecked(true);
         ((RadioButton)radioGroup.getChildAt(questions.get(k).getAnswer())).setChecked(true);
 
-
-        Log.d(TAG, "backNo: "+ ((RadioButton)radioGroup.getChildAt(questions.get(k).getAnswer())).isChecked());
-
         assessmentCheck();
     }
 
@@ -243,7 +251,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
     public void editAsess(View view) {
 
-        Dialog dialog = new Dialog(this);
+        final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.edit_dialog);
         ListView lv = (ListView ) dialog.findViewById(R.id.lv);
         EditAssesListActivity adapter = new EditAssesListActivity(this,answer);
@@ -252,6 +260,9 @@ public class AssessmentActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                editAsessAnswer(position);
+                Log.d(TAG, "onItemClick: ");
+
             }
         });
 
@@ -259,6 +270,16 @@ public class AssessmentActivity extends AppCompatActivity {
         dialog.show();
 
 
+    }
+
+    public void editAsessAnswer(int postion) {
+
+        Log.d(TAG, "editAsessAnswer: " + questions.get(postion).getDetail());
+
+        TextView textView = (TextView) findViewById(R.id.article_text);
+        textView.setText(questions.get(postion).getDetail());
+        TextView textView1 = (TextView) findViewById(R.id.article_num);
+        textView1.setText(questions.get(postion).getNo()+"/"+questions.size());
     }
 
 
