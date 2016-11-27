@@ -153,7 +153,7 @@ public class ListActivity extends AppCompatActivity {
         TextView studentname = (TextView)welcomedialog.findViewById(R.id.studentnameTextview);
         TextView studentid = (TextView)welcomedialog.findViewById(R.id.studentIdTextview);
         studentname.setText(student.getName());
-        studentid.setText(student.getId());
+        studentid.setText("รหัสนักศึกษา "+student.getId());
 
         Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept);
         acceptbtn.setOnClickListener(new View.OnClickListener() {

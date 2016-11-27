@@ -273,9 +273,11 @@ public class AssessmentActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 dialog.dismiss();
                 editAsessAnswer(position);
-                Log.d(TAG, "onItemClick: ");
+               
+
 
             }
         });
