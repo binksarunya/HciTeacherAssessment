@@ -34,7 +34,7 @@ public class EditAssesListActivity extends ArrayAdapter<String> {
         this.questionsDetail=questionsDetail;
         this.points=new String[questions.size()];
         for (int i=0;i<points.length;i++){
-            points[i]=String.valueOf(questions.get(i).getAnswer());
+            points[i]=String.valueOf(questions.get(i).getAnswer()+1);
         }
 
     }

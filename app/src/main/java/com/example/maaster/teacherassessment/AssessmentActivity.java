@@ -119,7 +119,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
                                     int answers = j;
 
-                                    questions.get(k).setAnswer(answers+1);
+                                    questions.get(k).setAnswer(answers);
 
 
                                     k++;
