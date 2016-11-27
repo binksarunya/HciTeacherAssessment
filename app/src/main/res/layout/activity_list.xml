@@ -78,6 +78,7 @@
 
             <Button
                 android:text="ออกจากระบบ"
+                android:onClick="onClickLogout"
                 android:background="@drawable/logout_btn"
                 android:layout_width="@dimen/_120sdp"
                 android:layout_height="@dimen/_40sdp"

@@ -169,6 +169,13 @@ public class ListActivity extends AppCompatActivity {
 
     }
 
+    public void onClickLogout(View view){
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+
 
 
 
