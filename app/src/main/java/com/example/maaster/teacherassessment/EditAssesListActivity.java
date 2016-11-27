@@ -66,17 +66,7 @@ public class EditAssesListActivity extends ArrayAdapter<String> {
         TextView point = (TextView)rowView.findViewById(R.id.point);
         point.setText(points[position]);
         question.setText("  "+questionsDetail[position]);
-        question.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*ไปหน้าตำถามที่ดลือก*/
-                Log.d("click", "onClick: ");
-                Intent intent = new Intent(context, AssessmentActivity.class);
-                intent.putExtra("checkEdit", true);
-                intent.putExtra("positionAns" , position);
-                context.startActivity(intent);
-            }
-        });
+
 
 
         return rowView;

@@ -38,7 +38,7 @@ public class AssessmentActivity extends AppCompatActivity {
     private Animator mCurrentAnimator;
     private int mShortAnimationDuration;
     private RadioGroup radioGroup;
-    private ImageView backIcon;
+    private Button backIcon;
     private Student student;
     private Course course;
     private  ArrayList<Course> courses;
@@ -58,10 +58,7 @@ public class AssessmentActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("การประเมิน");
 
         createQuestion();
-        if(getIntent().getExtras().getBoolean("checkEdit")) {
-            Log.d(TAG, "num : "+  getIntent().getExtras().getInt("positionAns"));
-            editAsessAnswer( getIntent().getExtras().getInt("positionAns"));
-        } else {
+
 
 
         
@@ -89,7 +86,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
         imageView.setImageResource(teacher.getImageId());
         textView.setText(teacher.getName());
-    }
+
 
     }
     
@@ -106,9 +103,9 @@ public class AssessmentActivity extends AppCompatActivity {
     public void assessmentCheck() {
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
 
-        backIcon = (ImageView) findViewById(R.id.back_icon);
+        backIcon = (Button) findViewById(R.id.back_icon);
         if(k==0) {
-            backIcon = (ImageView) findViewById(R.id.back_icon);
+            backIcon = (Button) findViewById(R.id.back_icon);
             backIcon.setVisibility(View.INVISIBLE);
 
         }
@@ -151,7 +148,7 @@ public class AssessmentActivity extends AppCompatActivity {
                                     } else {
                                         clearBtn();
 
-                                        backIcon = (ImageView) findViewById(R.id.back_icon);
+                                        backIcon = (Button) findViewById(R.id.back_icon);
                                         backIcon.setVisibility(View.VISIBLE);
                                         TextView textView = (TextView) findViewById(R.id.article_text);
                                         textView.setText(questions.get(k).getDetail());
@@ -175,6 +172,9 @@ public class AssessmentActivity extends AppCompatActivity {
 
     public void completeAssess () {
 
+        Button button = (Button) findViewById(R.id.finish);
+        button.setVisibility(View.INVISIBLE);
+
         LinearLayout layout = (LinearLayout) findViewById(R.id.complete_layout);
         layout.setVisibility(View.VISIBLE);
         ImageView imageView = (ImageView) findViewById(R.id.status_image);
@@ -190,7 +190,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
         k--;
         if(k==0) {
-            backIcon = (ImageView) findViewById(R.id.back_icon);
+            backIcon = (Button) findViewById(R.id.back_icon);
             backIcon.setVisibility(View.INVISIBLE);
 
         }
@@ -264,12 +264,8 @@ public class AssessmentActivity extends AppCompatActivity {
 
     public void editAsess(View view) {
 
-
         final Dialog dialog = new Dialog(this);
-
-
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         dialog.setContentView(R.layout.edit_dialog);
         ListView lv = (ListView ) dialog.findViewById(R.id.lv);
         EditAssesListActivity adapter = new EditAssesListActivity(this,answer);
@@ -277,7 +273,7 @@ public class AssessmentActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                dialog.dismiss();
                 editAsessAnswer(position);
                 Log.d(TAG, "onItemClick: ");
 
@@ -290,14 +286,45 @@ public class AssessmentActivity extends AppCompatActivity {
 
     }
 
-    public void editAsessAnswer(int postion) {
+    public void editAsessAnswer(final int postion) {
 
-        Log.d(TAG, "editAsessAnswer: " + questions.get(postion).getDetail());
+        backIcon = (Button) findViewById(R.id.back_icon);
+        backIcon.setVisibility(View.INVISIBLE);
+
+        LinearLayout layout = (LinearLayout) findViewById(R.id.complete_layout);
+        layout.setVisibility(View.INVISIBLE);
+
+        Button button = (Button) findViewById(R.id.finish);
+        button.setVisibility(View.VISIBLE);
 
         TextView textView = (TextView) findViewById(R.id.article_text);
         textView.setText(questions.get(postion).getDetail());
         TextView textView1 = (TextView) findViewById(R.id.article_num);
         textView1.setText(questions.get(postion).getNo()+"/"+questions.size());
+
+
+        radioGroup = (RadioGroup) findViewById(R.id.radio_group);
+        ((RadioButton)radioGroup.getChildAt(questions.get(postion).getAnswer())).setChecked(true);
+
+
+
+        for (int i = 0; i < radioGroup.getChildCount() ; i++) {
+            final int j = i;
+            radioGroup.getChildAt(j).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    questions.get(postion).setAnswer(j);
+                }
+            });
+        }
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                completeAssess();
+            }
+        });
+
     }
 
 

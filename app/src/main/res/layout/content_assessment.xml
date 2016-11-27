@@ -86,7 +86,7 @@
                 android:layout_margin="25dp"
                 android:orientation="vertical"
                 android:background="@drawable/quesion_shape"
-                >
+                android:id="@+id/linearLayout">
 
                 <TextView
                     android:id="@+id/article_num"
@@ -106,72 +106,159 @@
                     android:textSize="18dp"/>
 
                 <RadioGroup
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
                     android:id="@+id/radio_group"
                     android:layout_width="wrap_content"
-                    android:layout_height="78dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="15dp">
+                    >
 
                     <RadioButton
                         android:id="@+id/r1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:padding="10dp"/>
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        />
 
                     <RadioButton
                         android:id="@+id/r2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:padding="10dp"/>
+                        android:layout_marginLeft="@dimen/_15sdp"
+
+                        />
 
                     <RadioButton
                         android:id="@+id/r3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:padding="10dp"/>
+                        android:layout_marginLeft="@dimen/_15sdp"
+
+                        />
 
                     <RadioButton
                         android:id="@+id/r4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:padding="10dp"/>
+                        android:layout_marginLeft="@dimen/_15sdp"
+
+                        />
 
                     <RadioButton
                         android:id="@+id/r5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:padding="10dp"/>
+                        android:layout_marginLeft="@dimen/_15sdp"
+
+                        />
 
 
                 </RadioGroup>
 
-                <ImageView
-                    android:visibility="invisible"
-                    android:onClick="backNo"
-                    android:id="@+id/back_icon"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/back_icon"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                   android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_20sdp">
+
+                    <TextView
+                        android:layout_marginLeft="@dimen/_23sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"/>
+
+                    <TextView
+                        android:layout_marginLeft="@dimen/_38sdp"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2"/>
+
+                    <TextView
+                        android:layout_marginLeft="@dimen/_43sdp"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"/>
+
+                    <TextView
+                        android:layout_marginLeft="@dimen/_40sdp"
+
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4"/>
+
+                    <TextView
+                        android:layout_marginLeft="@dimen/_40sdp"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"/>
+
+                </LinearLayout>
+
+
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+
+                    <Button
+                        android:id="@+id/back_icon"
+                        android:visibility="invisible"
+                        android:onClick="backNo"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ย้อนกลับ"
+                        android:textColor="#fff"
+                        android:background="@drawable/logout_btn"/>
+
+
+                    <Button
+                        android:id="@+id/finish"
+                        android:visibility="invisible"
+                        android:onClick="comfirmAsess"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="เสร็จสิ้น"
+                        android:textColor="#fff"
+                        android:background="@drawable/logout_btn"/>
+
+                </RelativeLayout>
+
+
 
 
             </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/complete_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="25dp"
                 android:orientation="vertical"
                 android:visibility="invisible"
                 android:background="@drawable/quesion_shape"
 
-                >
+                android:layout_alignTop="@+id/linearLayout"
+                android:layout_alignLeft="@+id/linearLayout"
+                android:layout_alignStart="@+id/linearLayout"
+                android:layout_alignBottom="@+id/linearLayout"
+                android:layout_alignRight="@+id/linearLayout"
+                android:layout_alignEnd="@+id/linearLayout">
 
                 <TextView
                     android:id="@+id/confirm_text"
@@ -188,6 +275,8 @@
                     android:layout_height="@dimen/_60sdp">
 
                 </View>
+
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
