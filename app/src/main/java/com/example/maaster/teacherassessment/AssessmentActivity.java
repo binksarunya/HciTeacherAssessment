@@ -1,32 +1,18 @@
 package com.example.maaster.teacherassessment;
 
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.Point;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -35,13 +21,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.maaster.teacherassessment.Model.Course;
-import com.example.maaster.teacherassessment.Model.EditAssesListActivity;
 import com.example.maaster.teacherassessment.Model.Question;
 import com.example.maaster.teacherassessment.Model.Student;
 import com.example.maaster.teacherassessment.Model.Teacher;
-import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class AssessmentActivity extends AppCompatActivity {
@@ -136,7 +119,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
                                     int answers = j;
 
-                                    questions.get(k).setAnswer(answers);
+                                    questions.get(k).setAnswer(answers+1);
 
 
                                     k++;
@@ -234,13 +217,13 @@ public class AssessmentActivity extends AppCompatActivity {
 
 
 
-        Dialog dialog = new Dialog(this);
+        final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.comfirm_dialog);
         dialog.setTitle("สรุปผลการทำ");
         //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         ListView lv = (ListView ) dialog.findViewById(R.id.lv_confirm);
-        EditAssesListActivity adapter = new EditAssesListActivity(this,answer);
+        EditAssesListActivity adapter = new EditAssesListActivity(this,answer,questions);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
@@ -248,17 +231,27 @@ public class AssessmentActivity extends AppCompatActivity {
 
             }
         });
-
-
+        Button confirmbtn = (Button)dialog.findViewById(R.id.button2) ;
+        confirmbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AssessmentActivity.this, ListActivity.class);
+                intent.putExtra("student", student);
+                courses.set(position, course);
+                intent.putParcelableArrayListExtra("course", courses);
+                intent.putExtra("checkfirst",false);
+                startActivity(intent);
+            }
+        });
+        Button dismissbtn = (Button)dialog.findViewById(R.id.button3);
+        dismissbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
         dialog.show();
 
-
-       /* Intent intent = new Intent(AssessmentActivity.this, ListActivity.class);
-        intent.putExtra("student", student);
-        courses.set(position, course);
-        intent.putParcelableArrayListExtra("course", courses);
-        intent.putExtra("checkfirst",false);
-        startActivity(intent);*/
     }
 
     public void editAsess(View view) {
