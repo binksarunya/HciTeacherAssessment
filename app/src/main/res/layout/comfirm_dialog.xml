@@ -13,61 +13,62 @@
         android:layout_height="@dimen/_50sdp"
         android:background="@drawable/dialog_shape"
         android:id="@+id/textView3"
-        android:textSize="30sp"
+        android:textSize="34sp"
         android:paddingTop="10dp"
         android:paddingLeft="17dp" />
 
     <ListView
         android:id="@+id/lv_confirm"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/_160sdp"/>
+        android:layout_height="@dimen/_160sdp" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="217dp"
         android:layout_height="@dimen/_60sdp"
-        android:background="@drawable/dialog_shape"
-        android:orientation="horizontal">
+
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
 
         <Button
             android:text="ยกเลิก"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/logout_btn"
             android:id="@+id/button3"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textColor="@android:color/background_light"
             android:layout_alignBaseline="@+id/button2"
             android:layout_alignBottom="@+id/button2"
             android:layout_toLeftOf="@+id/button2"
             android:layout_toStartOf="@+id/button2"
             android:layout_weight="1"
-            android:layout_margin="15dp"
+            android:layout_margin="13dp"
             android:layout_marginBottom="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:layout_width="80dp" />
 
         <Button
             android:text="ยืนยัน"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:background="@drawable/logout_btn"
             android:id="@+id/button2"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textColor="@android:color/background_light"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_weight="1"
-            android:layout_margin="15dp"
+            android:layout_margin="13dp"
             android:layout_marginBottom="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp" />
-
+            android:layout_marginTop="10dp"
+            android:layout_width="80dp" />
     </LinearLayout>
 </LinearLayout>
