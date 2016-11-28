@@ -116,6 +116,10 @@ public class AssessmentActivity extends AppCompatActivity {
                                     if(checkpresent==k){
                                         backfirst=0;
                                     }
+                                    if(backfirst==0){
+                                        previusIcon = (Button)findViewById(R.id.previous_icon);
+                                        previusIcon.setVisibility(View.GONE);
+                                    }
                                     if(k==questions.size()-2){
                                         previusIcon = (Button)findViewById(R.id.previous_icon);
                                         previusIcon.setVisibility(View.GONE);
