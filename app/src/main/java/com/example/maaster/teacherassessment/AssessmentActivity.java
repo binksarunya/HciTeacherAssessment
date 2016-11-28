@@ -190,7 +190,10 @@ public class AssessmentActivity extends AppCompatActivity {
 
     public void previousNo (View view) {
         k++;
-
+        if(k>0){
+            backIcon = (Button) findViewById(R.id.back_icon);
+            backIcon.setVisibility(View.VISIBLE);
+        }
         if(checkpresent<k){
             previusIcon = (Button)findViewById(R.id.previous_icon);
             previusIcon.setVisibility(View.INVISIBLE);
@@ -233,6 +236,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
             if(backfirst!=0){
                 previusIcon.setVisibility(View.VISIBLE);
+                
             }
 
         }
