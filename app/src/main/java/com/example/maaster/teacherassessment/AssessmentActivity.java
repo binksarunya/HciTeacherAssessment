@@ -42,12 +42,16 @@ public class AssessmentActivity extends AppCompatActivity {
     private int mShortAnimationDuration;
     private RadioGroup radioGroup;
     private Button backIcon;
+    private Button previusIcon;
     private Student student;
     private Course course;
     private  ArrayList<Course> courses;
     private int position;
     private boolean checkfirst;
     private int positionNo;
+    private int checkpresent;
+    private int backfirst;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +83,7 @@ public class AssessmentActivity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.name_teacher);
         imageView.setImageResource(teacher.getImageId());
         textView.setText(teacher.getName());
+        backfirst=0;
 
 
     }
@@ -120,8 +125,16 @@ public class AssessmentActivity extends AppCompatActivity {
                                 try {
 
                                    int answers = j;
+                                    if(checkpresent==k){
+                                        backfirst=0;
+                                    }
+                                    if(k==questions.size()-2){
+                                        previusIcon = (Button)findViewById(R.id.previous_icon);
+                                        previusIcon.setVisibility(View.INVISIBLE);
+                                    }
                                     questions.get(k).setAnswer(answers);
-                                    k++;
+                                    Log.d(TAG, "onFinish: "+k);
+                                        k++;
                                     if(k>=questions.size()) {
 
                                         new CountDownTimer(500, 700) {
@@ -137,9 +150,14 @@ public class AssessmentActivity extends AppCompatActivity {
                                         }.start();
 
                                     } else {
-
+                                        if(backfirst==0) {
                                             clearBtn();
-
+                                        }
+                                        else{
+                                            ((RadioButton) radioGroup.getChildAt(0)).setChecked(true);
+                                            ((RadioButton) radioGroup.getChildAt(1)).setChecked(true);
+                                            ((RadioButton) radioGroup.getChildAt(questions.get(k).getAnswer())).setChecked(true);
+                                        }
 
                                         backIcon = (Button) findViewById(R.id.back_icon);
                                         backIcon.setVisibility(View.VISIBLE);
@@ -179,13 +197,27 @@ public class AssessmentActivity extends AppCompatActivity {
     }
 
     public void previousNo (View view) {
-
         k++;
+        if(k>0){
+            backIcon = (Button) findViewById(R.id.back_icon);
+            backIcon.setVisibility(View.VISIBLE);
+        }
+        if(checkpresent<k||k==questions.size()-1){
+            previusIcon = (Button)findViewById(R.id.previous_icon);
+            previusIcon.setVisibility(View.INVISIBLE);
+            backfirst=0;
+            clearBtn();
+        }
 
         TextView textView = (TextView) findViewById(R.id.article_text);
         textView.setText(questions.get(k).getDetail());
         TextView textView1 = (TextView) findViewById(R.id.article_num);
         textView1.setText(questions.get(k).getNo()+"/"+questions.size());
+        if(checkpresent>=k) {
+            ((RadioButton) radioGroup.getChildAt(0)).setChecked(true);
+            ((RadioButton) radioGroup.getChildAt(1)).setChecked(true);
+            ((RadioButton) radioGroup.getChildAt(questions.get(k).getAnswer())).setChecked(true);
+        }
 
 
         assessmentCheck();
@@ -195,12 +227,24 @@ public class AssessmentActivity extends AppCompatActivity {
     public void backNo (View view){
 
         k--;
+        if(backfirst==0){
+            checkpresent=k;
+            backfirst++;
+        }
+        previusIcon = (Button)findViewById(R.id.previous_icon);
+        previusIcon.setVisibility(View.VISIBLE);
+
+
         if(k==0) {
             backIcon = (Button) findViewById(R.id.back_icon);
             backIcon.setVisibility(View.INVISIBLE);
 
-            Button button  = (Button) findViewById(R.id.previous_icon);
-            button.setVisibility(View.INVISIBLE);
+
+
+            if(backfirst!=0){
+                previusIcon.setVisibility(View.VISIBLE);
+
+            }
 
         }
         TextView textView = (TextView) findViewById(R.id.article_text);
