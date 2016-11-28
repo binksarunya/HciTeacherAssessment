@@ -229,7 +229,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
         if(k==0) {
             backIcon = (Button) findViewById(R.id.back_icon);
-            backIcon.setVisibility(View.GONE);
+
             Log.d(TAG, "backNo: *************" +k);
             
 

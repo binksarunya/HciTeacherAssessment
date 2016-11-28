@@ -2,6 +2,7 @@ package com.example.maaster.teacherassessment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,9 +12,12 @@ import android.view.Window;
 import com.example.maaster.teacherassessment.Model.Course;
 import com.example.maaster.teacherassessment.Model.MongoDBConnection;
 import com.example.maaster.teacherassessment.Model.Student;
+import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 
 import java.util.ArrayList;
 
@@ -31,6 +35,7 @@ public class LoginActivity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login2);
         courses = new ArrayList<>();
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy);
     }
 
     public void openListTeacher(View view) {
@@ -45,15 +50,19 @@ public class LoginActivity extends Activity {
 
     public void createStudent() {
 
-       /* mongoDBConnection = new MongoDBConnection("mongodb://172.16.160.172:27017", "Student", "test");
-        DBCursor cursor = mongoDBConnection.getCursor();
+       /* MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://192.168.1.39:27017"));
+
+        DB db = mongoClient.getDB("test");
+        DBCollection dbCollection = db.getCollection("Student");
+        DBCursor cursor = dbCollection.find();
+
         cursor.next();
 
         DBObject object = cursor.next();
         String name = (String) object.get("name");
 
-        Log.d("name", "createStudent: "+name);*/
-
+        Log.d("name", "createStudent: "+name);
+*/
         String[] course = {
                 "CS374",
                 "CS374",
