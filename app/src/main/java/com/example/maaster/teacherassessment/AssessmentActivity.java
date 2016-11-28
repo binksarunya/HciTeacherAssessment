@@ -1,9 +1,12 @@
 package com.example.maaster.teacherassessment;
 
 import android.animation.Animator;
+import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -56,6 +59,8 @@ public class AssessmentActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("การประเมิน");
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#D94130")));
 
         createQuestion();
 
