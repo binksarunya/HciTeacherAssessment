@@ -45,6 +45,7 @@ public class AssessmentActivity extends AppCompatActivity {
     private int position;
     private boolean checkfirst;
     private int positionNo;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
