@@ -142,9 +142,9 @@ public class AssessmentActivity extends AppCompatActivity {
                                         }.start();
 
                                     } else {
-
+                                        if(backfirst==0) {
                                             clearBtn();
-
+                                        }
 
                                         backIcon = (Button) findViewById(R.id.back_icon);
                                         backIcon.setVisibility(View.VISIBLE);
