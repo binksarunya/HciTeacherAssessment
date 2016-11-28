@@ -221,7 +221,7 @@
 
                         <Button
                             android:id="@+id/back_icon"
-                            android:visibility="invisible"
+                            android:visibility="gone"
                             android:onClick="backNo"
                             android:layout_margin="@dimen/_5sdp"
                             android:layout_width="wrap_content"
@@ -232,7 +232,8 @@
 
                         <Button
                             android:id="@+id/previous_icon"
-                            android:visibility="invisible"
+                            android:layout_gravity="center"
+                            android:visibility="gone"
                             android:onClick="previousNo"
                             android:layout_margin="@dimen/_5sdp"
                             android:layout_width="wrap_content"
