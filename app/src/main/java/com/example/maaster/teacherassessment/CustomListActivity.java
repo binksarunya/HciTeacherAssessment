@@ -15,6 +15,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 
 import android.util.Log;
@@ -33,6 +34,7 @@ import com.example.maaster.teacherassessment.Model.Teacher;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 
 import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
@@ -118,7 +120,9 @@ public class CustomListActivity extends ArrayAdapter<String>{
         zoombtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fixMediaDir();
                 Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+
                 zoomImageFromThumb(zoombtn,getImageUri(context,bitmap));
                 ImageView imageView1 = (ImageView) context.findViewById(R.id.expand_image);
             }
@@ -136,9 +140,9 @@ public class CustomListActivity extends ArrayAdapter<String>{
 
     protected Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+
         Log.d(TAG, "getImageUri: "+path);
         return Uri.parse(path);
     }//cast bitmap to uri
@@ -291,6 +295,17 @@ public class CustomListActivity extends ArrayAdapter<String>{
             }
         });
     }//zoom image
+
+
+    void fixMediaDir() {
+        File sdcard = Environment.getExternalStorageDirectory();
+        if (sdcard != null) {
+            File mediaDir = new File(sdcard, "DCIM/Camera");
+            if (!mediaDir.exists()) {
+                mediaDir.mkdirs();
+            }
+        }
+    }
 
 
 }
