@@ -118,7 +118,7 @@ public class AssessmentActivity extends AppCompatActivity {
                                     }
                                     if(k==questions.size()-2){
                                         previusIcon = (Button)findViewById(R.id.previous_icon);
-                                        previusIcon.setVisibility(View.INVISIBLE);
+                                        previusIcon.setVisibility(View.GONE);
                                     }
                                     questions.get(k).setAnswer(answers);
                                     Log.d(TAG, "onFinish: "+k);
@@ -192,7 +192,7 @@ public class AssessmentActivity extends AppCompatActivity {
         }
         if(checkpresent<k||k==questions.size()-1){
             previusIcon = (Button)findViewById(R.id.previous_icon);
-            previusIcon.setVisibility(View.INVISIBLE);
+            previusIcon.setVisibility(View.GONE);
             backfirst=0;
             clearBtn();
         }
@@ -225,8 +225,9 @@ public class AssessmentActivity extends AppCompatActivity {
 
         if(k==0) {
             backIcon = (Button) findViewById(R.id.back_icon);
-            backIcon.setVisibility(View.INVISIBLE);
-
+            backIcon.setVisibility(View.GONE);
+            Log.d(TAG, "backNo: *************");
+            
 
 
             if(backfirst!=0){
