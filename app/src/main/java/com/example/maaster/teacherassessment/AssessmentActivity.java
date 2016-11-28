@@ -192,6 +192,7 @@ public class AssessmentActivity extends AppCompatActivity {
     public void backNo (View view){
 
         k--;
+        checkpresent=k;
 
 
         if(k==0) {
