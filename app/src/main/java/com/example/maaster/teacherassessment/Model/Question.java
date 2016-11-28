@@ -18,7 +18,7 @@ public class Question {
     public Question(String no, String detail) {
         this.no = no;
         this.detail = detail;
-
+        answer = -1;
     }
 
     public String getNo() {
