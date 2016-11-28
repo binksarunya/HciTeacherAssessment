@@ -226,7 +226,7 @@ public class AssessmentActivity extends AppCompatActivity {
         if(k==0) {
             backIcon = (Button) findViewById(R.id.back_icon);
             backIcon.setVisibility(View.GONE);
-            Log.d(TAG, "backNo: *************");
+            Log.d(TAG, "backNo: *************" +k);
             
 
 
@@ -311,7 +311,7 @@ public class AssessmentActivity extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.edit_dialog);
         ListView lv = (ListView ) dialog.findViewById(R.id.lv);
-        EditAssesListActivity adapter = new EditAssesListActivity(this,answer);
+        EditAssesListActivity adapter = new EditAssesListActivity(this,answer,questions);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
