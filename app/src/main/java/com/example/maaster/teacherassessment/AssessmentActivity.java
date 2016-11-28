@@ -45,7 +45,8 @@ public class AssessmentActivity extends AppCompatActivity {
     private int position;
     private boolean checkfirst;
     private int positionNo;
-    
+    private int checkpresent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,6 +193,8 @@ public class AssessmentActivity extends AppCompatActivity {
     public void backNo (View view){
 
         k--;
+
+
         if(k==0) {
             backIcon = (Button) findViewById(R.id.back_icon);
             backIcon.setVisibility(View.INVISIBLE);
