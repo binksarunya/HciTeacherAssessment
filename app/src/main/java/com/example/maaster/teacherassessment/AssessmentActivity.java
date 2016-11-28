@@ -125,8 +125,12 @@ public class AssessmentActivity extends AppCompatActivity {
                                 try {
 
                                    int answers = j;
+                                    if(checkpresent==k){
+                                        backfirst=0;
+                                    }
                                     questions.get(k).setAnswer(answers);
-                                    k++;
+                                    Log.d(TAG, "onFinish: "+k);
+                                        k++;
                                     if(k>=questions.size()) {
 
                                         new CountDownTimer(500, 700) {
@@ -201,7 +205,6 @@ public class AssessmentActivity extends AppCompatActivity {
             clearBtn();
         }
 
-
         TextView textView = (TextView) findViewById(R.id.article_text);
         textView.setText(questions.get(k).getDetail());
         TextView textView1 = (TextView) findViewById(R.id.article_num);
@@ -236,7 +239,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
             if(backfirst!=0){
                 previusIcon.setVisibility(View.VISIBLE);
-                
+
             }
 
         }
