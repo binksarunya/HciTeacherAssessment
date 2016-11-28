@@ -145,6 +145,11 @@ public class AssessmentActivity extends AppCompatActivity {
                                         if(backfirst==0) {
                                             clearBtn();
                                         }
+                                        else{
+                                            ((RadioButton) radioGroup.getChildAt(0)).setChecked(true);
+                                            ((RadioButton) radioGroup.getChildAt(1)).setChecked(true);
+                                            ((RadioButton) radioGroup.getChildAt(questions.get(k).getAnswer())).setChecked(true);
+                                        }
 
                                         backIcon = (Button) findViewById(R.id.back_icon);
                                         backIcon.setVisibility(View.VISIBLE);
