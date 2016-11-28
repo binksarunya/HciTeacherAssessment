@@ -93,7 +93,7 @@ public class AssessmentActivity extends AppCompatActivity {
         backIcon = (Button) findViewById(R.id.back_icon);
         if(k==0) {
             backIcon = (Button) findViewById(R.id.back_icon);
-            backIcon.setVisibility(View.INVISIBLE);
+            backIcon.setVisibility(View.GONE);
 
         }
         for (int i = 0; i < radioGroup.getChildCount() ; i++) {
@@ -229,7 +229,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
         if(k==0) {
             backIcon = (Button) findViewById(R.id.back_icon);
-            backIcon.setVisibility(View.GONE);
+
             Log.d(TAG, "backNo: *************" +k);
             
 
