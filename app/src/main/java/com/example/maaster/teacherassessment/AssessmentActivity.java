@@ -59,10 +59,6 @@ public class AssessmentActivity extends AppCompatActivity {
 
         createQuestion();
 
-
-
-        
-
         teacher =  getIntent().getExtras().getParcelable("teacher");
         student = getIntent().getExtras().getParcelable("student");
 
@@ -72,18 +68,10 @@ public class AssessmentActivity extends AppCompatActivity {
         course = courses.get(position);
 
 
-
-        Log.d(TAG, "onCreate: " + course.getName() + " " +course.getComplete());
-
-
         assessmentCheck();
-
-
 
         ImageView imageView = (ImageView) findViewById(R.id.image_teacher);
         TextView textView = (TextView) findViewById(R.id.name_teacher);
-
-
         imageView.setImageResource(teacher.getImageId());
         textView.setText(teacher.getName());
 
@@ -98,6 +86,7 @@ public class AssessmentActivity extends AppCompatActivity {
             questions.add(new Question((i+1)+"", answer[i]));
         }
     }
+
 
 
     public void assessmentCheck() {
@@ -125,11 +114,8 @@ public class AssessmentActivity extends AppCompatActivity {
 
                                 try {
 
-                                    int answers = j;
-
+                                   int answers = j;
                                     questions.get(k).setAnswer(answers);
-
-
                                     k++;
                                     if(k>=questions.size()) {
 
@@ -146,9 +132,9 @@ public class AssessmentActivity extends AppCompatActivity {
                                         }.start();
 
                                     } else {
-                                        clearBtn();
 
-                                        
+                                            clearBtn();
+
 
                                         backIcon = (Button) findViewById(R.id.back_icon);
                                         backIcon.setVisibility(View.VISIBLE);
@@ -167,15 +153,14 @@ public class AssessmentActivity extends AppCompatActivity {
                         }.start();
                     }
             });
+
+
         }
 
 
     }
 
     public void completeAssess () {
-
-        Button button = (Button) findViewById(R.id.finish);
-        button.setVisibility(View.INVISIBLE);
 
         LinearLayout layout = (LinearLayout) findViewById(R.id.complete_layout);
         layout.setVisibility(View.VISIBLE);
@@ -188,12 +173,29 @@ public class AssessmentActivity extends AppCompatActivity {
 
     }
 
+    public void previousNo (View view) {
+
+        k++;
+
+        TextView textView = (TextView) findViewById(R.id.article_text);
+        textView.setText(questions.get(k).getDetail());
+        TextView textView1 = (TextView) findViewById(R.id.article_num);
+        textView1.setText(questions.get(k).getNo()+"/"+questions.size());
+
+
+        assessmentCheck();
+
+    }
+
     public void backNo (View view){
 
         k--;
         if(k==0) {
             backIcon = (Button) findViewById(R.id.back_icon);
             backIcon.setVisibility(View.INVISIBLE);
+
+            Button button  = (Button) findViewById(R.id.previous_icon);
+            button.setVisibility(View.INVISIBLE);
 
         }
         TextView textView = (TextView) findViewById(R.id.article_text);

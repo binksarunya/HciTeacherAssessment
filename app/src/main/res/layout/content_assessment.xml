@@ -213,17 +213,35 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center">
 
-
-                    <Button
-                        android:id="@+id/back_icon"
-                        android:visibility="invisible"
-                        android:onClick="backNo"
-                        android:layout_margin="@dimen/_5sdp"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ย้อนกลับ"
-                        android:textColor="#fff"
-                        android:background="@drawable/logout_btn"/>
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/back_icon"
+                            android:visibility="invisible"
+                            android:onClick="backNo"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ย้อนกลับ"
+                            android:textColor="#fff"
+                            android:background="@drawable/logout_btn"/>
+
+                        <Button
+                            android:id="@+id/previous_icon"
+                            android:visibility="gone"
+                            android:onClick="previousNo"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ถัดไป"
+                            android:textColor="#fff"
+                            android:background="@drawable/logout_btn"/>
+
+                    </LinearLayout>
+
 
 
                     <Button
