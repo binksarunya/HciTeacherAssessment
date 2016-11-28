@@ -60,6 +60,7 @@ public class ListActivity extends AppCompatActivity {
     private Context context;
     private ImageView iv, imageView;
     private boolean checkfirst =true;
+    private boolean checkassessmentcomplete = false;
 
 
 
@@ -99,7 +100,6 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
         setContentView(R.layout.activity_list);
         context = getBaseContext();
         teachers = new ArrayList<>();
@@ -117,6 +117,17 @@ public class ListActivity extends AppCompatActivity {
 
         for (int i = 0; i < courses.size() ; i++) {
             Log.d(TAG, "complete " + courses.get(i).getName() + " " + courses.get(i).getComplete());
+            if(courses.get(i).getComplete()==1){
+                checkassessmentcomplete=true;
+            }
+            else{
+                checkassessmentcomplete=false;
+            }
+        }
+
+        if(checkassessmentcomplete==true){
+            showComplete(student);
+
         }
 
     }
@@ -176,6 +187,33 @@ public class ListActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+    }
+
+    public void showComplete(Student student){
+        final Dialog welcomedialog= new Dialog(this);
+        welcomedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        welcomedialog.setContentView(R.layout.welcome_dialog);
+        TextView complete = (TextView)welcomedialog.findViewById(R.id.textView8) ;
+        TextView studentname = (TextView)welcomedialog.findViewById(R.id.studentnameTextview);
+        TextView studentid = (TextView)welcomedialog.findViewById(R.id.studentIdTextview);
+        complete.setText("ท่านได้รับโควต้าพิมพ์เอกสารฟรีเป็นจำนวนทั้งสิ้น 200 บาท");
+        studentname.setText("ขอบคุณสำหรับการประเมินอาจารย์ผู้สอน");
+        complete.setTextSize(15);
+        studentname.setTextSize(15);
+        studentid.setText("");
+
+        Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept);
+        acceptbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                welcomedialog.dismiss();
+            }
+        });
+
+
+        welcomedialog.show();
+
     }
 
 
