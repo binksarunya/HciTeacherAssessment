@@ -56,29 +56,19 @@ public class AssessmentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_assessment);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("การประเมิน");
-
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#D94130")));
-
         createQuestion();
-
         teacher =  getIntent().getExtras().getParcelable("teacher");
         student = getIntent().getExtras().getParcelable("student");
-
         courses = getIntent().getExtras().getParcelableArrayList("course");
-
         position = getIntent().getExtras().getInt("position");
         course = courses.get(position);
-
-
         assessmentCheck();
-
         ImageView imageView = (ImageView) findViewById(R.id.image_teacher);
         TextView textView = (TextView) findViewById(R.id.name_teacher);
         imageView.setImageResource(teacher.getImageId());
@@ -89,9 +79,7 @@ public class AssessmentActivity extends AppCompatActivity {
     }
     
     public void createQuestion() {
-        
         questions = new ArrayList<>();
-
         for (int i = 0; i <5 ; i++) {
             questions.add(new Question((i+1)+"", answer[i]));
         }
