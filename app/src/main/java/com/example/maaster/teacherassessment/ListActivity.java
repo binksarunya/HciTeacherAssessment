@@ -201,7 +201,7 @@ public class ListActivity extends AppCompatActivity {
         welcomedialog.setContentView(R.layout.no_complete_dialog);
         TextView complete = (TextView)welcomedialog.findViewById(R.id.tltle) ;
         TextView studentname = (TextView)welcomedialog.findViewById(R.id.detail);
-        
+
         complete.setText("ท่านต้องการออกจากระบบหรือไม่");
         studentname.setText("");
         complete.setTextSize(18);

@@ -120,11 +120,17 @@ public class CustomListActivity extends ArrayAdapter<String>{
         zoombtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fixMediaDir();
-                Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                try {
 
-                zoomImageFromThumb(zoombtn,getImageUri(context,bitmap));
-                ImageView imageView1 = (ImageView) context.findViewById(R.id.expand_image);
+
+                    Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+
+                    zoomImageFromThumb(zoombtn,getImageUri(context,bitmap));
+                    ImageView imageView1 = (ImageView) context.findViewById(R.id.expand_image);
+                } catch (Exception e) {
+                    fixMediaDir();
+                }
+
             }
         });
 
@@ -141,6 +147,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
     protected Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
 
         Log.d(TAG, "getImageUri: "+path);
