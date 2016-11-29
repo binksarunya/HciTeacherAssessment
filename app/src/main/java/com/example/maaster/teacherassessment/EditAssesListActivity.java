@@ -45,17 +45,9 @@ public class EditAssesListActivity extends ArrayAdapter<String> {
 
     }
 
-    public EditAssesListActivity(Activity context, String questionsDetail[]) {
-        super(context, R.layout.question_list_single,questionsDetail);
-        this.context=context;
-        this.contxt=context;
-        this.questionsDetail=questionsDetail;
-        this.points=new String[questionsDetail.length];
-        for (int i=0;i<points.length;i++){
-            points[i]="";
-        }
 
-    }
+
+
 
     @NonNull
     @Override
