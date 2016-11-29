@@ -118,10 +118,12 @@ public class ListActivity extends AppCompatActivity {
         for (int i = 0; i < courses.size() ; i++) {
             Log.d(TAG, "complete " + courses.get(i).getName() + " " + courses.get(i).getComplete());
             if(courses.get(i).getComplete()==1){
+
                 checkassessmentcomplete=true;
             }
             else{
                 checkassessmentcomplete=false;
+                break;
             }
         }
 
@@ -299,6 +301,8 @@ public class ListActivity extends AppCompatActivity {
         welcomedialog.show();
 
     }
+
+
 
 
 

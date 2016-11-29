@@ -1,4 +1,5 @@
 package com.example.maaster.teacherassessment;
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 
@@ -8,6 +9,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.*;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
@@ -15,9 +17,11 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -120,15 +124,11 @@ public class CustomListActivity extends ArrayAdapter<String>{
         zoombtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
 
-
-                    Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-
-                    zoomImageFromThumb(zoombtn,getImageUri(context,bitmap));
+                if(isStoragePermissionGranted()) {
+                    Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                    zoomImageFromThumb(zoombtn, getImageUri(context, bitmap));
                     ImageView imageView1 = (ImageView) context.findViewById(R.id.expand_image);
-                } catch (Exception e) {
-                    fixMediaDir();
                 }
 
             }
@@ -311,6 +311,26 @@ public class CustomListActivity extends ArrayAdapter<String>{
             if (!mediaDir.exists()) {
                 mediaDir.mkdirs();
             }
+        }
+    }
+
+
+    public  boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (context.checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG,"Permission is granted");
+                return true;
+            } else {
+
+                Log.v(TAG,"Permission is revoked");
+                ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(TAG,"Permission is granted");
+            return true;
         }
     }
 
