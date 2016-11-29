@@ -185,8 +185,92 @@ public class ListActivity extends AppCompatActivity {
 
     public void onClickLogout(View view){
 
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        if(checkassessmentcomplete==false){
+            showNoComplete();
+        } else {
+
+            checkLogout();
+        }
+
+
+    }
+
+    public void checkLogout() {
+        final Dialog welcomedialog= new Dialog(this);
+        welcomedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        welcomedialog.setContentView(R.layout.no_complete_dialog);
+        TextView complete = (TextView)welcomedialog.findViewById(R.id.tltle) ;
+        TextView studentname = (TextView)welcomedialog.findViewById(R.id.detail);
+        
+        complete.setText("ท่านต้องการออกจากระบบหรือไม่");
+        studentname.setText("");
+        complete.setTextSize(18);
+        studentname.setTextSize(15);
+
+
+        Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept_logout);
+        acceptbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                welcomedialog.dismiss();
+                Intent intent = new Intent(ListActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button cancelbtn = (Button)welcomedialog.findViewById(R.id.cacel_logout);
+        cancelbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                welcomedialog.dismiss();
+            }
+        });
+
+
+        welcomedialog.show();
+
+    }
+
+
+
+    public void showNoComplete() {
+        final Dialog welcomedialog= new Dialog(this);
+        welcomedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        welcomedialog.setContentView(R.layout.no_complete_dialog);
+        TextView complete = (TextView)welcomedialog.findViewById(R.id.tltle) ;
+        TextView studentname = (TextView)welcomedialog.findViewById(R.id.detail);
+
+        complete.setText("ท่ายังประเมินอาจารย์ไม่ครบ");
+        studentname.setText("ท่านต้องการออกจากระบบหรือไม่");
+        complete.setTextSize(18);
+        studentname.setTextSize(15);
+
+
+        Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept_logout);
+        acceptbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                welcomedialog.dismiss();
+                Intent intent = new Intent(ListActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button cancelbtn = (Button)welcomedialog.findViewById(R.id.cacel_logout);
+        cancelbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                welcomedialog.dismiss();
+            }
+        });
+
+
+        welcomedialog.show();
+
     }
 
     public void showComplete(Student student){
