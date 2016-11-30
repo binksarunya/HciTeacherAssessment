@@ -381,9 +381,39 @@ public class AssessmentActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK ) {
             //preventing default implementation previous to android.os.Build.VERSION_CODES.ECLAIR
+            showNoComplete();
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void showNoComplete() {
+        final Dialog welcomedialog= new Dialog(this);
+        welcomedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        welcomedialog.setContentView(R.layout.no_complete_dialog);
+        TextView complete = (TextView)welcomedialog.findViewById(R.id.tltle) ;
+        TextView studentname = (TextView)welcomedialog.findViewById(R.id.detail);
+
+        complete.setText("ท่ายังประเมินอาจารย์ไม่ครบ");
+        studentname.setText("กรุณาประเมินอาจารย์ให้ครบก่อนกลับสู่หน้าหลัก");
+        complete.setTextSize(18);
+        studentname.setTextSize(15);
+
+        Button abtn = (Button)welcomedialog.findViewById(R.id.accept_logout);
+        abtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                welcomedialog.dismiss();
+            }
+        });
+
+
+        Button cancelbtn = (Button)welcomedialog.findViewById(R.id.cacel_logout);
+        cancelbtn.setVisibility(View.GONE);
+
+        welcomedialog.show();
+
     }
 
 

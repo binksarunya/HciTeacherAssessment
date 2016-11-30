@@ -44,6 +44,17 @@
                     android:layout_height="100dp"
                     android:src="@drawable/test_image"/>
 
+                <ImageView
+                    android:layout_width="@dimen/_25sdp"
+                    app:srcCompat="@drawable/zoom_icon"
+                    android:id="@+id/zoom_ass"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_alignBottom="@+id/image_teacher"
+                    android:layout_alignRight="@+id/image_teacher"
+                    android:layout_alignEnd="@+id/image_teacher"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp" />
+
 
 
             </RelativeLayout>
@@ -336,5 +347,6 @@
 
 
 
-
 </RelativeLayout>
+
+
