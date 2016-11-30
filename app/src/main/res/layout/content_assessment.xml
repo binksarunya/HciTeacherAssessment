@@ -166,7 +166,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                   android:layout_marginTop="@dimen/_15sdp"
+
                     android:layout_marginLeft="@dimen/_20sdp">
 
                     <TextView
@@ -218,13 +218,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/_15sdp">
+                        android:gravity="center_horizontal">
 
                         <Button
                             android:id="@+id/back_icon"
                             android:onClick="backNo"
-                            android:layout_margin="@dimen/_5sdp"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="ย้อนกลับ"
@@ -237,7 +236,7 @@
                             android:layout_gravity="center"
                             android:visibility="gone"
                             android:onClick="previousNo"
-                            android:layout_margin="@dimen/_5sdp"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="ถัดไป"
@@ -252,7 +251,7 @@
                         android:id="@+id/finish"
                         android:visibility="invisible"
                         android:onClick="comfirmAsess"
-                        android:layout_margin="@dimen/_5sdp"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="เสร็จสิ้น"
