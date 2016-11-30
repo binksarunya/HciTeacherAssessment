@@ -1,56 +1,31 @@
 package com.example.maaster.teacherassessment;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
-import android.os.Build;
-import android.provider.MediaStore;
-
-
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
-import android.view.animation.DecelerateInterpolator;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.AdapterView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.example.maaster.teacherassessment.Model.Course;
 import com.example.maaster.teacherassessment.Model.Student;
 import com.example.maaster.teacherassessment.Model.Teacher;
-import com.mongodb.BasicDBList;
-import com.mongodb.DBObject;
-import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
-
-public class ListActivity extends AppCompatActivity {
+public class TeacherListActivity extends AppCompatActivity {
 
     private Student student;
     private ArrayList<Teacher> teachers;
@@ -61,9 +36,6 @@ public class ListActivity extends AppCompatActivity {
     private ImageView iv, imageView;
     private boolean checkfirst =true;
     private boolean checkassessmentcomplete = false;
-
-
-
 
     Integer[] imageId = {
             R.drawable.im_1,
@@ -94,13 +66,18 @@ public class ListActivity extends AppCompatActivity {
             "20001"
     } ;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_teacher_list);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Teacher Assessment");
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#D94130")));
+
         context = getBaseContext();
         teachers = new ArrayList<>();
         courses = new ArrayList<>();
@@ -132,8 +109,8 @@ public class ListActivity extends AppCompatActivity {
 
         }
 
-    }
 
+    }
 
     public void getTeacherFromDB() {
 
@@ -149,7 +126,7 @@ public class ListActivity extends AppCompatActivity {
 
     public void getData(){
 
-        CustomListActivity adapter = new CustomListActivity(ListActivity.this,teachers,name,courseName,section,student,courses);
+        CustomListActivity adapter = new CustomListActivity(TeacherListActivity.this,teachers,name,courseName,section,student,courses);
         ListView list = (ListView)findViewById(R.id.list);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -216,7 +193,7 @@ public class ListActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 welcomedialog.dismiss();
-                Intent intent = new Intent(ListActivity.this, LoginActivity.class);
+                Intent intent = new Intent(TeacherListActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -256,7 +233,7 @@ public class ListActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 welcomedialog.dismiss();
-                Intent intent = new Intent(ListActivity.this, LoginActivity.class);
+                Intent intent = new Intent(TeacherListActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -301,8 +278,6 @@ public class ListActivity extends AppCompatActivity {
         welcomedialog.show();
 
     }
-
-
 
 
 

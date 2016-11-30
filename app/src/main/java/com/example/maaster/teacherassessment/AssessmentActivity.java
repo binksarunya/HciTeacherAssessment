@@ -289,7 +289,7 @@ public class AssessmentActivity extends AppCompatActivity {
         confirmbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AssessmentActivity.this, ListActivity.class);
+                Intent intent = new Intent(AssessmentActivity.this, TeacherListActivity.class);
                 intent.putExtra("student", student);
                 courses.set(position, course);
                 intent.putParcelableArrayListExtra("course", courses);
