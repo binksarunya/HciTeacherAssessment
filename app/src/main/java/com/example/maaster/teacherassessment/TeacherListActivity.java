@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -73,10 +75,8 @@ public class TeacherListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        setSupportActionBar(toolbar);
-        setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Teacher Assessment");
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#D94130")));
+
 
         context = getBaseContext();
         teachers = new ArrayList<>();
@@ -277,6 +277,10 @@ public class TeacherListActivity extends AppCompatActivity {
 
         welcomedialog.show();
 
+    }
+
+    public void openManual(View view) {
+        startActivity(new Intent(TeacherListActivity.this, ManualActivity.class));
     }
 
 
