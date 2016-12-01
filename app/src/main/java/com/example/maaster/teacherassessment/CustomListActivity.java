@@ -137,15 +137,16 @@ public class CustomListActivity extends ArrayAdapter<String>{
                     zoomImageFromThumb(zoombtn, getImageUri(context, bitmap));
                     ImageView imageView1 = (ImageView) context.findViewById(R.id.expand_image);
                 }
-
             }
         });
-
         txtTeacherName.setText(teachers.get(position).getName());
         Log.d(TAG, teachers.get(position).getName());
         txtCourse.setText("รายวิชา "+course[position]);
         txtSection.setText("Section "+section[position]);
         imageView.setImageResource(teachers.get(position).getImageId());
+
+
+
         return rowView;
     }
 
@@ -185,9 +186,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
     protected Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-
         Log.d(TAG, "getImageUri: "+path);
         return Uri.parse(path);
     }//cast bitmap to uri
@@ -342,15 +341,6 @@ public class CustomListActivity extends ArrayAdapter<String>{
     }//zoom image
 
 
-    void fixMediaDir() {
-        File sdcard = Environment.getExternalStorageDirectory();
-        if (sdcard != null) {
-            File mediaDir = new File(sdcard, "DCIM/Camera");
-            if (!mediaDir.exists()) {
-                mediaDir.mkdirs();
-            }
-        }
-    }
 
 
     public  boolean isStoragePermissionGranted() {

@@ -136,9 +136,7 @@ public class TeacherListActivity extends AppCompatActivity {
             Teacher teacher = new Teacher(name[i]);
             teacher.setImageId(imageId[i]);
             teachers.add(teacher);
-
         }
-
     }
 
     public void getData(){
@@ -149,7 +147,6 @@ public class TeacherListActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
             }
         });
 
@@ -164,7 +161,6 @@ public class TeacherListActivity extends AppCompatActivity {
         TextView studentid = (TextView)welcomedialog.findViewById(R.id.studentIdTextview);
         studentname.setText(student.getName());
         studentid.setText("รหัสนักศึกษา "+student.getId());
-
         Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept);
         acceptbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,7 +169,6 @@ public class TeacherListActivity extends AppCompatActivity {
                 welcomedialog.dismiss();
             }
         });
-
 
         welcomedialog.show();
 
@@ -187,8 +182,6 @@ public class TeacherListActivity extends AppCompatActivity {
 
             checkLogout();
         }
-
-
     }
 
     public void checkLogout() {
@@ -202,7 +195,6 @@ public class TeacherListActivity extends AppCompatActivity {
         studentname.setText("");
         complete.setTextSize(18);
         studentname.setTextSize(15);
-
 
         Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept_logout);
         acceptbtn.setOnClickListener(new View.OnClickListener() {
@@ -223,7 +215,6 @@ public class TeacherListActivity extends AppCompatActivity {
                 welcomedialog.dismiss();
             }
         });
-
 
         welcomedialog.show();
 
@@ -242,8 +233,6 @@ public class TeacherListActivity extends AppCompatActivity {
         studentname.setText("ท่านต้องการออกจากระบบหรือไม่");
         complete.setTextSize(18);
         studentname.setTextSize(15);
-
-
         Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept_logout);
         acceptbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -264,7 +253,6 @@ public class TeacherListActivity extends AppCompatActivity {
             }
         });
 
-
         welcomedialog.show();
 
     }
@@ -281,7 +269,6 @@ public class TeacherListActivity extends AppCompatActivity {
         complete.setTextSize(15);
         studentname.setTextSize(15);
         studentid.setText("");
-
         Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept);
         acceptbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -290,8 +277,6 @@ public class TeacherListActivity extends AppCompatActivity {
                 welcomedialog.dismiss();
             }
         });
-
-
         welcomedialog.show();
 
     }
@@ -308,6 +293,17 @@ public class TeacherListActivity extends AppCompatActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void showAfterComplete(View view) {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.edit_dialog);
+        /*ListView lv = (ListView ) dialog.findViewById(R.id.lv);
+        EditAssesListActivity adapter = new EditAssesListActivity(this,answer,questions);
+        lv.setAdapter(adapter);*/
+        dialog.show();
+
     }
 
 
