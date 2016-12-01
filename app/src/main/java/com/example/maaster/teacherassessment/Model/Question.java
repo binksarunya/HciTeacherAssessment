@@ -1,5 +1,7 @@
 package com.example.maaster.teacherassessment.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.RadioButton;
 
 import java.util.ArrayList;
@@ -8,7 +10,7 @@ import java.util.ArrayList;
  * Created by Administrator on 17/11/2559.
  */
 
-public class Question {
+public class Question implements Parcelable{
 
     private String no;
     private String detail;
@@ -20,6 +22,24 @@ public class Question {
         this.detail = detail;
         answer = -1;
     }
+
+    protected Question(Parcel in) {
+        no = in.readString();
+        detail = in.readString();
+        answer = in.readInt();
+    }
+
+    public static final Creator<Question> CREATOR = new Creator<Question>() {
+        @Override
+        public Question createFromParcel(Parcel in) {
+            return new Question(in);
+        }
+
+        @Override
+        public Question[] newArray(int size) {
+            return new Question[size];
+        }
+    };
 
     public String getNo() {
         return no;
@@ -43,5 +63,17 @@ public class Question {
 
     public void setAnswer(int answer) {
         this.answer = answer;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(no);
+        parcel.writeString(detail);
+        parcel.writeInt(answer);
     }
 }

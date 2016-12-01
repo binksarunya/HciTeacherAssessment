@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#ffffff"
+    android:background="#dedede"
    >
 
     <LinearLayout
@@ -48,7 +48,9 @@
                 android:textSize="18dp"
                 android:maxLines="1"
                 android:inputType="number"
-                android:backgroundTint="#000"
+                android:backgroundTint="#d94130"
+                android:textColorHint="#d94130"
+                android:textColor="#d94130"
                 android:textCursorDrawable="@drawable/cursor_color"/>
         </LinearLayout>
 
@@ -75,8 +77,11 @@
                 android:hint="PASSWORD"
                 android:textSize="18dp"
                 android:maxLines="1"
-                android:backgroundTint="#000"
+                android:backgroundTint="#d94130"
+                android:textColorHint="#d94130"
                 android:inputType="textPassword"
+                android:textColor="#d94130"
+
                 android:textCursorDrawable="@drawable/cursor_color"/>
         </LinearLayout>
 

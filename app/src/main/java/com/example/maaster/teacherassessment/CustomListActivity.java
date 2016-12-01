@@ -26,9 +26,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -55,6 +59,8 @@ public class CustomListActivity extends ArrayAdapter<String>{
     private int mShortAnimationDuration;
     private final Student student;
     private final ArrayList<Course> courses;
+    private  Course courseSingel;
+    private int position;
 
 
 
@@ -83,11 +89,11 @@ public class CustomListActivity extends ArrayAdapter<String>{
         RelativeLayout imageprofile = (RelativeLayout) rowView.findViewById(R.id.imageprofile);
 
         RelativeLayout completeStatus = (RelativeLayout) rowView.findViewById(R.id.completestatus);
+        this.position = position;
 
 
-            if(courses.get(position).getComplete() == 1) {
+        if(courses.get(position).getComplete() == 1) {
                 completeStatus.setVisibility(View.VISIBLE);
-                Log.d(TAG, "getView: "+ 5);
 
             }
 
@@ -97,6 +103,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
             public void onClick(View v) {
 
                 if(courses.get(position).getComplete() == 1) {
+                    showResultAssess();
                     return;
 
                 }
@@ -140,6 +147,37 @@ public class CustomListActivity extends ArrayAdapter<String>{
         txtSection.setText("Section "+section[position]);
         imageView.setImageResource(teachers.get(position).getImageId());
         return rowView;
+    }
+
+    final String[] answer = {"1.สอนอย่างเป็นระบบ", "2.สอนให้คิดวิเคราะห์ วิจารณ์", "3.วิธีสอนให้น่าสนใจเเละน่าติดตาม", "4.จัดให้แสดงความคิดเห็น", "5.สามารถประเมินความเข้าใจ"};
+
+    public void showResultAssess() {
+
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.comfirm_dialog);
+        dialog.setTitle("สรุปผลการทำ");
+        //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        ListView lv = (ListView ) dialog.findViewById(R.id.lv_confirm);
+        EditAssesListActivity adapter = new EditAssesListActivity(context,answer,courses.get(position).getQuestions());
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+        Button confirmbtn = (Button)dialog.findViewById(R.id.button2) ;
+        confirmbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+
+            }
+        });
+        Button dismissbtn = (Button)dialog.findViewById(R.id.button3);
+        dismissbtn.setVisibility(View.GONE);
+        dialog.show();
     }
 
 

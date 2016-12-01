@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -76,6 +77,28 @@ public class AssessmentActivity extends AppCompatActivity {
         textView.setText(teacher.getName());
         backfirst=0;
 
+
+    }
+
+    public void showAllQuestion(View view) {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.list_question);
+        dialog.setTitle("รายการคำถาม");
+        //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        ListView lv = (ListView ) dialog.findViewById(R.id.ls_view_question);
+        ListQuestionActivity adapter = new ListQuestionActivity(this, answer,  questions);
+        lv.setAdapter(adapter);
+
+        Button confirmbtn = (Button)dialog.findViewById(R.id.list_confirm_btn) ;
+        confirmbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
 
     }
     
@@ -270,8 +293,6 @@ public class AssessmentActivity extends AppCompatActivity {
 
     public void comfirmAsess(View view) {
 
-
-
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.comfirm_dialog);
@@ -292,7 +313,9 @@ public class AssessmentActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(AssessmentActivity.this, TeacherListActivity.class);
                 intent.putExtra("student", student);
+                intent.putExtra("position", position);
                 courses.set(position, course);
+                intent.putExtra("question", questions);
                 intent.putParcelableArrayListExtra("course", courses);
                 intent.putExtra("checkfirst",false);
                 dialog.dismiss();
@@ -394,7 +417,7 @@ public class AssessmentActivity extends AppCompatActivity {
         TextView complete = (TextView)welcomedialog.findViewById(R.id.tltle) ;
         TextView studentname = (TextView)welcomedialog.findViewById(R.id.detail);
 
-        complete.setText("ท่ายังประเมินอาจารย์ไม่ครบ");
+        complete.setText("ท่านยังประเมินอาจารย์ไม่ครบ");
         studentname.setText("กรุณาประเมินอาจารย์ให้ครบก่อนกลับสู่หน้าหลัก");
         complete.setTextSize(18);
         studentname.setTextSize(15);

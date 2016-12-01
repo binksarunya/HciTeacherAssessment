@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 /**
  * Created by Administrator on 16/11/2559.
  */
@@ -12,30 +14,31 @@ public class Course implements Parcelable{
     private String name;
     private String section;
     private int complete;
+    private ArrayList<Question> questions;
+
+    public ArrayList<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(ArrayList<Question> questions) {
+        this.questions = questions;
+    }
 
     public Course(String name, String section) {
         this.name = name;
         this.section = section;
         this.complete = 0;
+        questions = new ArrayList<>();
     }
 
     protected Course(Parcel in) {
         name = in.readString();
         section = in.readString();
         complete = in.readInt();
+
     }
 
-    public static final Creator<Course> CREATOR = new Creator<Course>() {
-        @Override
-        public Course createFromParcel(Parcel in) {
-            return new Course(in);
-        }
 
-        @Override
-        public Course[] newArray(int size) {
-            return new Course[size];
-        }
-    };
 
     public void setComplete(Integer complete) {
         this.complete = complete;
@@ -72,5 +75,21 @@ public class Course implements Parcelable{
         parcel.writeString(section);
         parcel.writeInt(complete);
 
+
     }
+
+    public static Creator<Course> CREATOR = new Creator<Course>() {
+
+        @Override
+        public Course createFromParcel(Parcel source) {
+            return new Course(source);
+        }
+
+        @Override
+        public Course[] newArray(int size) {
+            return new Course[size];
+        }
+
+    };
 }
+

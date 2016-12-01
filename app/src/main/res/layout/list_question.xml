@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+     >
+
+    <TextView
+        android:text="รายการคำถาม"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:id="@+id/title_list_question"
+        android:textSize="@dimen/_30sdp"
+        android:paddingTop="10dp"
+        android:paddingLeft="17dp" />
+
+    <ListView
+        android:id="@+id/ls_view_question"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_160sdp" />
+
+
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:text="ตกลง"
+            android:layout_height="wrap_content"
+            android:background="@drawable/logout_btn"
+            android:id="@+id/list_confirm_btn"
+            android:textSize="@dimen/_20sdp"
+            android:textColor="@android:color/background_light"
+            android:layout_width="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

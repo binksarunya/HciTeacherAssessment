@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.maaster.teacherassessment.Model.Course;
+import com.example.maaster.teacherassessment.Model.Question;
 import com.example.maaster.teacherassessment.Model.Student;
 import com.example.maaster.teacherassessment.Model.Teacher;
 
@@ -33,6 +34,7 @@ public class TeacherListActivity extends AppCompatActivity {
     private Student student;
     private ArrayList<Teacher> teachers;
     private ArrayList<Course> courses;
+    private ArrayList<Question> questions;
     private final String TAG = "click";
 
     private Context context;
@@ -79,6 +81,7 @@ public class TeacherListActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Teacher Assessment");
 
 
+
         context = getBaseContext();
         teachers = new ArrayList<>();
         courses = new ArrayList<>();
@@ -86,9 +89,22 @@ public class TeacherListActivity extends AppCompatActivity {
         courses = getIntent().getExtras().getParcelableArrayList("course");
         student.setCourses(courses);
         checkfirst = getIntent().getExtras().getBoolean("checkfirst");
+
+        try {
+
+            questions = new ArrayList<>();
+            questions = getIntent().getExtras().getParcelableArrayList("questions");
+            courses.get(getIntent().getExtras().getInt("position")).setQuestions(questions);
+
+        } catch (Exception e) {
+
+        }
+
         if(checkfirst==true) {
             showStudentDialog(student);
         }
+
+
 
         getTeacherFromDB();
         getData();
