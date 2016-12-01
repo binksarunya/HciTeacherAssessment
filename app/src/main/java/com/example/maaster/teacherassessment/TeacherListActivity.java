@@ -93,11 +93,13 @@ public class TeacherListActivity extends AppCompatActivity {
         try {
 
             questions = new ArrayList<>();
-            questions = getIntent().getExtras().getParcelableArrayList("questions");
+            questions = getIntent().getExtras().getParcelableArrayList("question");
             courses.get(getIntent().getExtras().getInt("position")).setQuestions(questions);
+            Log.d("question", "onCreate: "+ getIntent().getExtras().getInt("position"));
 
         } catch (Exception e) {
-
+            Log.d("question", "onCreate: " );
+            e.printStackTrace();
         }
 
         if(checkfirst==true) {

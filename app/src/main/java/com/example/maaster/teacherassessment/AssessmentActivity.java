@@ -358,7 +358,8 @@ public class AssessmentActivity extends AppCompatActivity {
                 intent.putExtra("student", student);
                 intent.putExtra("position", position);
                 courses.set(position, course);
-                intent.putExtra("question", questions);
+
+                intent.putParcelableArrayListExtra("question", questions);
                 intent.putParcelableArrayListExtra("course", courses);
                 intent.putExtra("checkfirst",false);
                 dialog.dismiss();
