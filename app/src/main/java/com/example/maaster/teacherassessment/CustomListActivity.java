@@ -145,7 +145,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
     protected Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        fixMediaDir();
+       // fixMediaDir();
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
 
         Log.d(TAG, "getImageUri: "+path);

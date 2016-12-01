@@ -142,9 +142,7 @@ public class ListActivity extends AppCompatActivity {
             Teacher teacher = new Teacher(name[i]);
             teacher.setImageId(imageId[i]);
             teachers.add(teacher);
-
         }
-
     }
 
     public void getData(){
@@ -155,7 +153,6 @@ public class ListActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
             }
         });
 
@@ -170,7 +167,6 @@ public class ListActivity extends AppCompatActivity {
         TextView studentid = (TextView)welcomedialog.findViewById(R.id.studentIdTextview);
         studentname.setText(student.getName());
         studentid.setText("รหัสนักศึกษา "+student.getId());
-
         Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept);
         acceptbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,7 +175,6 @@ public class ListActivity extends AppCompatActivity {
                 welcomedialog.dismiss();
             }
         });
-
 
         welcomedialog.show();
 
@@ -193,8 +188,6 @@ public class ListActivity extends AppCompatActivity {
 
             checkLogout();
         }
-
-
     }
 
     public void checkLogout() {
@@ -208,7 +201,6 @@ public class ListActivity extends AppCompatActivity {
         studentname.setText("");
         complete.setTextSize(18);
         studentname.setTextSize(15);
-
 
         Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept_logout);
         acceptbtn.setOnClickListener(new View.OnClickListener() {
@@ -229,7 +221,6 @@ public class ListActivity extends AppCompatActivity {
                 welcomedialog.dismiss();
             }
         });
-
 
         welcomedialog.show();
 
@@ -248,8 +239,6 @@ public class ListActivity extends AppCompatActivity {
         studentname.setText("ท่านต้องการออกจากระบบหรือไม่");
         complete.setTextSize(18);
         studentname.setTextSize(15);
-
-
         Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept_logout);
         acceptbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -270,7 +259,6 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
-
         welcomedialog.show();
 
     }
@@ -287,7 +275,6 @@ public class ListActivity extends AppCompatActivity {
         complete.setTextSize(15);
         studentname.setTextSize(15);
         studentid.setText("");
-
         Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept);
         acceptbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -296,8 +283,6 @@ public class ListActivity extends AppCompatActivity {
                 welcomedialog.dismiss();
             }
         });
-
-
         welcomedialog.show();
 
     }
