@@ -36,13 +36,25 @@
             <RelativeLayout
 
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/imageprofile2">
 
                 <ImageView
                     android:id="@+id/image_teacher"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:src="@drawable/test_image"/>
+
+                <ImageView
+                    android:layout_width="@dimen/_25sdp"
+                    app:srcCompat="@drawable/zoom_icon"
+                    android:id="@+id/zoom_ass"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_alignBottom="@+id/image_teacher"
+                    android:layout_alignRight="@+id/image_teacher"
+                    android:layout_alignEnd="@+id/image_teacher"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp" />
 
 
 
@@ -166,7 +178,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                   android:layout_marginTop="@dimen/_15sdp"
+
                     android:layout_marginLeft="@dimen/_20sdp">
 
                     <TextView
@@ -218,13 +230,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/_15sdp">
+                        android:gravity="center_horizontal">
 
                         <Button
                             android:id="@+id/back_icon"
                             android:onClick="backNo"
-                            android:layout_margin="@dimen/_5sdp"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="ย้อนกลับ"
@@ -237,7 +248,7 @@
                             android:layout_gravity="center"
                             android:visibility="gone"
                             android:onClick="previousNo"
-                            android:layout_margin="@dimen/_5sdp"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="ถัดไป"
@@ -252,7 +263,7 @@
                         android:id="@+id/finish"
                         android:visibility="invisible"
                         android:onClick="comfirmAsess"
-                        android:layout_margin="@dimen/_5sdp"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="เสร็จสิ้น"
@@ -335,7 +346,24 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_weight="10.89">
+
+        <ImageView
+            android:id="@+id/expand_image2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="64dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="64dp"/>
+    </LinearLayout>
 
 
 
 </RelativeLayout>
+
+

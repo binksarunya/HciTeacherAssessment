@@ -41,7 +41,7 @@ public class LoginActivity extends Activity {
     public void openListTeacher(View view) {
 
         createStudent();
-        Intent intent = new Intent(this, ListActivity.class);
+        Intent intent = new Intent(this, TeacherListActivity.class);
         intent.putExtra("student", student);
         intent.putParcelableArrayListExtra("course", courses);
         intent.putExtra("checkfirst",true);

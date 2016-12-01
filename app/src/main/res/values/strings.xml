@@ -15,4 +15,6 @@
     </string>
     <string name="title_activity_assessment">AssessmentActivity</string>
     <string name="title_activity_list_teacher">ListTeacherActivity</string>
+    <string name="title_activity_teacher_list">TeacherListActivity</string>
+    <string name="title_activity_manual">ManualActivity</string>
 </resources>
