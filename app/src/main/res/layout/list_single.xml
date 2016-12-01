@@ -104,7 +104,7 @@
             android:id="@+id/completestatus"
             android:layout_width="match_parent"
             android:visibility="invisible"
-            android:onClick="showAfterComplete">
+            android:onClick="onComplete">
 
         </RelativeLayout>
 

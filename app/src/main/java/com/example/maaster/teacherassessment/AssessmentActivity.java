@@ -278,7 +278,6 @@ public class AssessmentActivity extends AppCompatActivity {
             ((RadioButton) radioGroup.getChildAt(questions.get(k).getAnswer())).setChecked(true);
         }
 
-
         assessmentCheck();
 
     }
@@ -293,19 +292,15 @@ public class AssessmentActivity extends AppCompatActivity {
         previusIcon = (Button)findViewById(R.id.previous_icon);
         previusIcon.setVisibility(View.VISIBLE);
 
-
         if(k==0) {
             backIcon = (Button) findViewById(R.id.back_icon);
 
             Log.d(TAG, "backNo: *************" +k);
-            
-
 
             if(backfirst!=0){
                 previusIcon.setVisibility(View.VISIBLE);
 
             }
-
         }
         TextView textView = (TextView) findViewById(R.id.article_text);
         textView.setText(questions.get(k).getDetail());
@@ -358,9 +353,9 @@ public class AssessmentActivity extends AppCompatActivity {
                 intent.putExtra("student", student);
                 intent.putExtra("position", position);
                 courses.set(position, course);
-
                 intent.putParcelableArrayListExtra("question", questions);
                 intent.putParcelableArrayListExtra("course", courses);
+                intent.putExtra("teachername",teacher.getName());
                 intent.putExtra("checkfirst",false);
                 dialog.dismiss();
                 startActivity(intent);

@@ -35,17 +35,6 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
-        <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/studentIdTextview"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:layout_centerVertical="true"
-            android:layout_alignLeft="@+id/studentnameTextview"
-            android:layout_alignStart="@+id/studentnameTextview" />
-
         <Button
             android:text="ตกลง"
             android:layout_width="@dimen/_90sdp"
@@ -58,6 +47,17 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:textColor="@android:color/background_light" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_height="wrap_content"
+            android:id="@+id/studentIdTextview"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_width="300dp"
+            android:layout_above="@+id/accept"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="13dp" />
     </RelativeLayout>
 
 </RelativeLayout>
