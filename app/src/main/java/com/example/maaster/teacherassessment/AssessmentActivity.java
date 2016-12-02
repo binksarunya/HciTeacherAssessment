@@ -360,7 +360,6 @@ public class AssessmentActivity extends AppCompatActivity {
                 courses.set(position, course);
                 intent.putParcelableArrayListExtra("question", questions);
                 intent.putParcelableArrayListExtra("course", courses);
-                intent.putExtra("coursetmp",course);
                 intent.putExtra("teachername",teacher.getName());
                 intent.putExtra("checkfirst",false);
                 course.setQuestions(questions);

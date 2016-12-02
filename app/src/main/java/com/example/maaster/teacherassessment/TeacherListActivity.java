@@ -95,9 +95,7 @@ public class TeacherListActivity extends AppCompatActivity {
             questions = new ArrayList<>();
             questions = getIntent().getExtras().getParcelableArrayList("question");
             int position = getIntent().getExtras().getInt("position");
-            coursetmp= getIntent().getExtras().getParcelable("coursetmp");
             courses.get(position).setQuestions(questions);
-            coursetmp.setQuestions(questions);
             Intent intent = getIntent();
             TeacherResult = (HashMap<String, ArrayList<Question>>) intent.getSerializableExtra("kuy");
             TeacherResult.put(String.valueOf(position),questions);
