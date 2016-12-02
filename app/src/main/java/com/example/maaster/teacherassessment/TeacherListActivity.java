@@ -36,13 +36,17 @@ public class TeacherListActivity extends AppCompatActivity {
     private ArrayList<Teacher> teachers;
     private ArrayList<Course> courses;
     private ArrayList<Question> questions;
+    private Course coursetmp;
     private final String TAG = "click";
     private Context context;
     private ImageView iv, imageView;
     private boolean checkfirst =true;
     private boolean checkassessmentcomplete = false;
-    private HashMap<String,ArrayList<Question>> TeacherResult = new HashMap<>();
+
     private int position;
+
+
+    private static HashMap<String,ArrayList<Question>> TeacherResult;
 
 
     Integer[] imageId = {
@@ -81,7 +85,7 @@ public class TeacherListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Teacher Assessment");
-
+        TeacherResult=new HashMap<String, ArrayList<Question>>();
         context = getBaseContext();
         teachers = new ArrayList<>();
         courses = new ArrayList<>();
@@ -89,7 +93,7 @@ public class TeacherListActivity extends AppCompatActivity {
         courses = getIntent().getExtras().getParcelableArrayList("course");
         student.setCourses(courses);
         checkfirst = getIntent().getExtras().getBoolean("checkfirst");
-        Log.d(TAG, "Checkfirst: "+checkfirst);
+
 
 
         try {
@@ -97,11 +101,21 @@ public class TeacherListActivity extends AppCompatActivity {
 
             questions = new ArrayList<>();
             questions = getIntent().getExtras().getParcelableArrayList("question");
+
+            int position = getIntent().getExtras().getInt("position");
+            coursetmp= getIntent().getExtras().getParcelable("coursetmp");
             courses.get(position).setQuestions(questions);
+            coursetmp.setQuestions(questions);
+            Intent intent = getIntent();
+            TeacherResult = (HashMap<String, ArrayList<Question>>) intent.getSerializableExtra("kuy");
+            TeacherResult.put(String.valueOf(position),questions);
+            Log.d(TAG, "onClickafter: "+TeacherResult.get(String.valueOf(position)).get(0).getAnswer());
+
 
         } catch (Exception e) {
 
             e.printStackTrace();
+            Log.d(TAG, "Fuckyou");
         }
         if(checkfirst==true) {
             showStudentDialog(student);
@@ -129,11 +143,7 @@ public class TeacherListActivity extends AppCompatActivity {
 
         }
 
-        if(checkfirst==false){
-            String nameteacher = getIntent().getExtras().getString("teachername");
-            ArrayList<Question> question = getIntent().getExtras().getParcelableArrayList("question");
-            TeacherResult.put(nameteacher,question);
-        }
+
 
 
     }
@@ -145,13 +155,14 @@ public class TeacherListActivity extends AppCompatActivity {
             Teacher teacher = new Teacher(name[i]);
             teacher.setImageId(imageId[i]);
             teachers.add(teacher);
+
         }
     }
 
     public void getData(){
 
-        CustomListActivity adapter = new CustomListActivity(TeacherListActivity.this,teachers,name,courseName,section,student,courses);
-        ListView list = (ListView)findViewById(R.id.list);
+        CustomListActivity adapter = new CustomListActivity(TeacherListActivity.this,teachers,name,courseName,section,student,TeacherResult,courses);
+        final ListView list = (ListView)findViewById(R.id.list);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
@@ -304,6 +315,7 @@ public class TeacherListActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
 
     public void onComplete(View view){
         final Dialog dialog = new Dialog(this);

@@ -3,6 +3,7 @@ package com.example.maaster.teacherassessment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
 import static com.example.maaster.teacherassessment.R.id.course;
 
 /**
@@ -38,6 +40,7 @@ public class EditAssesListActivity extends ArrayAdapter<String> {
         this.context=context;
         this.contxt=context;
         this.questionsDetail=questionsDetail;
+
         this.points=new String[questions.size()];
         this.questions = questions;
         for (int i=0;i<points.length;i++){
