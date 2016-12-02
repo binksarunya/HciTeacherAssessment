@@ -94,12 +94,12 @@ public class TeacherListActivity extends AppCompatActivity {
         try {
             questions = new ArrayList<>();
             questions = getIntent().getExtras().getParcelableArrayList("question");
+            int position = getIntent().getExtras().getInt("position");
             coursetmp= getIntent().getExtras().getParcelable("coursetmp");
-            courses.add(coursetmp);
+            courses.get(position).setQuestions(questions);
             coursetmp.setQuestions(questions);
             Intent intent = getIntent();
             TeacherResult = (HashMap<String, ArrayList<Question>>) intent.getSerializableExtra("kuy");
-            int position = getIntent().getExtras().getInt("position");
             TeacherResult.put(String.valueOf(position),questions);
             Log.d(TAG, "onClickafter: "+TeacherResult.get(String.valueOf(position)).get(0).getAnswer());
 
