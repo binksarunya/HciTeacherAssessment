@@ -42,7 +42,12 @@ public class TeacherListActivity extends AppCompatActivity {
     private ImageView iv, imageView;
     private boolean checkfirst =true;
     private boolean checkassessmentcomplete = false;
+
+    private int position;
+
+
     private static HashMap<String,ArrayList<Question>> TeacherResult;
+
 
     Integer[] imageId = {
             R.drawable.im_1,
@@ -92,14 +97,18 @@ public class TeacherListActivity extends AppCompatActivity {
 
 
         try {
+            position = getIntent().getExtras().getInt("position");
+
             questions = new ArrayList<>();
             questions = getIntent().getExtras().getParcelableArrayList("question");
+
             int position = getIntent().getExtras().getInt("position");
             courses.get(position).setQuestions(questions);
             Intent intent = getIntent();
             TeacherResult = (HashMap<String, ArrayList<Question>>) intent.getSerializableExtra("kuy");
             TeacherResult.put(String.valueOf(position),questions);
             Log.d(TAG, "onClickafter: "+TeacherResult.get(String.valueOf(position)).get(0).getAnswer());
+
 
         } catch (Exception e) {
 
@@ -156,7 +165,6 @@ public class TeacherListActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
 
             }
         });
@@ -307,6 +315,22 @@ public class TeacherListActivity extends AppCompatActivity {
     }
 
 
+    public void onComplete(View view){
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.edit_dialog);
+        ListView lv = (ListView ) dialog.findViewById(R.id.lv);
+        TextView nametxt = (TextView)findViewById(R.id.name);
+        String teachername = name[position];
+        Log.d("teachername", "onComplete: "+teachername);
+        String Questionstr[] = new String[questions.size()];
+        for(int i=0;i<Questionstr.length;i++){
+            Questionstr[i]=TeacherResult.get(teachername).get(i).getDetail();
+        }
+        ShowCompleteListActivity adapter = new ShowCompleteListActivity(TeacherListActivity.this,Questionstr,TeacherResult,teachername);
+        lv.setAdapter(adapter);
+        dialog.show();
+    }
 
 
 

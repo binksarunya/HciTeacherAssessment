@@ -109,9 +109,11 @@ public class CustomListActivity extends ArrayAdapter<String>{
 
                 if(courses.get(position).getComplete() == 1) {
 
+
                     Log.d(TAG, "oncheckQues: "+teacherresult.get(String.valueOf(position)).get(0).getAnswer());
 
                    showResultAssess(teacherresult,position);
+
 
 
                 }
@@ -169,29 +171,23 @@ public class CustomListActivity extends ArrayAdapter<String>{
 
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.comfirm_dialog);
+        dialog.setContentView(R.layout.result_answer);
         dialog.setTitle("สรุปผลการทำ");
-        ListView lv = (ListView ) dialog.findViewById(R.id.lv_confirm);
+        ListView lv = (ListView ) dialog.findViewById(R.id.list_result);
         Log.d(TAG, "onClick: "+teacherresult.get(String.valueOf(position)).get(0).getAnswer());
 
         EditAssesListActivity adapter = new EditAssesListActivity(context,answer,teacherresult.get(String.valueOf(position)));
+
         lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            }
-        });
-        Button confirmbtn = (Button)dialog.findViewById(R.id.button2) ;
-        confirmbtn.setOnClickListener(new View.OnClickListener() {
+        Button button = (Button) dialog.findViewById(R.id.comfirm_result);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 dialog.dismiss();
-
             }
         });
-        Button dismissbtn = (Button)dialog.findViewById(R.id.button3);
-        dismissbtn.setVisibility(View.GONE);
+
         dialog.show();
     }
 

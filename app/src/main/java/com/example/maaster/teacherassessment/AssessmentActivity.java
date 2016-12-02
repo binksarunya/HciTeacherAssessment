@@ -396,6 +396,13 @@ public class AssessmentActivity extends AppCompatActivity {
 
             }
         });
+        Button button = (Button) dialog.findViewById(R.id.cancel_edit);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
         dialog.show();
 
     }
@@ -546,6 +553,7 @@ public class AssessmentActivity extends AppCompatActivity {
         thumbView.setAlpha(0f);
         expandedImageView.setVisibility(View.VISIBLE);
 
+
         // Set the pivot point for SCALE_X and SCALE_Y transformations
         // to the top-left corner of the zoomed-in view (the default
         // is the center of the view).
@@ -611,6 +619,7 @@ public class AssessmentActivity extends AppCompatActivity {
                     public void onAnimationEnd(Animator animation) {
                         thumbView.setAlpha(1f);
                         expandedImageView.setVisibility(View.GONE);
+
                         mCurrentAnimator = null;
                     }
 
@@ -618,11 +627,13 @@ public class AssessmentActivity extends AppCompatActivity {
                     public void onAnimationCancel(Animator animation) {
                         thumbView.setAlpha(1f);
                         expandedImageView.setVisibility(View.GONE);
+                       
                         mCurrentAnimator = null;
                     }
                 });
                 set.start();
                 mCurrentAnimator = set;
+
 
 
             }
