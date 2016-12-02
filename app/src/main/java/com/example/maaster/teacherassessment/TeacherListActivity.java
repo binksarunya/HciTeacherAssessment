@@ -36,12 +36,13 @@ public class TeacherListActivity extends AppCompatActivity {
     private ArrayList<Teacher> teachers;
     private ArrayList<Course> courses;
     private ArrayList<Question> questions;
+    private Course coursetmp;
     private final String TAG = "click";
     private Context context;
     private ImageView iv, imageView;
     private boolean checkfirst =true;
     private boolean checkassessmentcomplete = false;
-    private HashMap<String,ArrayList<Question>> TeacherResult = new HashMap<>();
+    private static HashMap<String,ArrayList<Question>> TeacherResult;
 
     Integer[] imageId = {
             R.drawable.im_1,
@@ -79,7 +80,7 @@ public class TeacherListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Teacher Assessment");
-
+        TeacherResult=new HashMap<String, ArrayList<Question>>();
         context = getBaseContext();
         teachers = new ArrayList<>();
         courses = new ArrayList<>();
@@ -87,17 +88,25 @@ public class TeacherListActivity extends AppCompatActivity {
         courses = getIntent().getExtras().getParcelableArrayList("course");
         student.setCourses(courses);
         checkfirst = getIntent().getExtras().getBoolean("checkfirst");
-        Log.d(TAG, "Checkfirst: "+checkfirst);
+
 
 
         try {
             questions = new ArrayList<>();
             questions = getIntent().getExtras().getParcelableArrayList("question");
-            courses.get(getIntent().getExtras().getInt("position")).setQuestions(questions);
+            coursetmp= getIntent().getExtras().getParcelable("coursetmp");
+            courses.add(coursetmp);
+            coursetmp.setQuestions(questions);
+            Intent intent = getIntent();
+            TeacherResult = (HashMap<String, ArrayList<Question>>) intent.getSerializableExtra("kuy");
+            int position = getIntent().getExtras().getInt("position");
+            TeacherResult.put(String.valueOf(position),questions);
+            Log.d(TAG, "onClickafter: "+TeacherResult.get(String.valueOf(position)).get(0).getAnswer());
 
         } catch (Exception e) {
 
             e.printStackTrace();
+            Log.d(TAG, "Fuckyou");
         }
         if(checkfirst==true) {
             showStudentDialog(student);
@@ -125,11 +134,7 @@ public class TeacherListActivity extends AppCompatActivity {
 
         }
 
-        if(checkfirst==false){
-            String nameteacher = getIntent().getExtras().getString("teachername");
-            ArrayList<Question> question = getIntent().getExtras().getParcelableArrayList("question");
-            TeacherResult.put(nameteacher,question);
-        }
+
 
 
     }
@@ -141,13 +146,14 @@ public class TeacherListActivity extends AppCompatActivity {
             Teacher teacher = new Teacher(name[i]);
             teacher.setImageId(imageId[i]);
             teachers.add(teacher);
+
         }
     }
 
     public void getData(){
 
-        CustomListActivity adapter = new CustomListActivity(TeacherListActivity.this,teachers,name,courseName,section,student,courses);
-        ListView list = (ListView)findViewById(R.id.list);
+        CustomListActivity adapter = new CustomListActivity(TeacherListActivity.this,teachers,name,courseName,section,student,TeacherResult,courses);
+        final ListView list = (ListView)findViewById(R.id.list);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
@@ -302,21 +308,7 @@ public class TeacherListActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    public void onComplete(View view){
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.edit_dialog);
-        ListView lv = (ListView ) dialog.findViewById(R.id.lv);
-        TextView nametxt = (TextView)findViewById(R.id.name);
-        String teachername = nametxt.getText().toString();
-        String Questionstr[] = new String[questions.size()];
-        for(int i=0;i<Questionstr.length;i++){
-            Questionstr[i]=TeacherResult.get(teachername).get(i).getDetail();
-        }
-        ShowCompleteListActivity adapter = new ShowCompleteListActivity(TeacherListActivity.this,Questionstr,TeacherResult,teachername);
-        lv.setAdapter(adapter);
-        dialog.show();
-    }
+
 
 
 

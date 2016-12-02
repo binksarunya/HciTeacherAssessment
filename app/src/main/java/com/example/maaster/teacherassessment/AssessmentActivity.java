@@ -52,6 +52,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
 
@@ -78,6 +79,7 @@ public class AssessmentActivity extends AppCompatActivity {
     private int backfirst;
     private Activity context;
     private Context contxt;
+    private static HashMap<String,ArrayList<Question>> TeacherResult;
 
 
     @Override
@@ -103,6 +105,9 @@ public class AssessmentActivity extends AppCompatActivity {
         backfirst=0;
         context=AssessmentActivity.this;
         contxt=AssessmentActivity.this;
+        TeacherResult =new HashMap<String,ArrayList<Question>>();
+        TeacherResult=(HashMap<String,ArrayList<Question>>) getIntent().getSerializableExtra("teacherresult");
+        Log.d(TAG, "input from activity: "+TeacherResult.isEmpty());
 
         final ImageView imageteacher = (ImageView) findViewById(R.id.image_teacher);
         final ImageView zoombtn = (ImageView) findViewById(R.id.zoom_ass);
@@ -355,8 +360,14 @@ public class AssessmentActivity extends AppCompatActivity {
                 courses.set(position, course);
                 intent.putParcelableArrayListExtra("question", questions);
                 intent.putParcelableArrayListExtra("course", courses);
+                intent.putExtra("coursetmp",course);
                 intent.putExtra("teachername",teacher.getName());
                 intent.putExtra("checkfirst",false);
+                course.setQuestions(questions);
+                TeacherResult.put(String.valueOf(position),questions);
+                Log.d(TAG, "onClickbeforesend: "+TeacherResult.get(String.valueOf(position)).get(0).getAnswer());
+                intent.putExtra("kuy",TeacherResult);
+
                 dialog.dismiss();
                 startActivity(intent);
             }

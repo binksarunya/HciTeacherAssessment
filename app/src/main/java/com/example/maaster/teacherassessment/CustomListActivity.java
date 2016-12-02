@@ -37,6 +37,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.maaster.teacherassessment.Model.Course;
+import com.example.maaster.teacherassessment.Model.Question;
 import com.example.maaster.teacherassessment.Model.Student;
 import com.example.maaster.teacherassessment.Model.Teacher;
 import com.squareup.picasso.Picasso;
@@ -44,6 +45,7 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
 
@@ -58,15 +60,16 @@ public class CustomListActivity extends ArrayAdapter<String>{
     private Animator mCurrentAnimator;
     private int mShortAnimationDuration;
     private final Student student;
-    private final ArrayList<Course> courses;
+    private ArrayList<Course> courses;
     private  Course courseSingel;
     private int position;
+    private HashMap<String,ArrayList<Question>> teacherresult;
 
 
 
 
     public CustomListActivity(Activity context,
-                              ArrayList<Teacher> teachers, String[] name, String[] course, String[] section, Student student, ArrayList<Course> courses) {
+                              ArrayList<Teacher> teachers, String[] name, String[] course, String[] section, Student student, HashMap<String,ArrayList<Question>> teacherresult,ArrayList<Course> courses) {
 
         super(context,R.layout.list_single,name);
         this.contxt=context;
@@ -76,7 +79,9 @@ public class CustomListActivity extends ArrayAdapter<String>{
         this.section = section;
         this.name = name;
         this.student = student;
+        this.teacherresult=teacherresult;
         this.courses = courses;
+
 
 
     }
@@ -103,17 +108,23 @@ public class CustomListActivity extends ArrayAdapter<String>{
             public void onClick(View v) {
 
                 if(courses.get(position).getComplete() == 1) {
-                    showResultAssess();
-                    return;
+
+                    Log.d(TAG, "oncheckQues: "+teacherresult.get(String.valueOf(position)).get(0).getAnswer());
+
+                   showResultAssess(teacherresult,position);
+
 
                 }
-                Intent intent = new Intent(context, AssessmentActivity.class);//put extra
-                intent.putExtra("teacher", teachers.get(position));
-                intent.putExtra("student", student);
-                intent.putParcelableArrayListExtra("course", courses);
-                intent.putExtra("position", position);
+                else{
+                    Intent intent = new Intent(context, AssessmentActivity.class);//put extra
+                    intent.putExtra("teacher", teachers.get(position));
+                    intent.putExtra("student", student);
+                    intent.putParcelableArrayListExtra("course", courses);
+                    intent.putExtra("position", position);
+                    intent.putExtra("teacherresult",teacherresult);
+                    context.startActivity(intent);
+                }
 
-                context.startActivity(intent);
             }
         });
         imageprofile.setOnClickListener(new View.OnClickListener(){
@@ -152,15 +163,18 @@ public class CustomListActivity extends ArrayAdapter<String>{
 
     final String[] answer = {"1.สอนอย่างเป็นระบบ", "2.สอนให้คิดวิเคราะห์ วิจารณ์", "3.วิธีสอนให้น่าสนใจเเละน่าติดตาม", "4.จัดให้แสดงความคิดเห็น", "5.สามารถประเมินความเข้าใจ"};
 
-    public void showResultAssess() {
+
+
+    public void showResultAssess(HashMap<String,ArrayList<Question>> teacherresult,int position) {
 
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.comfirm_dialog);
         dialog.setTitle("สรุปผลการทำ");
-        //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         ListView lv = (ListView ) dialog.findViewById(R.id.lv_confirm);
-        EditAssesListActivity adapter = new EditAssesListActivity(context,answer,courses.get(position).getQuestions());
+        Log.d(TAG, "onClick: "+teacherresult.get(String.valueOf(position)).get(0).getAnswer());
+
+        EditAssesListActivity adapter = new EditAssesListActivity(context,answer,teacherresult.get(String.valueOf(position)));
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
