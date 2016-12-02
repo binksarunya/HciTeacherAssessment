@@ -80,39 +80,46 @@ public class AssessmentActivity extends AppCompatActivity {
     private Activity context;
     private Context contxt;
     private static HashMap<String,ArrayList<Question>> TeacherResult;
-    private ImageView zoomout;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.activity_assessment);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("การประเมิน");
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#D94130")));
         createQuestion();
+
         teacher =  getIntent().getExtras().getParcelable("teacher");
         student = getIntent().getExtras().getParcelable("student");
         courses = getIntent().getExtras().getParcelableArrayList("course");
         position = getIntent().getExtras().getInt("position");
         course = courses.get(position);
+
         assessmentCheck();
+
         ImageView imageView = (ImageView) findViewById(R.id.image_teacher);
         TextView textView = (TextView) findViewById(R.id.name_teacher);
+        TextView section = (TextView) findViewById(R.id.section_teacher);
+        TextView courseText = (TextView) findViewById(R.id.course_teacher);
+
         imageView.setImageResource(teacher.getImageId());
         textView.setText(teacher.getName());
+        courseText.setText("วิชา " + course.getName());
+        section.setText("Section " + course.getSection());
+        imageView.setImageResource(teacher.getImageId());
+        textView.setText(teacher.getName());
+
         backfirst=0;
         context=AssessmentActivity.this;
         contxt=AssessmentActivity.this;
         TeacherResult =new HashMap<String,ArrayList<Question>>();
         TeacherResult=(HashMap<String,ArrayList<Question>>) getIntent().getSerializableExtra("teacherresult");
-        Log.d(TAG, "InAssess: "+TeacherResult.isEmpty());
-
-        zoomout = (ImageView)findViewById(R.id.zoomout) ;
-
-
 
 
         final ImageView imageteacher = (ImageView) findViewById(R.id.image_teacher);
@@ -124,10 +131,8 @@ public class AssessmentActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(isStoragePermissionGranted()) {
-
                     Bitmap bitmap = ((BitmapDrawable) imageteacher.getDrawable()).getBitmap();
                     zoomImageFromThumb(zoombtn, getImageUri(context, bitmap));
-                    zoomout.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -158,7 +163,7 @@ public class AssessmentActivity extends AppCompatActivity {
         dialog.show();
 
     }
-    
+
     public void createQuestion() {
         questions = new ArrayList<>();
         for (int i = 0; i <5 ; i++) {
@@ -369,6 +374,7 @@ public class AssessmentActivity extends AppCompatActivity {
                 courses.set(position, course);
                 intent.putParcelableArrayListExtra("question", questions);
                 intent.putParcelableArrayListExtra("course", courses);
+                intent.putExtra("coursetmp",course);
                 intent.putExtra("teachername",teacher.getName());
                 intent.putExtra("checkfirst",false);
                 course.setQuestions(questions);
@@ -561,7 +567,8 @@ public class AssessmentActivity extends AppCompatActivity {
         // thumbnail.
         thumbView.setAlpha(0f);
         expandedImageView.setVisibility(View.VISIBLE);
-
+        final ImageView imageView = (ImageView) findViewById(R.id.zoomout);
+        imageView.setVisibility(View.VISIBLE);
 
         // Set the pivot point for SCALE_X and SCALE_Y transformations
         // to the top-left corner of the zoomed-in view (the default
@@ -605,7 +612,6 @@ public class AssessmentActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (mCurrentAnimator != null) {
                     mCurrentAnimator.cancel();
-
                 }
 
                 // Animate the four positioning/sizing properties in parallel,
@@ -629,8 +635,7 @@ public class AssessmentActivity extends AppCompatActivity {
                     public void onAnimationEnd(Animator animation) {
                         thumbView.setAlpha(1f);
                         expandedImageView.setVisibility(View.GONE);
-                        zoomout.setVisibility(View.GONE);
-
+                        imageView.setVisibility(View.GONE);
                         mCurrentAnimator = null;
                     }
 
@@ -638,8 +643,7 @@ public class AssessmentActivity extends AppCompatActivity {
                     public void onAnimationCancel(Animator animation) {
                         thumbView.setAlpha(1f);
                         expandedImageView.setVisibility(View.GONE);
-                        zoomout.setVisibility(View.GONE);
-                       
+                        imageView.setVisibility(View.GONE);
                         mCurrentAnimator = null;
                     }
                 });

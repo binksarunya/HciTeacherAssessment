@@ -113,13 +113,8 @@ public class CustomListActivity extends ArrayAdapter<String>{
 
                 if(courses.get(position).getComplete() == 1) {
 
-
-                    Log.d(TAG, "oncheckQues: "+teacherresult.get(String.valueOf(position)).get(0).getAnswer());
-
                    showResultAssess(teacherresult,position);
-
-
-
+                    return;
                 }
                 else{
                     Intent intent = new Intent(context, AssessmentActivity.class);//put extra
@@ -179,7 +174,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
         dialog.setContentView(R.layout.result_answer);
         dialog.setTitle("สรุปผลการทำ");
         ListView lv = (ListView ) dialog.findViewById(R.id.list_result);
-        Log.d(TAG, "onClick: "+teacherresult.get(String.valueOf(position)).get(0).getAnswer());
+
 
         EditAssesListActivity adapter = new EditAssesListActivity(context,answer,teacherresult.get(String.valueOf(position)));
 
@@ -202,7 +197,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        Log.d(TAG, "getImageUri: "+path);
+
         return Uri.parse(path);
     }//cast bitmap to uri
 

@@ -30,8 +30,6 @@ import com.example.maaster.teacherassessment.Model.Teacher;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
-
 public class TeacherListActivity extends AppCompatActivity {
 
     private Student student;
@@ -44,9 +42,11 @@ public class TeacherListActivity extends AppCompatActivity {
     private ImageView iv, imageView;
     private boolean checkfirst =true;
     private boolean checkassessmentcomplete = false;
-    private int position;
-    private static HashMap<String,ArrayList<Question>> TeacherResult;
 
+    private int position;
+
+
+    private static HashMap<String,ArrayList<Question>> TeacherResult;
 
 
     Integer[] imageId = {
@@ -86,7 +86,6 @@ public class TeacherListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Teacher Assessment");
         TeacherResult=new HashMap<String, ArrayList<Question>>();
-        Log.d(TAG, "onClick: "+TeacherResult.isEmpty());
         context = getBaseContext();
         teachers = new ArrayList<>();
         courses = new ArrayList<>();
@@ -97,15 +96,18 @@ public class TeacherListActivity extends AppCompatActivity {
 
 
 
-
         try {
             position = getIntent().getExtras().getInt("position");
+
             questions = new ArrayList<>();
             questions = getIntent().getExtras().getParcelableArrayList("question");
+
             int position = getIntent().getExtras().getInt("position");
+            coursetmp= getIntent().getExtras().getParcelable("coursetmp");
             courses.get(position).setQuestions(questions);
+            coursetmp.setQuestions(questions);
             Intent intent = getIntent();
-            TeacherResult =(HashMap<String, ArrayList<Question>>) intent.getSerializableExtra("kuy");
+            TeacherResult = (HashMap<String, ArrayList<Question>>) intent.getSerializableExtra("kuy");
             TeacherResult.put(String.valueOf(position),questions);
             Log.d(TAG, "onClickafter: "+TeacherResult.get(String.valueOf(position)).get(0).getAnswer());
 
@@ -113,8 +115,7 @@ public class TeacherListActivity extends AppCompatActivity {
         } catch (Exception e) {
 
             e.printStackTrace();
-            Log.d(TAG, "Fuckyou");
-            TeacherResult=new HashMap<String, ArrayList<Question>>();
+
         }
         if(checkfirst==true) {
             showStudentDialog(student);
@@ -137,7 +138,7 @@ public class TeacherListActivity extends AppCompatActivity {
             }
         }
 
-        if(checkassessmentcomplete==true){
+        if(checkassessmentcomplete){
             showComplete(student);
 
         }
@@ -148,7 +149,6 @@ public class TeacherListActivity extends AppCompatActivity {
     }
 
     public void getTeacherFromDB() {
-
 
         for (int i = 0; i <4 ; i++) {
             Teacher teacher = new Teacher(name[i]);
@@ -316,22 +316,7 @@ public class TeacherListActivity extends AppCompatActivity {
     }
 
 
-    public void onComplete(View view){
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.edit_dialog);
-        ListView lv = (ListView ) dialog.findViewById(R.id.lv);
-        TextView nametxt = (TextView)findViewById(R.id.name);
-        String teachername = name[position];
-        Log.d("teachername", "onComplete: "+teachername);
-        String Questionstr[] = new String[questions.size()];
-        for(int i=0;i<Questionstr.length;i++){
-            Questionstr[i]=TeacherResult.get(teachername).get(i).getDetail();
-        }
-        ShowCompleteListActivity adapter = new ShowCompleteListActivity(TeacherListActivity.this,Questionstr,TeacherResult,teachername);
-        lv.setAdapter(adapter);
-        dialog.show();
-    }
+
 
 
 
