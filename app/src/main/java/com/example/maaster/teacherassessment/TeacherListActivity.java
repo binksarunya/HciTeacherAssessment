@@ -42,6 +42,8 @@ public class TeacherListActivity extends AppCompatActivity {
     private boolean checkfirst =true;
     private boolean checkassessmentcomplete = false;
     private HashMap<String,ArrayList<Question>> TeacherResult = new HashMap<>();
+    private int position;
+
 
     Integer[] imageId = {
             R.drawable.im_1,
@@ -91,9 +93,11 @@ public class TeacherListActivity extends AppCompatActivity {
 
 
         try {
+            position = getIntent().getExtras().getInt("position");
+
             questions = new ArrayList<>();
             questions = getIntent().getExtras().getParcelableArrayList("question");
-            courses.get(getIntent().getExtras().getInt("position")).setQuestions(questions);
+            courses.get(position).setQuestions(questions);
 
         } catch (Exception e) {
 
@@ -152,7 +156,6 @@ public class TeacherListActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
 
             }
         });
@@ -308,7 +311,8 @@ public class TeacherListActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.edit_dialog);
         ListView lv = (ListView ) dialog.findViewById(R.id.lv);
         TextView nametxt = (TextView)findViewById(R.id.name);
-        String teachername = nametxt.getText().toString();
+        String teachername = name[position];
+        Log.d("teachername", "onComplete: "+teachername);
         String Questionstr[] = new String[questions.size()];
         for(int i=0;i<Questionstr.length;i++){
             Questionstr[i]=TeacherResult.get(teachername).get(i).getDetail();

@@ -103,7 +103,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
             public void onClick(View v) {
 
                 if(courses.get(position).getComplete() == 1) {
-                    showResultAssess();
+                    showResultAssess(position);
                     return;
 
                 }
@@ -152,32 +152,21 @@ public class CustomListActivity extends ArrayAdapter<String>{
 
     final String[] answer = {"1.สอนอย่างเป็นระบบ", "2.สอนให้คิดวิเคราะห์ วิจารณ์", "3.วิธีสอนให้น่าสนใจเเละน่าติดตาม", "4.จัดให้แสดงความคิดเห็น", "5.สามารถประเมินความเข้าใจ"};
 
-    public void showResultAssess() {
+    public void showResultAssess(int position) {
 
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.comfirm_dialog);
-        dialog.setTitle("สรุปผลการทำ");
-        //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        ListView lv = (ListView ) dialog.findViewById(R.id.lv_confirm);
-        EditAssesListActivity adapter = new EditAssesListActivity(context,answer,courses.get(position).getQuestions());
+        dialog.setContentView(R.layout.result_answer);
+        ListView lv = (ListView ) dialog.findViewById(R.id.list_result);
+
+        ShowResultAnswer adapter = new ShowResultAnswer(context ,courses.get(position).getQuestions(), answer);
+
+
         lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            }
-        });
-        Button confirmbtn = (Button)dialog.findViewById(R.id.button2) ;
-        confirmbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
 
-            }
-        });
-        Button dismissbtn = (Button)dialog.findViewById(R.id.button3);
-        dismissbtn.setVisibility(View.GONE);
+
+
         dialog.show();
     }
 
