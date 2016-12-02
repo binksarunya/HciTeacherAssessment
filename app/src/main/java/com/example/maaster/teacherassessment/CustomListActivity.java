@@ -16,6 +16,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -64,6 +65,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
     private  Course courseSingel;
     private int position;
     private HashMap<String,ArrayList<Question>> teacherresult;
+    private ImageView zoomout;
 
 
 
@@ -81,6 +83,8 @@ public class CustomListActivity extends ArrayAdapter<String>{
         this.student = student;
         this.teacherresult=teacherresult;
         this.courses = courses;
+        zoomout = (ImageView) context.findViewById(R.id.zoomout2);
+        zoomout.setVisibility(View.GONE);
 
 
 
@@ -90,7 +94,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView= inflater.inflate(R.layout.list_single, null, true);
 
-        RelativeLayout teacherProfile = (RelativeLayout) rowView.findViewById(R.id.teacherprofile);
+        final RelativeLayout teacherProfile = (RelativeLayout) rowView.findViewById(R.id.teacherprofile);
         RelativeLayout imageprofile = (RelativeLayout) rowView.findViewById(R.id.imageprofile);
 
         RelativeLayout completeStatus = (RelativeLayout) rowView.findViewById(R.id.completestatus);
@@ -149,6 +153,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
                     Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
                     zoomImageFromThumb(zoombtn, getImageUri(context, bitmap));
                     ImageView imageView1 = (ImageView) context.findViewById(R.id.expand_image);
+                    zoomout.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -333,6 +338,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
                         thumbView.setAlpha(1f);
                         expandedImageView.setVisibility(View.GONE);
                         mCurrentAnimator = null;
+                        zoomout.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -340,6 +346,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
                         thumbView.setAlpha(1f);
                         expandedImageView.setVisibility(View.GONE);
                         mCurrentAnimator = null;
+                        zoomout.setVisibility(View.GONE);
                     }
                 });
                 set.start();

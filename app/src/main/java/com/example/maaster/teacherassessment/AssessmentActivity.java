@@ -80,6 +80,7 @@ public class AssessmentActivity extends AppCompatActivity {
     private Activity context;
     private Context contxt;
     private static HashMap<String,ArrayList<Question>> TeacherResult;
+    private ImageView zoomout;
 
 
     @Override
@@ -107,18 +108,26 @@ public class AssessmentActivity extends AppCompatActivity {
         contxt=AssessmentActivity.this;
         TeacherResult =new HashMap<String,ArrayList<Question>>();
         TeacherResult=(HashMap<String,ArrayList<Question>>) getIntent().getSerializableExtra("teacherresult");
-        Log.d(TAG, "input from activity: "+TeacherResult.isEmpty());
+        Log.d(TAG, "InAssess: "+TeacherResult.isEmpty());
+
+        zoomout = (ImageView)findViewById(R.id.zoomout) ;
+
+
+
 
         final ImageView imageteacher = (ImageView) findViewById(R.id.image_teacher);
         final ImageView zoombtn = (ImageView) findViewById(R.id.zoom_ass);
+
         zoombtn.setImageResource(R.drawable.zoom_icon);
         zoombtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if(isStoragePermissionGranted()) {
+
                     Bitmap bitmap = ((BitmapDrawable) imageteacher.getDrawable()).getBitmap();
                     zoomImageFromThumb(zoombtn, getImageUri(context, bitmap));
+                    zoomout.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -596,6 +605,7 @@ public class AssessmentActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (mCurrentAnimator != null) {
                     mCurrentAnimator.cancel();
+
                 }
 
                 // Animate the four positioning/sizing properties in parallel,
@@ -619,6 +629,7 @@ public class AssessmentActivity extends AppCompatActivity {
                     public void onAnimationEnd(Animator animation) {
                         thumbView.setAlpha(1f);
                         expandedImageView.setVisibility(View.GONE);
+                        zoomout.setVisibility(View.GONE);
 
                         mCurrentAnimator = null;
                     }
@@ -627,6 +638,7 @@ public class AssessmentActivity extends AppCompatActivity {
                     public void onAnimationCancel(Animator animation) {
                         thumbView.setAlpha(1f);
                         expandedImageView.setVisibility(View.GONE);
+                        zoomout.setVisibility(View.GONE);
                        
                         mCurrentAnimator = null;
                     }
