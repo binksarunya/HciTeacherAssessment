@@ -2,12 +2,14 @@ package com.example.maaster.teacherassessment;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -84,6 +86,10 @@ public class LoginActivity extends Activity {
         intent.putParcelableArrayListExtra("course", courses);
         intent.putExtra("checkfirst",true);
         intent.putExtra("check", check);
+
+        ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("กำลังเข้าสู่ระบบ");
+        pd.show();
         startActivity(intent);
     }
 
@@ -155,5 +161,15 @@ public class LoginActivity extends Activity {
 
         student = new Student("ปัณวรรธน์ นกเกตุ", "5709680044", courses, "1234");
         check = false;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            //preventing default implementation previous to android.os.Build.VERSION_CODES.ECLAIR
+
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

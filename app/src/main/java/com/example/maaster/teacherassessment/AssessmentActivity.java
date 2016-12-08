@@ -8,6 +8,7 @@ import android.animation.ObjectAnimator;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -80,6 +81,7 @@ public class AssessmentActivity extends AppCompatActivity {
     private Activity context;
     private Context contxt;
     private static HashMap<String,ArrayList<Question>> TeacherResult;
+    private boolean check;
 
 
     @Override
@@ -100,6 +102,7 @@ public class AssessmentActivity extends AppCompatActivity {
         courses = getIntent().getExtras().getParcelableArrayList("course");
         position = getIntent().getExtras().getInt("position");
         course = courses.get(position);
+        check = getIntent().getExtras().getBoolean("check");
 
         assessmentCheck();
 
@@ -190,7 +193,7 @@ public class AssessmentActivity extends AppCompatActivity {
             radioGroup.getChildAt(j).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                        new CountDownTimer(500, 700) {
+                        new CountDownTimer(500, 600) {
                             @Override
                             public void onTick(long l) {}
 
@@ -216,12 +219,14 @@ public class AssessmentActivity extends AppCompatActivity {
                                         k++;
                                     if(k>=questions.size()) {
 
-                                        new CountDownTimer(500, 700) {
+                                        new CountDownTimer(500, 600) {
                                             @Override
                                             public void onTick(long l) {}
                                             @Override
                                             public void onFinish() {
 
+                                                ProgressDialog pd = new ProgressDialog(context);
+                                                pd.setMessage("กำลังเข้าสู่การยืนยันการประเมิน");
                                                 completeAssess ();
 
 
@@ -359,12 +364,7 @@ public class AssessmentActivity extends AppCompatActivity {
         ListView lv = (ListView ) dialog.findViewById(R.id.lv_confirm);
         EditAssesListActivity adapter = new EditAssesListActivity(this,answer,questions);
         lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            }
-        });
         Button confirmbtn = (Button)dialog.findViewById(R.id.button2) ;
         confirmbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -382,7 +382,7 @@ public class AssessmentActivity extends AppCompatActivity {
                 TeacherResult.put(String.valueOf(position),questions);
                 Log.d(TAG, "onClickbeforesend: "+TeacherResult.get(String.valueOf(position)).get(0).getAnswer());
                 intent.putExtra("kuy",TeacherResult);
-
+                intent.putExtra("check", check);
                 dialog.dismiss();
                 startActivity(intent);
             }

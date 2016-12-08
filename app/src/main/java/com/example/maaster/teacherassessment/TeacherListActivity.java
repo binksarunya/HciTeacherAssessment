@@ -1,6 +1,7 @@
 package com.example.maaster.teacherassessment;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -126,12 +127,13 @@ public class TeacherListActivity extends AppCompatActivity {
         if(checkfirst==true) {
             showStudentDialog(student);
         }
+        Log.d("check", "onCreate: "+check);
 
-
-        
-        getTeacherFromMongoDB();
-
-        getTeacherFromDB();
+        if(check) {
+            getTeacherFromMongoDB();
+        } else {
+            getTeacherFromDB();
+        }
         getData();
 
         for (int i = 0; i < courses.size() ; i++) {
@@ -155,9 +157,14 @@ public class TeacherListActivity extends AppCompatActivity {
     }
 
     public void getTeacherFromDB() {
+        String url[] = {"http://www.cs.tu.ac.th/uploads/articles_icon/1446541817.jpg",
+                        "http://www.cs.tu.ac.th/uploads/articles_icon/1446542136.jpg",
+                        "http://www.cs.tu.ac.th/uploads/articles_icon/1446601639.jpg",
+                        "http://www.cs.tu.ac.th/uploads/articles_icon/1467772704.jpg"};
+
         for (int j = 0; j <4 ; j++) {
             Teacher teacher = new Teacher(name[j]);
-            teacher.setImageId(imageId[j]);
+            teacher.setImage(url[j]);
             teachers.add(teacher);
 
         }
@@ -235,7 +242,7 @@ public class TeacherListActivity extends AppCompatActivity {
 
     public void getData(){
 
-        CustomListActivity adapter = new CustomListActivity(TeacherListActivity.this,teachers,name,courseName,section,student,TeacherResult,courses);
+        CustomListActivity adapter = new CustomListActivity(TeacherListActivity.this,teachers,name,courseName,section,student,TeacherResult,courses,check);
         final ListView list = (ListView)findViewById(R.id.list);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -298,6 +305,8 @@ public class TeacherListActivity extends AppCompatActivity {
 
                 welcomedialog.dismiss();
                 Intent intent = new Intent(TeacherListActivity.this, LoginActivity.class);
+                ProgressDialog pd = new ProgressDialog(context);
+                pd.setMessage("กำลังออกจากระบบ");
                 startActivity(intent);
             }
         });
@@ -335,6 +344,8 @@ public class TeacherListActivity extends AppCompatActivity {
 
                 welcomedialog.dismiss();
                 Intent intent = new Intent(TeacherListActivity.this, LoginActivity.class);
+                ProgressDialog pd = new ProgressDialog(context);
+                pd.setMessage("กำลังออกจากระบบ");
                 startActivity(intent);
             }
         });

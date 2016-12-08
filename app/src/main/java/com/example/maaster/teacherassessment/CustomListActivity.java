@@ -67,12 +67,13 @@ public class CustomListActivity extends ArrayAdapter<String>{
     private int position;
     private HashMap<String,ArrayList<Question>> teacherresult;
     private ImageView zoomout;
+    private boolean check;
 
 
 
 
     public CustomListActivity(Activity context,
-                              ArrayList<Teacher> teachers, String[] name, String[] course, String[] section, Student student, HashMap<String,ArrayList<Question>> teacherresult,ArrayList<Course> courses) {
+                              ArrayList<Teacher> teachers, String[] name, String[] course, String[] section, Student student, HashMap<String,ArrayList<Question>> teacherresult,ArrayList<Course> courses, boolean check) {
 
         super(context,R.layout.list_single,name);
         this.contxt=context;
@@ -86,6 +87,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
         this.courses = courses;
         zoomout = (ImageView) context.findViewById(R.id.zoomout2);
         zoomout.setVisibility(View.GONE);
+        this.check = check;
 
 
 
@@ -119,6 +121,10 @@ public class CustomListActivity extends ArrayAdapter<String>{
                     intent.putParcelableArrayListExtra("course", courses);
                     intent.putExtra("position", position);
                     intent.putExtra("teacherresult",teacherresult);
+                    intent.putExtra("check", check);
+                    ProgressDialog pd = new ProgressDialog(context);
+                    pd.setMessage("กำลังเข้าสู่การประเมิน");
+                    pd.show();
                     context.startActivity(intent);
                 }
 
