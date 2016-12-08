@@ -25,6 +25,8 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 public class LoginActivity extends Activity {
@@ -33,6 +35,7 @@ public class LoginActivity extends Activity {
     private ArrayList<Course> courses;
     private MongoDBConnection mongoDBConnection;
     private final String TAG = "click";
+    private boolean check = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +45,15 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login2);
         courses = new ArrayList<>();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy);
+
+
     }
+
+
 
     public void openListTeacher(View view) {
 
+        if(check)
         createStudent();
 
         if(student == null) {
@@ -75,6 +83,7 @@ public class LoginActivity extends Activity {
         intent.putExtra("student", student);
         intent.putParcelableArrayListExtra("course", courses);
         intent.putExtra("checkfirst",true);
+        intent.putExtra("check", check);
         startActivity(intent);
     }
 
@@ -83,7 +92,6 @@ public class LoginActivity extends Activity {
         MongoDBConnection mongoDBConnection  = new MongoDBConnection(Constance.IP_ADDRESS, "Student", "Asessment");
         DBCursor cursor = mongoDBConnection.getCursor();
 
-       // Log.d(TAG, "createStudent: " + cursor.next().get("name"));
 
         TextView studetIdTextView = (TextView) findViewById(R.id.student_id_text);
         TextView passwordTextView = (TextView) findViewById(R.id.passwaord_text);
@@ -106,14 +114,14 @@ public class LoginActivity extends Activity {
                 for (int i = 0; i <coursesDb.size() ; i++) {
                     DBObject courseObject = (DBObject) coursesDb.get(i);
                     Course course = new Course((String)courseObject.get("name"), (String)courseObject.get("section"));
+
+                        Log.d("course", "getView: "+ course.getName());
+
                     courses.add(course);
 
                 }
 
-                Log.d(TAG, "createStudent: "+id+" "+pass);
                 student = new Student((String) object.get("name"), id, courses ,pass);
-
-
                 break;
             }
 
@@ -121,9 +129,10 @@ public class LoginActivity extends Activity {
 
         mongoDBConnection.closeDB();
 
+    }
 
+    public void loginNoDB(View view) {
 
-/*
         String[] course = {
                 "CS374",
                 "CS374",
@@ -144,7 +153,7 @@ public class LoginActivity extends Activity {
             courses.add(courseStudent);
         }
 
-        student = new Student("ปัณวรรธน์ นกเกตุ", "5709680044", courses, "1234");*/
-
+        student = new Student("ปัณวรรธน์ นกเกตุ", "5709680044", courses, "1234");
+        check = false;
     }
 }

@@ -96,18 +96,13 @@ public class CustomListActivity extends ArrayAdapter<String>{
         View rowView= inflater.inflate(R.layout.list_single, null, true);
 
         final RelativeLayout teacherProfile = (RelativeLayout) rowView.findViewById(R.id.teacherprofile);
-        RelativeLayout imageprofile = (RelativeLayout) rowView.findViewById(R.id.imageprofile);
-
         RelativeLayout completeStatus = (RelativeLayout) rowView.findViewById(R.id.completestatus);
         this.position = position;
 
-
-        if(courses.get(position).getComplete() == 1) {
+            if(courses.get(position).getComplete() == 1) {
                 completeStatus.setVisibility(View.VISIBLE);
 
             }
-
-
         teacherProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,8 +158,6 @@ public class CustomListActivity extends ArrayAdapter<String>{
 
     final String[] answer = {"1.สอนอย่างเป็นระบบ", "2.สอนให้คิดวิเคราะห์ วิจารณ์", "3.วิธีสอนให้น่าสนใจเเละน่าติดตาม", "4.จัดให้แสดงความคิดเห็น", "5.สามารถประเมินความเข้าใจ"};
 
-
-
     public void showResultAssess(HashMap<String,ArrayList<Question>> teacherresult,int position) {
 
         final Dialog dialog = new Dialog(context);
@@ -188,17 +181,6 @@ public class CustomListActivity extends ArrayAdapter<String>{
 
         dialog.show();
     }
-
-
-
-    protected Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-
-        return Uri.parse(path);
-    }//cast bitmap to uri
-
 
     protected   void zoomImageFromThumb(final View thumbView, String uri) {
         // If there's an animation in progress, cancel it
@@ -349,9 +331,6 @@ public class CustomListActivity extends ArrayAdapter<String>{
             }
         });
     }//zoom image
-
-
-
 
     public  boolean isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {

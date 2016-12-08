@@ -52,7 +52,7 @@ public class TeacherListActivity extends AppCompatActivity {
     private int count = 0;
     private int position;
     private static HashMap<String,ArrayList<Question>> TeacherResult;
-
+    private boolean check;
 
     Integer[] imageId = {
             R.drawable.im_1,
@@ -102,14 +102,12 @@ public class TeacherListActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        getTeacherFromMongoDB();
-
         try {
             position = getIntent().getExtras().getInt("position");
 
             questions = new ArrayList<>();
             questions = getIntent().getExtras().getParcelableArrayList("question");
-
+            check = getIntent().getExtras().getBoolean("check");
             int position = getIntent().getExtras().getInt("position");
             coursetmp= getIntent().getExtras().getParcelable("coursetmp");
             courses.get(position).setQuestions(questions);
@@ -130,6 +128,8 @@ public class TeacherListActivity extends AppCompatActivity {
         }
 
 
+        
+        getTeacherFromMongoDB();
 
         getTeacherFromDB();
         getData();
@@ -209,6 +209,7 @@ public class TeacherListActivity extends AppCompatActivity {
                         teachers.add(teacherArrayList.get(i));
                         Log.d("pun", "getTeacherFromMongoDB: " + student.getCourses().get(k).getName());
                         Log.d("pun", "getTeacherFromMongoDB: " + student.getCourses().get(k).getSection());
+                        nameString.add(teacherArrayList.get(i).getName());
                         courseString.add(student.getCourses().get(k).getName());
                         sectionString.add(student.getCourses().get(k).getSection());
 
@@ -219,11 +220,13 @@ public class TeacherListActivity extends AppCompatActivity {
 
         courseName = new String[courseString.size()];
         section = new String[sectionString.size()];
+        name = new String[nameString.size()];
         Log.d(TAG, "getTeacherFromMongoDB: "+ student.getCourses().size());
 
         for (int i = 0; i < courseString.size() ; i++) {
             courseName[i] = courseString.get(i);
             section[i] = sectionString.get(i);
+            name[i] = nameString.get(i);
         }
 
 
