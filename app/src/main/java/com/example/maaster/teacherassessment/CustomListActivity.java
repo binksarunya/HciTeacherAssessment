@@ -16,6 +16,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
@@ -128,12 +129,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
 
             }
         });
-        imageprofile.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        
         final ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
         TextView txtTeacherName = (TextView) rowView.findViewById(R.id.name);
         TextView txtCourse = (TextView) rowView.findViewById(R.id.course);
@@ -147,7 +143,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
                 if(isStoragePermissionGranted()) {
                     Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
                     zoomImageFromThumb(zoombtn, getImageUri(context, bitmap));
-                    ImageView imageView1 = (ImageView) context.findViewById(R.id.expand_image);
+
                     zoomout.setVisibility(View.VISIBLE);
                 }
             }
@@ -157,6 +153,8 @@ public class CustomListActivity extends ArrayAdapter<String>{
         txtCourse.setText("รายวิชา "+course[position]);
         txtSection.setText("Section "+section[position]);
         imageView.setImageResource(teachers.get(position).getImageId());
+
+       // Picasso.with(context).load("http://www.cs.tu.ac.th/uploads/articles_icon/1446541947.jpg").into(imageView);
 
 
 

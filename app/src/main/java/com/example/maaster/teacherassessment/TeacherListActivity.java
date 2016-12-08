@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.DrawableRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,13 +23,19 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.maaster.teacherassessment.Model.Constance;
 import com.example.maaster.teacherassessment.Model.Course;
+import com.example.maaster.teacherassessment.Model.MongoDBConnection;
 import com.example.maaster.teacherassessment.Model.Question;
 import com.example.maaster.teacherassessment.Model.Student;
 import com.example.maaster.teacherassessment.Model.Teacher;
+import com.mongodb.BasicDBList;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class TeacherListActivity extends AppCompatActivity {
 
@@ -94,7 +101,10 @@ public class TeacherListActivity extends AppCompatActivity {
         student.setCourses(courses);
         checkfirst = getIntent().getExtras().getBoolean("checkfirst");
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
+        getTeacherFromMongoDB();
 
         try {
             position = getIntent().getExtras().getInt("position");
@@ -144,19 +154,79 @@ public class TeacherListActivity extends AppCompatActivity {
         }
 
 
-
-
     }
 
     public void getTeacherFromDB() {
-
-        for (int i = 0; i <4 ; i++) {
-            Teacher teacher = new Teacher(name[i]);
-            teacher.setImageId(imageId[i]);
+        for (int j = 0; j <4 ; j++) {
+            Teacher teacher = new Teacher(name[j]);
+            teacher.setImageId(imageId[j]);
             teachers.add(teacher);
 
         }
+
     }
+
+    public void getTeacherFromMongoDB() {
+
+        ArrayList<Teacher> teacherArrayList = new ArrayList<>();
+        MongoDBConnection mongoDBConnection = new MongoDBConnection(Constance.IP_ADDRESS, "Teacher", "Asessment");
+        DBCursor cursor = mongoDBConnection.getCursor();
+
+        ArrayList<Course> courseList = new ArrayList<>();
+
+        while (cursor.hasNext()) {
+
+            DBObject object = cursor.next();
+
+            Teacher teacher = new Teacher((String) object.get("name"));
+
+            BasicDBList list = (BasicDBList) object.get("course");
+            /*BasicDBList pointlist = (BasicDBList) object.get("point");
+
+            for (int j = 0; j < pointlist.size() ; j++) {
+
+                DBObject dbObject = (DBObject) pointlist.get(j);
+
+                Log.d("point", "getTeacherFromMongoDB: "+  dbObject.get("point") + dbObject.get("part"));
+            }*/
+
+            for (int i = 0; i <list.size() ; i++) {
+                DBObject dbObject = (DBObject) list.get(i);
+                String nameCourse = (String) dbObject.get("name");
+                String section = (String) dbObject.get("section");
+
+
+
+                Course course = new Course(nameCourse, section);
+                Log.d("pun", "getTeacherFromMongoDB: " +course.getName()+ " " + course.getSection());
+
+
+                teacher.addCourse(course);
+            }
+
+            teacherArrayList.add(teacher);
+            courseList.clear();
+        }
+
+
+
+        for (int i = 0; i < teacherArrayList.size(); i++) {
+            for (int j = 0; j < teacherArrayList.get(i).getCourses().size(); j++) {
+                for (int k = 0; k < student.getCourses().size(); k++) {
+                    if(student.getCourses().get(k).getName().equalsIgnoreCase(teacherArrayList.get(i).getCourses().get(j).getName()) &&
+                            student.getCourses().get(k).getSection().equalsIgnoreCase(teacherArrayList.get(i).getCourses().get(j).getSection())) {
+
+                        Log.d("pun", "getTeacherFromMongoDB: " + teacherArrayList.get(i).getName());
+                    }
+                }
+            }
+
+
+        }
+
+
+    }
+
 
     public void getData(){
 

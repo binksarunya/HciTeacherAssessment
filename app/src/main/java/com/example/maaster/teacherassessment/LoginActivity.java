@@ -1,17 +1,23 @@
 package com.example.maaster.teacherassessment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.maaster.teacherassessment.Model.Constance;
 import com.example.maaster.teacherassessment.Model.Course;
 import com.example.maaster.teacherassessment.Model.MongoDBConnection;
 import com.example.maaster.teacherassessment.Model.Student;
+import com.mongodb.BasicDBList;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -41,6 +47,30 @@ public class LoginActivity extends Activity {
     public void openListTeacher(View view) {
 
         createStudent();
+
+        if(student == null) {
+
+            final Dialog welcomedialog= new Dialog(this);
+            welcomedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            welcomedialog.setContentView(R.layout.welcome_dialog);
+            TextView studentname = (TextView)welcomedialog.findViewById(R.id.studentnameTextview);
+            TextView studentid = (TextView)welcomedialog.findViewById(R.id.studentIdTextview);
+            studentname.setText("รหัสผิดพลาด");
+            studentid.setText("กรุณาใส่รหัสใหม่");
+            Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept);
+            acceptbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    welcomedialog.dismiss();
+                }
+            });
+
+            welcomedialog.show();
+            return;
+
+        }
+
         Intent intent = new Intent(this, TeacherListActivity.class);
         intent.putExtra("student", student);
         intent.putParcelableArrayListExtra("course", courses);
@@ -50,19 +80,50 @@ public class LoginActivity extends Activity {
 
     public void createStudent() {
 
-       /* MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://192.168.1.39:27017"));
+        MongoDBConnection mongoDBConnection  = new MongoDBConnection(Constance.IP_ADDRESS, "Student", "Asessment");
+        DBCursor cursor = mongoDBConnection.getCursor();
 
-        DB db = mongoClient.getDB("test");
-        DBCollection dbCollection = db.getCollection("Student");
-        DBCursor cursor = dbCollection.find();
+       // Log.d(TAG, "createStudent: " + cursor.next().get("name"));
 
-        cursor.next();
+        TextView studetIdTextView = (TextView) findViewById(R.id.student_id_text);
+        TextView passwordTextView = (TextView) findViewById(R.id.passwaord_text);
 
-        DBObject object = cursor.next();
-        String name = (String) object.get("name");
+        while (cursor.hasNext()) {
 
-        Log.d("name", "createStudent: "+name);
-*/
+            DBObject object = cursor.next();
+
+            String id = (String) object.get("id");
+            String pass = (String) object.get("password");
+
+
+
+            if(studetIdTextView.getText().toString().equalsIgnoreCase(id) && passwordTextView.getText().toString().equalsIgnoreCase(pass)){
+
+
+                BasicDBList coursesDb = (BasicDBList) object.get("course");
+
+
+                for (int i = 0; i <coursesDb.size() ; i++) {
+                    DBObject courseObject = (DBObject) coursesDb.get(i);
+                    Course course = new Course((String)courseObject.get("name"), (String)courseObject.get("section"));
+                    courses.add(course);
+
+                }
+
+                Log.d(TAG, "createStudent: "+id+" "+pass);
+                student = new Student((String) object.get("name"), id, courses ,pass);
+
+
+                break;
+            }
+
+        }
+
+        mongoDBConnection.closeDB();
+
+
+
+/*
         String[] course = {
                 "CS374",
                 "CS374",
@@ -83,7 +144,7 @@ public class LoginActivity extends Activity {
             courses.add(courseStudent);
         }
 
-        student = new Student("ปัณวรรธน์ นกเกตุ", "5709680044", courses, "1234");
+        student = new Student("ปัณวรรธน์ นกเกตุ", "5709680044", courses, "1234");*/
 
     }
 }
