@@ -32,7 +32,7 @@ public class Teacher implements  Parcelable{
     protected Teacher(Parcel in) {
         name = in.readString();
         image = in.readString();
-        imageId = in.readInt();
+
     }
 
 
@@ -119,6 +119,6 @@ public class Teacher implements  Parcelable{
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
         parcel.writeString(image);
-        parcel.writeInt(imageId);
+
     }
 }

@@ -129,7 +129,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
 
             }
         });
-        
+
         final ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
         TextView txtTeacherName = (TextView) rowView.findViewById(R.id.name);
         TextView txtCourse = (TextView) rowView.findViewById(R.id.course);
@@ -141,20 +141,20 @@ public class CustomListActivity extends ArrayAdapter<String>{
             public void onClick(View v) {
 
                 if(isStoragePermissionGranted()) {
-                    Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-                    zoomImageFromThumb(zoombtn, getImageUri(context, bitmap));
+
+                    zoomImageFromThumb(zoombtn, teachers.get(position).getImage());
 
                     zoomout.setVisibility(View.VISIBLE);
                 }
             }
         });
         txtTeacherName.setText(teachers.get(position).getName());
-        Log.d(TAG, teachers.get(position).getName());
+
         txtCourse.setText("รายวิชา "+course[position]);
         txtSection.setText("Section "+section[position]);
-        imageView.setImageResource(teachers.get(position).getImageId());
 
-       // Picasso.with(context).load("http://www.cs.tu.ac.th/uploads/articles_icon/1446541947.jpg").into(imageView);
+
+        Picasso.with(context).load(teachers.get(position).getImage()).into(imageView);
 
 
 
@@ -200,7 +200,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
     }//cast bitmap to uri
 
 
-    protected   void zoomImageFromThumb(final View thumbView, Uri uri) {
+    protected   void zoomImageFromThumb(final View thumbView, String uri) {
         // If there's an animation in progress, cancel it
         // immediately and proceed with this one.
 

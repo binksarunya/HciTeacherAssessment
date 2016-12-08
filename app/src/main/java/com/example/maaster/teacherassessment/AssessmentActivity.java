@@ -108,11 +108,12 @@ public class AssessmentActivity extends AppCompatActivity {
         TextView section = (TextView) findViewById(R.id.section_teacher);
         TextView courseText = (TextView) findViewById(R.id.course_teacher);
 
-        imageView.setImageResource(teacher.getImageId());
+        Picasso.with(context).load(teacher.getImage()).into(imageView);
+
         textView.setText(teacher.getName());
         courseText.setText("วิชา " + course.getName());
         section.setText("Section " + course.getSection());
-        imageView.setImageResource(teacher.getImageId());
+
         textView.setText(teacher.getName());
 
         backfirst=0;

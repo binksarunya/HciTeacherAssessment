@@ -49,10 +49,8 @@ public class TeacherListActivity extends AppCompatActivity {
     private ImageView iv, imageView;
     private boolean checkfirst =true;
     private boolean checkassessmentcomplete = false;
-
+    private int count = 0;
     private int position;
-
-
     private static HashMap<String,ArrayList<Question>> TeacherResult;
 
 
@@ -167,7 +165,6 @@ public class TeacherListActivity extends AppCompatActivity {
     }
 
     public void getTeacherFromMongoDB() {
-
         ArrayList<Teacher> teacherArrayList = new ArrayList<>();
         MongoDBConnection mongoDBConnection = new MongoDBConnection(Constance.IP_ADDRESS, "Teacher", "Asessment");
         DBCursor cursor = mongoDBConnection.getCursor();
@@ -179,28 +176,16 @@ public class TeacherListActivity extends AppCompatActivity {
             DBObject object = cursor.next();
 
             Teacher teacher = new Teacher((String) object.get("name"));
-
+            teacher.setImage((String) object.get("image"));
             BasicDBList list = (BasicDBList) object.get("course");
-            /*BasicDBList pointlist = (BasicDBList) object.get("point");
-
-            for (int j = 0; j < pointlist.size() ; j++) {
-
-                DBObject dbObject = (DBObject) pointlist.get(j);
-
-                Log.d("point", "getTeacherFromMongoDB: "+  dbObject.get("point") + dbObject.get("part"));
-            }*/
 
             for (int i = 0; i <list.size() ; i++) {
                 DBObject dbObject = (DBObject) list.get(i);
+
                 String nameCourse = (String) dbObject.get("name");
                 String section = (String) dbObject.get("section");
 
-
-
                 Course course = new Course(nameCourse, section);
-                Log.d("pun", "getTeacherFromMongoDB: " +course.getName()+ " " + course.getSection());
-
-
                 teacher.addCourse(course);
             }
 
@@ -208,20 +193,37 @@ public class TeacherListActivity extends AppCompatActivity {
             courseList.clear();
         }
 
+        ArrayList<String> nameString = new ArrayList<>();
+        ArrayList<String> sectionString = new ArrayList<>();
+        ArrayList<String> courseString = new ArrayList<>();
 
-
+        teachers = new ArrayList<>();
         for (int i = 0; i < teacherArrayList.size(); i++) {
             for (int j = 0; j < teacherArrayList.get(i).getCourses().size(); j++) {
                 for (int k = 0; k < student.getCourses().size(); k++) {
                     if(student.getCourses().get(k).getName().equalsIgnoreCase(teacherArrayList.get(i).getCourses().get(j).getName()) &&
                             student.getCourses().get(k).getSection().equalsIgnoreCase(teacherArrayList.get(i).getCourses().get(j).getSection())) {
 
-                        Log.d("pun", "getTeacherFromMongoDB: " + teacherArrayList.get(i).getName());
+                        count++;
+
+                        teachers.add(teacherArrayList.get(i));
+                        Log.d("pun", "getTeacherFromMongoDB: " + student.getCourses().get(k).getName());
+                        Log.d("pun", "getTeacherFromMongoDB: " + student.getCourses().get(k).getSection());
+                        courseString.add(student.getCourses().get(k).getName());
+                        sectionString.add(student.getCourses().get(k).getSection());
+
                     }
                 }
             }
+        }
 
+        courseName = new String[courseString.size()];
+        section = new String[sectionString.size()];
+        Log.d(TAG, "getTeacherFromMongoDB: "+ student.getCourses().size());
 
+        for (int i = 0; i < courseString.size() ; i++) {
+            courseName[i] = courseString.get(i);
+            section[i] = sectionString.get(i);
         }
 
 
