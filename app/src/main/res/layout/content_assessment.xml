@@ -10,8 +10,6 @@
     tools:showIn="@layout/activity_assessment">
 
 
-
-
     <LinearLayout
 
         android:layout_width="match_parent"
@@ -21,7 +19,7 @@
         <ImageView
             android:id="@+id/status_image"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="@dimen/_45sdp"
             android:layout_marginTop="10dp"
             android:src="@drawable/assessment_status"
             android:layout_gravity="center"/>
@@ -107,21 +105,23 @@
                     android:id="@+id/article_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1/5"
+                    android:text="1/23"
                     android:textSize="15dp"
                     android:layout_gravity="right"
                     android:padding="10dp"/>
 
                 <TextView
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:layout_marginLeft="@dimen/_15sdp"
                     android:id="@+id/article_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
                     android:text="1.สอนอย่างมีระบบ"
                     android:textSize="18dp"/>
 
                 <RadioGroup
-                    android:layout_marginTop="@dimen/_39sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:id="@+id/radio_group"
                     android:layout_width="wrap_content"
@@ -221,7 +221,7 @@
 
 
                 <RelativeLayout
-                    android:layout_marginTop="@dimen/_17sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center">
@@ -340,6 +340,44 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/part_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="invisible"
+                android:background="@drawable/quesion_shape"
+
+                android:layout_alignTop="@+id/linearLayout"
+                android:layout_alignLeft="@+id/linearLayout"
+                android:layout_alignStart="@+id/linearLayout"
+                android:layout_alignBottom="@+id/linearLayout"
+                android:layout_alignRight="@+id/linearLayout"
+                android:layout_alignEnd="@+id/linearLayout">
+
+                <TextView
+                    android:layout_marginTop="@dimen/_70sdp"
+                    android:gravity="center_vertical"
+                    android:id="@+id/part_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text=""
+                    android:textSize="@dimen/_18sdp"/>
+
+                <TextView
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:gravity="center_vertical"
+                    android:id="@+id/part_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text=""
+                    android:textSize="@dimen/_18sdp"/>
+
+
+            </LinearLayout>
+
 
         </RelativeLayout>
 
@@ -354,12 +392,6 @@
         android:layout_centerHorizontal="true">
 
         <ImageView
-            android:id="@+id/expand_image2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-
-        <ImageView
             android:layout_width="@dimen/_60sdp"
             android:layout_height="@dimen/_60sdp"
             app:srcCompat="@drawable/zoomout"
@@ -370,9 +402,16 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
+        <ImageView
+            android:id="@+id/expand_image2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
 
     </RelativeLayout>
-
 
 </RelativeLayout>
 

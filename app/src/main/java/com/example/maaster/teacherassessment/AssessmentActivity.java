@@ -62,7 +62,13 @@ public class AssessmentActivity extends AppCompatActivity {
 
     private Teacher teacher;
     private final String TAG = "click";
-    final String[] answer = {"1.สอนอย่างเป็นระบบ", "2.สอนให้คิดวิเคราะห์ วิจารณ์", "3.วิธีสอนให้น่าสนใจเเละน่าติดตาม", "4.จัดให้แสดงความคิดเห็น", "5.สามารถประเมินความเข้าใจ"};
+
+    /*8 19  */
+    final String[] answer = {"1.สอนอย่างเป็นระบบ", "2.สอนให้คิดวิเคราะห์ วิจารณ์", "3.วิธีสอนให้น่าสนใจเเละน่าติดตาม", "4.จัดให้แสดงความคิดเห็น", "5.สามารถประเมินความเข้าใจ",
+                                "6.ทำให้เห็นความสัมพันธ์กับวิชาอื่นที่เกี่ยวข้อง", "7.ใช้สื่อและอุปกรณ์ช่วยสอนได้ดี","8.แนะนำแหล่งค้นคว้าข้อมูลเพิ่มเติมให้","1.ผู้สอนแจ้งวัตถุประสงค์และเนื้อหาตามเค้าโครงการสอนอย่างชัดเจน","2.ผู้สอนแจ้งเกณฑ์และวิธีประเมินผล ล่วงหน้าชัดเจน",
+    "3.ผู้สอนเข้าสอนและเลิกสอนตรงเวลา","4.ผู้สอนมาสอนสม่ำเสมอ","5.ผู้สอนสอนเนื้อหาครบถ้วนและสอดคล้องตามเค้าโครงการสอน","6.ผู้สอนมีการเตรียมการสอนมาอย่างดี","7.ผู้สอนชี้แนะจุดมุ่งหมายหรือข้อสรุปที่เป็นเนื้อหาสาระสำคัญ",
+    "8.ผู้สอนแทรกเนื้อหาเกี่ยวกับคุณธรรมจริยธรรมในการเรียนการสอน","9.อาจารย์ให้คำปรึกษาและช่วยเหลือนักศึกษาในห้องฝึกปฏิบัติ","10.อาจารย์ตรวจงาน และให้ข้อคิดเห็นที่เป็นประโยชน์","11.อาจารย์ให้เวลานักศึกษาตลอดการปฏิบัติงาน","1.อุปกรณ์ช่วยสอนในห้องเรียนมีคุณภาพพร้อมใช้งาน",
+    "2.สภาพห้องเรียนหรือห้องปฏิบัติการมีคุณภาพพร้อมใช้งาน","3.จำนวนอุปกรณ์ในการเรียนการสอนเพียงพอและเหมาะสมต่อจำนวน","4.เจ้าหน้าที่อำนวยความสะดวกในการให้บริการ"};
     private ArrayList<Question> questions; 
     int k = 0;
     private Animator mCurrentAnimator;
@@ -104,6 +110,27 @@ public class AssessmentActivity extends AppCompatActivity {
         course = courses.get(position);
         check = getIntent().getExtras().getBoolean("check");
 
+
+        LinearLayout layout = (LinearLayout) findViewById(R.id.part_layout);
+        layout.setVisibility(View.VISIBLE);
+
+        TextView partTextView = (TextView) findViewById(R.id.part_text);
+        partTextView.setText(part[partIndex]);
+        TextView partTitleTextView = (TextView) findViewById(R.id.part_title);
+        partTitleTextView.setText(parttitle[partIndex]);
+        partIndex++;
+
+        new CountDownTimer(1900, 1500) {
+            @Override
+            public void onTick(long l) {}
+            @Override
+            public void onFinish() {
+
+                LinearLayout layout = (LinearLayout) findViewById(R.id.part_layout);
+                layout.setVisibility(View.INVISIBLE);
+
+            }
+        }.start();
         assessmentCheck();
 
         ImageView imageView = (ImageView) findViewById(R.id.image_teacher);
@@ -170,12 +197,16 @@ public class AssessmentActivity extends AppCompatActivity {
 
     public void createQuestion() {
         questions = new ArrayList<>();
-        for (int i = 0; i <5 ; i++) {
+        for (int i = 0; i <answer.length ; i++) {
             questions.add(new Question((i+1)+"", answer[i]));
         }
     }
 
+    String part[] = {"ข้อคำถามกลางของมหาวิทยาลัย","ข้อคำถามของคณะ/หน่วยงาน","สภาพแวดล้อมและสิ่งสนับสนุนการเรียนรู้"};
+    String parttitle[] = {"ส่วนที่ 1","ส่วนที่ 2","ส่วนที่ 3"};
 
+
+    int partIndex = 0;
 
     public void assessmentCheck() {
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
@@ -243,10 +274,40 @@ public class AssessmentActivity extends AppCompatActivity {
                                             ((RadioButton) radioGroup.getChildAt(questions.get(k).getAnswer())).setChecked(true);
                                         }
 
+
+                                        if(k==8 || k==19 ) {
+
+                                            LinearLayout layout = (LinearLayout) findViewById(R.id.part_layout);
+                                            layout.setVisibility(View.VISIBLE);
+
+                                            TextView textView = (TextView) findViewById(R.id.part_text);
+                                            textView.setText(part[partIndex]);
+                                            TextView partTitleTextView = (TextView) findViewById(R.id.part_title);
+                                            partTitleTextView.setText(parttitle[partIndex]);
+                                            partIndex++;
+
+                                            new CountDownTimer(1900, 1500) {
+                                                @Override
+                                                public void onTick(long l) {}
+                                                @Override
+                                                public void onFinish() {
+
+                                                    LinearLayout layout = (LinearLayout) findViewById(R.id.part_layout);
+                                                    layout.setVisibility(View.INVISIBLE);
+
+                                                }
+                                            }.start();
+
+
+                                        }
+
+
+
                                         backIcon = (Button) findViewById(R.id.back_icon);
                                         backIcon.setVisibility(View.VISIBLE);
                                         TextView textView = (TextView) findViewById(R.id.article_text);
                                         textView.setText(questions.get(k).getDetail());
+
                                         TextView textView1 = (TextView) findViewById(R.id.article_num);
                                         textView1.setText(questions.get(k).getNo()+"/"+questions.size());
 
@@ -266,6 +327,8 @@ public class AssessmentActivity extends AppCompatActivity {
 
 
     }
+
+
 
     public void completeAssess () {
 

@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:text="สรุปผลการทำ"
+        android:text="สรุปผลการประเมิน"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         android:textSize="@dimen/_25sdp"
