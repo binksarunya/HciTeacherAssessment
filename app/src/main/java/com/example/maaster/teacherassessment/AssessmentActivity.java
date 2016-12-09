@@ -136,7 +136,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
                 if(isStoragePermissionGranted()) {
                     Bitmap bitmap = ((BitmapDrawable) imageteacher.getDrawable()).getBitmap();
-                    zoomImageFromThumb(zoombtn, getImageUri(context, bitmap));
+                    zoomImageFromThumb(zoombtn, teacher.getImage());
                 }
 
             }
@@ -504,7 +504,7 @@ public class AssessmentActivity extends AppCompatActivity {
     }//cast bitmap to uri
 
 
-    protected   void zoomImageFromThumb(final View thumbView, Uri uri) {
+    protected   void zoomImageFromThumb(final View thumbView, String uri) {
         // If there's an animation in progress, cancel it
         // immediately and proceed with this one.
 

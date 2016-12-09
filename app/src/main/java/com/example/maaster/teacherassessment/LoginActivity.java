@@ -3,7 +3,9 @@ package com.example.maaster.teacherassessment;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Parcelable;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -55,6 +57,10 @@ public class LoginActivity extends Activity {
 
     public void openListTeacher(View view) {
 
+        if(isNetworkAvailable(this)) {
+
+
+
         if(check)
         createStudent();
 
@@ -62,12 +68,14 @@ public class LoginActivity extends Activity {
 
             final Dialog welcomedialog= new Dialog(this);
             welcomedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            welcomedialog.setContentView(R.layout.welcome_dialog);
-            TextView studentname = (TextView)welcomedialog.findViewById(R.id.studentnameTextview);
-            TextView studentid = (TextView)welcomedialog.findViewById(R.id.studentIdTextview);
-            studentname.setText("รหัสผิดพลาด");
-            studentid.setText("กรุณาใส่รหัสใหม่");
-            Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept);
+            welcomedialog.setContentView(R.layout.dialog_warn);
+
+            TextView title = (TextView) welcomedialog.findViewById(R.id.title_warn);
+            TextView sub = (TextView) welcomedialog.findViewById(R.id.subtitle_warn);
+            title.setText("มีข้อผิดพลาด");
+            sub.setText("กรุณาตรวจสอบเลขนักศึกษาเเละรหัสผ่าน");
+
+            Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept_warn);
             acceptbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -91,6 +99,30 @@ public class LoginActivity extends Activity {
         pd.setMessage("กำลังเข้าสู่ระบบ");
         pd.show();
         startActivity(intent);
+        } else {
+            final Dialog welcomedialog= new Dialog(this);
+            welcomedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            welcomedialog.setContentView(R.layout.dialog_warn);
+
+            TextView title = (TextView) welcomedialog.findViewById(R.id.title_warn);
+            TextView sub = (TextView) welcomedialog.findViewById(R.id.subtitle_warn);
+            title.setText("ไม่มีการเชือมต่อเครือยข่าย");
+            sub.setText("กรุณาเชื่อมต่อกับเครือข่าย");
+
+            Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept_warn);
+            acceptbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    welcomedialog.dismiss();
+                }
+            });
+
+            welcomedialog.show();
+            return;
+
+        }
+
     }
 
     public void createStudent() {
@@ -171,5 +203,10 @@ public class LoginActivity extends Activity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public boolean isNetworkAvailable(final Context context) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 }
