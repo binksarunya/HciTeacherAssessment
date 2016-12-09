@@ -41,6 +41,7 @@
                 android:src="@drawable/student_login"/>
 
             <EditText
+                android:text=""
                 android:id="@+id/student_id_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,16 +51,28 @@
                 android:maxLines="1"
                 android:inputType="number"
                 android:backgroundTint="#d94130"
-                android:textColorHint="#d94130"
+                android:textColorHint="#878686"
                 android:textColor="#d94130"
                 android:textCursorDrawable="@drawable/cursor_color"/>
+
         </LinearLayout>
+
+        <TextView
+            android:visibility="invisible"
+            android:layout_marginLeft="@dimen/_80sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="*รหัสนักศึกษาไม่ถูกต้อง"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="#ff0000"
+            android:id="@+id/wrong_id_text"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_gravity="center">
@@ -71,6 +84,8 @@
                 android:src="@drawable/password_icon"/>
 
             <EditText
+                android:text=""
+                android:textColorHint="#878686"
                 android:id="@+id/passwaord_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -79,12 +94,23 @@
                 android:textSize="18dp"
                 android:maxLines="1"
                 android:backgroundTint="#d94130"
-                android:textColorHint="#d94130"
                 android:inputType="textPassword"
                 android:textColor="#d94130"
-
                 android:textCursorDrawable="@drawable/cursor_color"/>
         </LinearLayout>
+
+        <TextView
+            android:visibility="invisible"
+            android:layout_marginLeft="@dimen/_80sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="*รหัสผ่านไม่ถูกต้อง"
+            android:textColor="#ff0000"
+            android:id="@+id/wrong_pass_text"
+            android:textSize="@dimen/_12sdp"
+            />
+
 
         <LinearLayout
 

@@ -333,7 +333,7 @@ public class TeacherListActivity extends AppCompatActivity {
         TextView complete = (TextView)welcomedialog.findViewById(R.id.tltle) ;
         TextView studentname = (TextView)welcomedialog.findViewById(R.id.detail);
 
-        complete.setText("ท่ายังประเมินอาจารย์ไม่ครบ");
+        complete.setText("ท่านยังประเมินอาจารย์ไม่ครบ");
         studentname.setText("ท่านต้องการออกจากระบบหรือไม่");
         complete.setTextSize(18);
         studentname.setTextSize(15);

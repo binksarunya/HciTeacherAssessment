@@ -15,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.maaster.teacherassessment.Model.Constance;
@@ -61,31 +62,70 @@ public class LoginActivity extends Activity {
 
 
 
-        if(check)
-        createStudent();
+        if(check) {
+            createStudent();
+        }
 
-        if(student == null) {
 
-            final Dialog welcomedialog= new Dialog(this);
-            welcomedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            welcomedialog.setContentView(R.layout.dialog_warn);
+        if(student == null){
 
-            TextView title = (TextView) welcomedialog.findViewById(R.id.title_warn);
-            TextView sub = (TextView) welcomedialog.findViewById(R.id.subtitle_warn);
-            title.setText("มีข้อผิดพลาด");
-            sub.setText("กรุณาตรวจสอบเลขนักศึกษาเเละรหัสผ่าน");
 
-            Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept_warn);
-            acceptbtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            EditText idEditText = (EditText) findViewById(R.id.student_id_text);
+            EditText passEditText = (EditText) findViewById(R.id.passwaord_text);
 
-                    welcomedialog.dismiss();
-                }
-            });
+            Log.d(TAG, "openListTeacher: 5555555555"+idEditText.getText()+"555555555");
 
-            welcomedialog.show();
-            return;
+
+            if(idEditText.getText().length()==0 && passEditText.getText().length()==0) {
+                TextView id = (TextView) findViewById(R.id.wrong_id_text);
+                id.setText("*กรุณากรอกรหัสนักศึกษา");
+                id.setVisibility(View.VISIBLE);
+
+                TextView pass = (TextView) findViewById(R.id.wrong_pass_text);
+                pass.setText("*กรุณากรอกรหัสผ่าน");
+                pass.setVisibility(View.VISIBLE);
+
+                Log.d("pun", "openListTeacher: ");
+
+                return;
+            }
+
+            if(idEditText.getText().length()==0) {
+                TextView id = (TextView) findViewById(R.id.wrong_id_text);
+                id.setText("*กรุณากรอกรหัสนักศึกษา");
+                id.setVisibility(View.VISIBLE);
+                Log.d("pun", "openListTeacher: ");
+
+                return;
+
+            }
+            if(passEditText.getText().length()==0) {
+                TextView pass = (TextView) findViewById(R.id.wrong_pass_text);
+                pass.setText("*กรุณากรอกรหัสผ่าน");
+                pass.setVisibility(View.VISIBLE);
+                Log.d("pun", "openListTeacher: ");
+
+                return;
+            }
+
+
+            if(!checkId) {
+                TextView id = (TextView) findViewById(R.id.wrong_id_text);
+                id.setText("*รหัสนักศึกษาไม่ถูกต้อง");
+                id.setVisibility(View.VISIBLE);
+
+                return;
+
+            }
+
+            if(!checkPass) {
+
+                TextView pass = (TextView) findViewById(R.id.wrong_pass_text);
+                pass.setVisibility(View.VISIBLE);
+                pass.setText("*รหัสผ่านไม่ถูกต้อง");
+
+                return;
+            }
 
         }
 
@@ -125,7 +165,19 @@ public class LoginActivity extends Activity {
 
     }
 
+    private boolean checkId = false;
+    private boolean checkPass = false;
+
     public void createStudent() {
+
+        TextView passTextView = (TextView) findViewById(R.id.wrong_pass_text);
+        passTextView.setVisibility(View.INVISIBLE);
+
+        TextView idTextView = (TextView) findViewById(R.id.wrong_id_text);
+        idTextView.setVisibility(View.INVISIBLE);
+
+        checkId = false;
+        checkPass = false;
 
         MongoDBConnection mongoDBConnection  = new MongoDBConnection(Constance.IP_ADDRESS, "Student", "Asessment");
         DBCursor cursor = mongoDBConnection.getCursor();
@@ -143,24 +195,30 @@ public class LoginActivity extends Activity {
 
 
 
-            if(studetIdTextView.getText().toString().equalsIgnoreCase(id) && passwordTextView.getText().toString().equalsIgnoreCase(pass)){
+            if(studetIdTextView.getText().toString().equalsIgnoreCase(id)) {
+
+                checkId = true;
+
+                if (passwordTextView.getText().toString().equalsIgnoreCase(pass)) {
+
+                    checkPass =true;
+                    BasicDBList coursesDb = (BasicDBList) object.get("course");
 
 
-                BasicDBList coursesDb = (BasicDBList) object.get("course");
+                    for (int i = 0; i < coursesDb.size(); i++) {
+                        DBObject courseObject = (DBObject) coursesDb.get(i);
+                        Course course = new Course((String) courseObject.get("name"), (String) courseObject.get("section"));
 
+                        Log.d("course", "getView: " + course.getName());
 
-                for (int i = 0; i <coursesDb.size() ; i++) {
-                    DBObject courseObject = (DBObject) coursesDb.get(i);
-                    Course course = new Course((String)courseObject.get("name"), (String)courseObject.get("section"));
+                        courses.add(course);
 
-                        Log.d("course", "getView: "+ course.getName());
+                    }
 
-                    courses.add(course);
-
+                    student = new Student((String) object.get("name"), id, courses, pass);
+                    break;
                 }
 
-                student = new Student((String) object.get("name"), id, courses ,pass);
-                break;
             }
 
         }
