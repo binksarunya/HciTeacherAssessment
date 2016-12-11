@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
@@ -23,6 +24,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +40,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.maaster.teacherassessment.Model.Constance;
 import com.example.maaster.teacherassessment.Model.Course;
 import com.example.maaster.teacherassessment.Model.Question;
 import com.example.maaster.teacherassessment.Model.Student;
@@ -92,6 +95,24 @@ public class CustomListActivity extends ArrayAdapter<String>{
 
 
     }
+    private void showSnack() {
+        String message="";
+        int color = 0;
+
+        message = "ไม่มีการเชื่อมต่อเครือข่ายกับข้อมูลอิเตอร์เน็ต";
+        color = Color.WHITE;
+
+
+        Snackbar snackbar = Snackbar
+                .make(context.findViewById(R.id.expand_image), message, Snackbar.LENGTH_LONG);
+
+        View sbView = snackbar.getView();
+        sbView.setAlpha((float) 0.8);
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
+    }
+
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
@@ -115,6 +136,13 @@ public class CustomListActivity extends ArrayAdapter<String>{
                     return;
                 }
                 else{
+
+
+                    if (!Constance.isNetworkAvailable(context)) {
+                        showSnack();
+                        return;
+                    }
+
                     Intent intent = new Intent(context, AssessmentActivity.class);//put extra
                     intent.putExtra("teacher", teachers.get(position));
                     intent.putExtra("student", student);
@@ -141,12 +169,9 @@ public class CustomListActivity extends ArrayAdapter<String>{
             @Override
             public void onClick(View v) {
 
-                if(isStoragePermissionGranted()) {
-
                     zoomImageFromThumb(zoombtn, teachers.get(position).getImage());
-
                     zoomout.setVisibility(View.VISIBLE);
-                }
+
             }
         });
         txtTeacherName.setText(teachers.get(position).getName());

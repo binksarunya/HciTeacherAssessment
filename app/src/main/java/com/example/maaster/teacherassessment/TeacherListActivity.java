@@ -156,6 +156,26 @@ public class TeacherListActivity extends AppCompatActivity {
 
     }
 
+
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (!Constance.isNetworkAvailable(this))
+            showSnack();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // register connection status listener
+        if (!Constance.isNetworkAvailable(this))
+            showSnack();
+
+    }
+
     public void getTeacherFromDB() {
         String url[] = {"http://www.cs.tu.ac.th/uploads/articles_icon/1446541817.jpg",
                         "http://www.cs.tu.ac.th/uploads/articles_icon/1446542136.jpg",
@@ -276,7 +296,31 @@ public class TeacherListActivity extends AppCompatActivity {
 
     }
 
+    private void showSnack() {
+        String message="";
+        int color = 0;
+
+        message = "ไม่มีการเชื่อมต่อเครือข่ายกับข้อมูลอิเตอร์เน็ต";
+        color = Color.WHITE;
+
+
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.expand_image), message, Snackbar.LENGTH_LONG);
+
+        View sbView = snackbar.getView();
+        sbView.setAlpha((float) 0.8);
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
+    }
+
     public void onClickLogout(View view){
+
+        if (!Constance.isNetworkAvailable(this)){
+            showSnack();
+            return;
+        }
+
 
         if(checkassessmentcomplete==false){
             showNoComplete();
@@ -287,6 +331,11 @@ public class TeacherListActivity extends AppCompatActivity {
     }
 
     public void checkLogout() {
+
+        if (!Constance.isNetworkAvailable(this)) {
+            showSnack();
+            return;
+        }
         final Dialog welcomedialog= new Dialog(this);
         welcomedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         welcomedialog.setContentView(R.layout.no_complete_dialog);
