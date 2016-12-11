@@ -113,13 +113,9 @@ public class CustomListActivity extends ArrayAdapter<String>{
 
                 if(courses.get(position).getComplete() == 1) {
 
-
                     Log.d(TAG, "oncheckQues: "+teacherresult.get(String.valueOf(position)).get(0).getAnswer());
 
                    showResultAssess(teacherresult,position);
-
-
-
                 }
                 else{
                     Intent intent = new Intent(context, AssessmentActivity.class);//put extra
