@@ -20,7 +20,7 @@
             android:background="?attr/colorPrimary"
             android:weightSum="1"
             android:visibility="visible"
-            android:paddingLeft="20dp">
+            android:paddingLeft="18dp">
 
 
                 <ImageView
