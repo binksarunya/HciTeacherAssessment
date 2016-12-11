@@ -2,6 +2,7 @@ package com.example.maaster.teacherassessment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,11 @@ public class ListQuestionActivity extends ArrayAdapter<String> {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView= inflater.inflate(R.layout.question_list_single, null, true);
         TextView question = (TextView)rowView.findViewById(R.id.question);
-        question.setText("  "+questions.get(position).getDetail());
+        if(position==9 || position==21 || position==0) {
+            question.setTypeface(null, Typeface.BOLD);
+        }
+        question.setText(questionsDetail[position]);
+
 
         return rowView;
     }

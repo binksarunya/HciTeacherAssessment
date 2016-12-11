@@ -161,10 +161,10 @@ public class AssessmentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(isStoragePermissionGranted()) {
-                    Bitmap bitmap = ((BitmapDrawable) imageteacher.getDrawable()).getBitmap();
+
                     zoomImageFromThumb(zoombtn, teacher.getImage());
-                }
+
+
 
             }
         });
@@ -181,7 +181,7 @@ public class AssessmentActivity extends AppCompatActivity {
         dialog.setTitle("รายการคำถาม");
         //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         ListView lv = (ListView ) dialog.findViewById(R.id.ls_view_question);
-        ListQuestionActivity adapter = new ListQuestionActivity(this, answer,  questions);
+        ListQuestionActivity adapter = new ListQuestionActivity(this, answerLsit,  questions);
         lv.setAdapter(adapter);
 
         Button confirmbtn = (Button)dialog.findViewById(R.id.list_confirm_btn) ;
@@ -204,6 +204,12 @@ public class AssessmentActivity extends AppCompatActivity {
 
     String part[] = {"ข้อคำถามกลางของมหาวิทยาลัย","ข้อคำถามของคณะ/หน่วยงาน","สภาพแวดล้อมและสิ่งสนับสนุนการเรียนรู้"};
     String parttitle[] = {"ส่วนที่ 1","ส่วนที่ 2","ส่วนที่ 3"};
+
+    final String[] answerLsit = {"ส่วนที่ 1 ข้อคำถามกลางของมหาวิทยาลัย", "1.สอนอย่างเป็นระบบ", "2.สอนให้คิดวิเคราะห์ วิจารณ์", "3.วิธีสอนให้น่าสนใจเเละน่าติดตาม", "4.จัดให้แสดงความคิดเห็น", "5.สามารถประเมินความเข้าใจ",
+            "6.ทำให้เห็นความสัมพันธ์กับวิชาอื่นที่เกี่ยวข้อง", "7.ใช้สื่อและอุปกรณ์ช่วยสอนได้ดี","8.แนะนำแหล่งค้นคว้าข้อมูลเพิ่มเติมให้","ส่วนที่ 2 ข้อคำถามของคณะ/หน่วยงาน", "1.ผู้สอนแจ้งวัตถุประสงค์และเนื้อหาตามเค้าโครงการสอนอย่างชัดเจน","2.ผู้สอนแจ้งเกณฑ์และวิธีประเมินผล ล่วงหน้าชัดเจน",
+            "3.ผู้สอนเข้าสอนและเลิกสอนตรงเวลา","4.ผู้สอนมาสอนสม่ำเสมอ","5.ผู้สอนสอนเนื้อหาครบถ้วนและสอดคล้องตามเค้าโครงการสอน","6.ผู้สอนมีการเตรียมการสอนมาอย่างดี","7.ผู้สอนชี้แนะจุดมุ่งหมายหรือข้อสรุปที่เป็นเนื้อหาสาระสำคัญ",
+            "8.ผู้สอนแทรกเนื้อหาเกี่ยวกับคุณธรรมจริยธรรมในการเรียนการสอน","9.อาจารย์ให้คำปรึกษาและช่วยเหลือนักศึกษาในห้องฝึกปฏิบัติ","10.อาจารย์ตรวจงาน และให้ข้อคิดเห็นที่เป็นประโยชน์","11.อาจารย์ให้เวลานักศึกษาตลอดการปฏิบัติงาน","ส่วนที่ 3 สภาพแวดล้อมและสิ่งสนับสนุนการเรียนรู้","1.อุปกรณ์ช่วยสอนในห้องเรียนมีคุณภาพพร้อมใช้งาน",
+            "2.สภาพห้องเรียนหรือห้องปฏิบัติการมีคุณภาพพร้อมใช้งาน","3.จำนวนอุปกรณ์ในการเรียนการสอนเพียงพอและเหมาะสมต่อจำนวน","4.เจ้าหน้าที่อำนวยความสะดวกในการให้บริการ"};
 
 
     int partIndex = 0;
@@ -425,7 +431,7 @@ public class AssessmentActivity extends AppCompatActivity {
         dialog.setTitle("สรุปผลการทำ");
         //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         ListView lv = (ListView ) dialog.findViewById(R.id.lv_confirm);
-        EditAssesListActivity adapter = new EditAssesListActivity(this,answer,questions);
+        EditAssesListActivity adapter = new EditAssesListActivity(this,answerLsit,questions);
         lv.setAdapter(adapter);
 
         Button confirmbtn = (Button)dialog.findViewById(R.id.button2) ;
@@ -465,7 +471,7 @@ public class AssessmentActivity extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.edit_dialog);
         ListView lv = (ListView ) dialog.findViewById(R.id.lv);
-        EditAssesListActivity adapter = new EditAssesListActivity(this,answer,questions);
+        EditAssesListActivity adapter = new EditAssesListActivity(this,answerLsit,questions);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
@@ -567,7 +573,7 @@ public class AssessmentActivity extends AppCompatActivity {
     }//cast bitmap to uri
 
 
-    protected   void zoomImageFromThumb(final View thumbView, String uri) {
+    protected void zoomImageFromThumb(final View thumbView, String uri) {
         // If there's an animation in progress, cancel it
         // immediately and proceed with this one.
 

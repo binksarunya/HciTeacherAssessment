@@ -394,7 +394,7 @@
         <ImageView
             android:layout_width="@dimen/_60sdp"
             android:layout_height="@dimen/_60sdp"
-            app:srcCompat="@drawable/zoomout"
+            android:src="@drawable/zoomout"
             android:id="@+id/zoomout"
             android:visibility="invisible"
             android:layout_marginBottom="10dp"
