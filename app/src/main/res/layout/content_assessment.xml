@@ -118,7 +118,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1.สอนอย่างมีระบบ"
-                    android:textSize="18dp"/>
+                    android:textSize="18dp"
+                    android:paddingRight="8dp" />
 
                 <RadioGroup
                     android:layout_marginTop="@dimen/_15sdp"
@@ -373,7 +374,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text=""
-                    android:textSize="@dimen/_18sdp"/>
+                    android:textSize="@dimen/_18sdp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp" />
 
 
             </LinearLayout>
