@@ -59,6 +59,19 @@ public class EditAssesListActivity extends ArrayAdapter<String> {
         TextView point = (TextView)rowView.findViewById(R.id.point);
         point.setText(points[position]);
         question.setText(questionsDetail[position]);
+       /* TextView group = (TextView)rowView.findViewById(R.id.textView3);
+        if(position==0){
+            group.setText("ข้อคำถามกลางของมหาวิทยาลัย");
+            group.setVisibility(View.VISIBLE);
+        }
+        if(position==8){
+            group.setText("ข้อคำถามของคณะ/หน่วยงาน");
+            group.setVisibility(View.VISIBLE);
+        }
+        if(position==19){
+            group.setText("สภาพแวดล้อมและสิ่งสนับสนุนการเรียนรู้");
+            group.setVisibility(View.VISIBLE);
+        }*/
 
 
 

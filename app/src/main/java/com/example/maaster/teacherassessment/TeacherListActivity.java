@@ -96,7 +96,9 @@ public class TeacherListActivity extends AppCompatActivity {
         teachers = new ArrayList<>();
         courses = new ArrayList<>();
         student = getIntent().getExtras().getParcelable("student");
+        Log.d(TAG, "Checkcourse "+courses.size());
         courses = getIntent().getExtras().getParcelableArrayList("course");
+
         student.setCourses(courses);
         checkfirst = getIntent().getExtras().getBoolean("checkfirst");
 
@@ -127,7 +129,6 @@ public class TeacherListActivity extends AppCompatActivity {
         if(checkfirst==true) {
             showStudentDialog(student);
         }
-        Log.d("check", "onCreate: "+check);
 
         if(check) {
             getTeacherFromMongoDB();
@@ -137,6 +138,7 @@ public class TeacherListActivity extends AppCompatActivity {
         getData();
 
         for (int i = 0; i < courses.size() ; i++) {
+            Log.d(TAG, "Checkcourse "+courses.size());
 
             if(courses.get(i).getComplete()==1){
 

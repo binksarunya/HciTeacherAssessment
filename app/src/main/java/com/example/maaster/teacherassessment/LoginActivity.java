@@ -235,6 +235,7 @@ public class LoginActivity extends Activity  {
             pd.setMessage("กำลังเข้าสู่ระบบ");
             pd.show();
             startActivity(intent);
+
         } else {
 
             if (!isNetworkAvailable(this))
