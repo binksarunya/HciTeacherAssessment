@@ -20,6 +20,8 @@ public class Teacher implements  Parcelable{
     private FileInputStream imageFile;
     private Integer imageId;
 
+
+
     public Teacher(String name) {
         courses = new ArrayList<>();
         points = new ArrayList<>();
@@ -30,7 +32,7 @@ public class Teacher implements  Parcelable{
     protected Teacher(Parcel in) {
         name = in.readString();
         image = in.readString();
-        imageId = in.readInt();
+
     }
 
 
@@ -86,6 +88,10 @@ public class Teacher implements  Parcelable{
         this.courses = courses;
     }
 
+    public void addCourse(Course course) {
+        courses.add(course);
+    }
+
     public ArrayList<Point> getPoints() {
         return points;
     }
@@ -113,6 +119,6 @@ public class Teacher implements  Parcelable{
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
         parcel.writeString(image);
-        parcel.writeInt(imageId);
+
     }
 }

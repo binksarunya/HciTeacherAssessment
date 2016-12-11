@@ -8,6 +8,7 @@ import android.animation.ObjectAnimator;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -61,7 +62,13 @@ public class AssessmentActivity extends AppCompatActivity {
 
     private Teacher teacher;
     private final String TAG = "click";
-    final String[] answer = {"1.สอนอย่างเป็นระบบ", "2.สอนให้คิดวิเคราะห์ วิจารณ์", "3.วิธีสอนให้น่าสนใจเเละน่าติดตาม", "4.จัดให้แสดงความคิดเห็น", "5.สามารถประเมินความเข้าใจ"};
+
+    /*8 19  */
+    final String[] answer = {"1.สอนอย่างเป็นระบบ", "2.สอนให้คิดวิเคราะห์ วิจารณ์", "3.วิธีสอนให้น่าสนใจเเละน่าติดตาม", "4.จัดให้แสดงความคิดเห็น", "5.สามารถประเมินความเข้าใจ",
+                                "6.ทำให้เห็นความสัมพันธ์กับวิชาอื่นที่เกี่ยวข้อง", "7.ใช้สื่อและอุปกรณ์ช่วยสอนได้ดี","8.แนะนำแหล่งค้นคว้าข้อมูลเพิ่มเติมให้","1.ผู้สอนแจ้งวัตถุประสงค์และเนื้อหาตามเค้าโครงการสอนอย่างชัดเจน","2.ผู้สอนแจ้งเกณฑ์และวิธีประเมินผล ล่วงหน้าชัดเจน",
+    "3.ผู้สอนเข้าสอนและเลิกสอนตรงเวลา","4.ผู้สอนมาสอนสม่ำเสมอ","5.ผู้สอนสอนเนื้อหาครบถ้วนและสอดคล้องตามเค้าโครงการสอน","6.ผู้สอนมีการเตรียมการสอนมาอย่างดี","7.ผู้สอนชี้แนะจุดมุ่งหมายหรือข้อสรุปที่เป็นเนื้อหาสาระสำคัญ",
+    "8.ผู้สอนแทรกเนื้อหาเกี่ยวกับคุณธรรมจริยธรรมในการเรียนการสอน","9.อาจารย์ให้คำปรึกษาและช่วยเหลือนักศึกษาในห้องฝึกปฏิบัติ","10.อาจารย์ตรวจงาน และให้ข้อคิดเห็นที่เป็นประโยชน์","11.อาจารย์ให้เวลานักศึกษาตลอดการปฏิบัติงาน","1.อุปกรณ์ช่วยสอนในห้องเรียนมีคุณภาพพร้อมใช้งาน",
+    "2.สภาพห้องเรียนหรือห้องปฏิบัติการมีคุณภาพพร้อมใช้งาน","3.จำนวนอุปกรณ์ในการเรียนการสอนเพียงพอและเหมาะสมต่อจำนวน","4.เจ้าหน้าที่อำนวยความสะดวกในการให้บริการ"};
     private ArrayList<Question> questions; 
     int k = 0;
     private Animator mCurrentAnimator;
@@ -80,39 +87,70 @@ public class AssessmentActivity extends AppCompatActivity {
     private Activity context;
     private Context contxt;
     private static HashMap<String,ArrayList<Question>> TeacherResult;
-    private ImageView zoomout;
+    private boolean check;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_assessment);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("การประเมิน");
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#D94130")));
         createQuestion();
+
         teacher =  getIntent().getExtras().getParcelable("teacher");
         student = getIntent().getExtras().getParcelable("student");
         courses = getIntent().getExtras().getParcelableArrayList("course");
         position = getIntent().getExtras().getInt("position");
         course = courses.get(position);
+        check = getIntent().getExtras().getBoolean("check");
+
+
+        LinearLayout layout = (LinearLayout) findViewById(R.id.part_layout);
+        layout.setVisibility(View.VISIBLE);
+
+        TextView partTextView = (TextView) findViewById(R.id.part_text);
+        partTextView.setText(part[partIndex]);
+        TextView partTitleTextView = (TextView) findViewById(R.id.part_title);
+        partTitleTextView.setText(parttitle[partIndex]);
+        partIndex++;
+
+        new CountDownTimer(1900, 1500) {
+            @Override
+            public void onTick(long l) {}
+            @Override
+            public void onFinish() {
+
+                LinearLayout layout = (LinearLayout) findViewById(R.id.part_layout);
+                layout.setVisibility(View.INVISIBLE);
+
+            }
+        }.start();
         assessmentCheck();
+
         ImageView imageView = (ImageView) findViewById(R.id.image_teacher);
         TextView textView = (TextView) findViewById(R.id.name_teacher);
-        imageView.setImageResource(teacher.getImageId());
+        TextView section = (TextView) findViewById(R.id.section_teacher);
+        TextView courseText = (TextView) findViewById(R.id.course_teacher);
+
+        Picasso.with(context).load(teacher.getImage()).into(imageView);
+
         textView.setText(teacher.getName());
+        courseText.setText("วิชา " + course.getName());
+        section.setText("Section " + course.getSection());
+
+        textView.setText(teacher.getName());
+
         backfirst=0;
         context=AssessmentActivity.this;
         contxt=AssessmentActivity.this;
         TeacherResult =new HashMap<String,ArrayList<Question>>();
         TeacherResult=(HashMap<String,ArrayList<Question>>) getIntent().getSerializableExtra("teacherresult");
-        Log.d(TAG, "InAssess: "+TeacherResult.isEmpty());
-
-        zoomout = (ImageView)findViewById(R.id.zoomout) ;
-
-
 
 
         final ImageView imageteacher = (ImageView) findViewById(R.id.image_teacher);
@@ -124,10 +162,8 @@ public class AssessmentActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(isStoragePermissionGranted()) {
-
                     Bitmap bitmap = ((BitmapDrawable) imageteacher.getDrawable()).getBitmap();
-                    zoomImageFromThumb(zoombtn, getImageUri(context, bitmap));
-                    zoomout.setVisibility(View.VISIBLE);
+                    zoomImageFromThumb(zoombtn, teacher.getImage());
                 }
 
             }
@@ -158,15 +194,19 @@ public class AssessmentActivity extends AppCompatActivity {
         dialog.show();
 
     }
-    
+
     public void createQuestion() {
         questions = new ArrayList<>();
-        for (int i = 0; i <5 ; i++) {
+        for (int i = 0; i <answer.length ; i++) {
             questions.add(new Question((i+1)+"", answer[i]));
         }
     }
 
+    String part[] = {"ข้อคำถามกลางของมหาวิทยาลัย","ข้อคำถามของคณะ/หน่วยงาน","สภาพแวดล้อมและสิ่งสนับสนุนการเรียนรู้"};
+    String parttitle[] = {"ส่วนที่ 1","ส่วนที่ 2","ส่วนที่ 3"};
 
+
+    int partIndex = 0;
 
     public void assessmentCheck() {
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
@@ -184,7 +224,7 @@ public class AssessmentActivity extends AppCompatActivity {
             radioGroup.getChildAt(j).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                        new CountDownTimer(500, 700) {
+                        new CountDownTimer(500, 600) {
                             @Override
                             public void onTick(long l) {}
 
@@ -210,12 +250,14 @@ public class AssessmentActivity extends AppCompatActivity {
                                         k++;
                                     if(k>=questions.size()) {
 
-                                        new CountDownTimer(500, 700) {
+                                        new CountDownTimer(500, 600) {
                                             @Override
                                             public void onTick(long l) {}
                                             @Override
                                             public void onFinish() {
 
+                                                ProgressDialog pd = new ProgressDialog(context);
+                                                pd.setMessage("กำลังเข้าสู่การยืนยันการประเมิน");
                                                 completeAssess ();
 
 
@@ -232,10 +274,40 @@ public class AssessmentActivity extends AppCompatActivity {
                                             ((RadioButton) radioGroup.getChildAt(questions.get(k).getAnswer())).setChecked(true);
                                         }
 
+
+                                        if(k==8 || k==19 ) {
+
+                                            LinearLayout layout = (LinearLayout) findViewById(R.id.part_layout);
+                                            layout.setVisibility(View.VISIBLE);
+
+                                            TextView textView = (TextView) findViewById(R.id.part_text);
+                                            textView.setText(part[partIndex]);
+                                            TextView partTitleTextView = (TextView) findViewById(R.id.part_title);
+                                            partTitleTextView.setText(parttitle[partIndex]);
+                                            partIndex++;
+
+                                            new CountDownTimer(1900, 1500) {
+                                                @Override
+                                                public void onTick(long l) {}
+                                                @Override
+                                                public void onFinish() {
+
+                                                    LinearLayout layout = (LinearLayout) findViewById(R.id.part_layout);
+                                                    layout.setVisibility(View.INVISIBLE);
+
+                                                }
+                                            }.start();
+
+
+                                        }
+
+
+
                                         backIcon = (Button) findViewById(R.id.back_icon);
                                         backIcon.setVisibility(View.VISIBLE);
                                         TextView textView = (TextView) findViewById(R.id.article_text);
                                         textView.setText(questions.get(k).getDetail());
+
                                         TextView textView1 = (TextView) findViewById(R.id.article_num);
                                         textView1.setText(questions.get(k).getNo()+"/"+questions.size());
 
@@ -255,6 +327,8 @@ public class AssessmentActivity extends AppCompatActivity {
 
 
     }
+
+
 
     public void completeAssess () {
 
@@ -353,12 +427,7 @@ public class AssessmentActivity extends AppCompatActivity {
         ListView lv = (ListView ) dialog.findViewById(R.id.lv_confirm);
         EditAssesListActivity adapter = new EditAssesListActivity(this,answer,questions);
         lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            }
-        });
         Button confirmbtn = (Button)dialog.findViewById(R.id.button2) ;
         confirmbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -369,13 +438,14 @@ public class AssessmentActivity extends AppCompatActivity {
                 courses.set(position, course);
                 intent.putParcelableArrayListExtra("question", questions);
                 intent.putParcelableArrayListExtra("course", courses);
+                intent.putExtra("coursetmp",course);
                 intent.putExtra("teachername",teacher.getName());
                 intent.putExtra("checkfirst",false);
                 course.setQuestions(questions);
                 TeacherResult.put(String.valueOf(position),questions);
                 Log.d(TAG, "onClickbeforesend: "+TeacherResult.get(String.valueOf(position)).get(0).getAnswer());
                 intent.putExtra("kuy",TeacherResult);
-
+                intent.putExtra("check", check);
                 dialog.dismiss();
                 startActivity(intent);
             }
@@ -497,7 +567,7 @@ public class AssessmentActivity extends AppCompatActivity {
     }//cast bitmap to uri
 
 
-    protected   void zoomImageFromThumb(final View thumbView, Uri uri) {
+    protected   void zoomImageFromThumb(final View thumbView, String uri) {
         // If there's an animation in progress, cancel it
         // immediately and proceed with this one.
 
@@ -561,7 +631,8 @@ public class AssessmentActivity extends AppCompatActivity {
         // thumbnail.
         thumbView.setAlpha(0f);
         expandedImageView.setVisibility(View.VISIBLE);
-
+        final ImageView imageView = (ImageView) findViewById(R.id.zoomout);
+        imageView.setVisibility(View.VISIBLE);
 
         // Set the pivot point for SCALE_X and SCALE_Y transformations
         // to the top-left corner of the zoomed-in view (the default
@@ -605,7 +676,6 @@ public class AssessmentActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (mCurrentAnimator != null) {
                     mCurrentAnimator.cancel();
-
                 }
 
                 // Animate the four positioning/sizing properties in parallel,
@@ -629,8 +699,7 @@ public class AssessmentActivity extends AppCompatActivity {
                     public void onAnimationEnd(Animator animation) {
                         thumbView.setAlpha(1f);
                         expandedImageView.setVisibility(View.GONE);
-                        zoomout.setVisibility(View.GONE);
-
+                        imageView.setVisibility(View.GONE);
                         mCurrentAnimator = null;
                     }
 
@@ -638,8 +707,7 @@ public class AssessmentActivity extends AppCompatActivity {
                     public void onAnimationCancel(Animator animation) {
                         thumbView.setAlpha(1f);
                         expandedImageView.setVisibility(View.GONE);
-                        zoomout.setVisibility(View.GONE);
-                       
+                        imageView.setVisibility(View.GONE);
                         mCurrentAnimator = null;
                     }
                 });

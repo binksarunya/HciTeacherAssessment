@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_manual"
@@ -10,9 +10,70 @@
     tools:context="com.example.maaster.teacherassessment.ManualActivity"
     tools:showIn="@layout/activity_manual">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="วิธีใช้ น้ะจ้ะ"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-</RelativeLayout>
+        <TextView
+            android:layout_margin="@dimen/_10sdp"
+            android:textSize="@dimen/_18sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Teacher Assessment"
+            android:layout_gravity="center"/>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="207dp"
+            android:src="@drawable/manual01" />
+
+        <ImageView
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="207dp"
+            android:src="@drawable/manual02" />
+
+        <ImageView
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="207dp"
+            android:src="@drawable/manual03" />
+
+        <ImageView
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="207dp"
+            android:src="@drawable/manual04" />
+
+        <ImageView
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="207dp"
+            android:src="@drawable/manual05" />
+
+        <ImageView
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="207dp"
+            android:src="@drawable/manual06" />
+
+        <ImageView
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="207dp"
+            android:src="@drawable/manual07" />
+
+        <ImageView
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="207dp"
+            android:src="@drawable/manual08" />
+
+
+
+    </LinearLayout>
+
+</ScrollView>

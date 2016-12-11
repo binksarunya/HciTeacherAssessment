@@ -58,7 +58,7 @@ public class EditAssesListActivity extends ArrayAdapter<String> {
         TextView question = (TextView)rowView.findViewById(R.id.question);
         TextView point = (TextView)rowView.findViewById(R.id.point);
         point.setText(points[position]);
-        question.setText("  "+questionsDetail[position]);
+        question.setText(questionsDetail[position]);
 
 
 

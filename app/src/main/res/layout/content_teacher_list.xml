@@ -10,8 +10,7 @@
     tools:showIn="@layout/activity_teacher_list">
 
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:background="#dedede"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,7 +19,10 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="com.example.maaster.teacherassessment.ListActivity"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:orientation="vertical"
@@ -41,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
-                    android:textSize="@dimen/_20sdp"
+                    android:textSize="@dimen/_18sdp"
                     android:textColor="#d94130"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
@@ -55,18 +57,18 @@
                     android:layout_below="@+id/textView"
                     android:layout_alignLeft="@+id/textView"
                     android:layout_alignStart="@+id/textView"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content" />
 
                 <ImageView
-                    android:layout_height="@dimen/_70sdp"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:layout_height="@dimen/_50sdp"
                     android:src="@drawable/group_icon"
                     android:id="@+id/imageView10"
-                    android:layout_width="@dimen/_80sdp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_width="@dimen/_70sdp"
+                    />
+
 
             </RelativeLayout>
 
@@ -109,14 +111,19 @@
             android:layout_height="match_parent"
             android:layout_weight="10.89">
 
+
+
             <ImageView
                 android:id="@+id/expand_image"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
             <ImageView
-                android:layout_width="@dimen/_40sdp"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
                 app:srcCompat="@drawable/zoomout"
                 android:id="@+id/zoomout2"
                 android:layout_marginBottom="31dp"
@@ -124,6 +131,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:visibility="gone" />
+
+
 
         </RelativeLayout>
 

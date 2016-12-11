@@ -12,16 +12,19 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +40,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.maaster.teacherassessment.Model.Constance;
 import com.example.maaster.teacherassessment.Model.Course;
 import com.example.maaster.teacherassessment.Model.Question;
 import com.example.maaster.teacherassessment.Model.Student;
@@ -66,12 +70,13 @@ public class CustomListActivity extends ArrayAdapter<String>{
     private int position;
     private HashMap<String,ArrayList<Question>> teacherresult;
     private ImageView zoomout;
+    private boolean check;
 
 
 
 
     public CustomListActivity(Activity context,
-                              ArrayList<Teacher> teachers, String[] name, String[] course, String[] section, Student student, HashMap<String,ArrayList<Question>> teacherresult,ArrayList<Course> courses) {
+                              ArrayList<Teacher> teachers, String[] name, String[] course, String[] section, Student student, HashMap<String,ArrayList<Question>> teacherresult,ArrayList<Course> courses, boolean check) {
 
         super(context,R.layout.list_single,name);
         this.contxt=context;
@@ -85,56 +90,76 @@ public class CustomListActivity extends ArrayAdapter<String>{
         this.courses = courses;
         zoomout = (ImageView) context.findViewById(R.id.zoomout2);
         zoomout.setVisibility(View.GONE);
+        this.check = check;
 
 
 
     }
+    private void showSnack() {
+        String message="";
+        int color = 0;
+
+        message = "ไม่มีการเชื่อมต่อเครือข่ายกับข้อมูลอิเตอร์เน็ต";
+        color = Color.WHITE;
+
+
+        Snackbar snackbar = Snackbar
+                .make(context.findViewById(R.id.expand_image), message, Snackbar.LENGTH_LONG);
+
+        View sbView = snackbar.getView();
+        sbView.setAlpha((float) 0.8);
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
+    }
+
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView= inflater.inflate(R.layout.list_single, null, true);
 
         final RelativeLayout teacherProfile = (RelativeLayout) rowView.findViewById(R.id.teacherprofile);
-        RelativeLayout imageprofile = (RelativeLayout) rowView.findViewById(R.id.imageprofile);
-
         RelativeLayout completeStatus = (RelativeLayout) rowView.findViewById(R.id.completestatus);
         this.position = position;
 
-
-        if(courses.get(position).getComplete() == 1) {
+            if(courses.get(position).getComplete() == 1) {
                 completeStatus.setVisibility(View.VISIBLE);
 
             }
-
-
         teacherProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if(courses.get(position).getComplete() == 1) {
 
-                    Log.d(TAG, "oncheckQues: "+teacherresult.get(String.valueOf(position)).get(0).getAnswer());
 
                    showResultAssess(teacherresult,position);
+                    return;
                 }
                 else{
+
+                    if (!Constance.isNetworkAvailable(context)) {
+                        showSnack();
+                        return;
+                    }
+
+
                     Intent intent = new Intent(context, AssessmentActivity.class);//put extra
                     intent.putExtra("teacher", teachers.get(position));
                     intent.putExtra("student", student);
                     intent.putParcelableArrayListExtra("course", courses);
                     intent.putExtra("position", position);
                     intent.putExtra("teacherresult",teacherresult);
+                    intent.putExtra("check", check);
+                    ProgressDialog pd = new ProgressDialog(context);
+                    pd.setMessage("กำลังเข้าสู่การประเมิน");
+                    pd.show();
                     context.startActivity(intent);
                 }
 
             }
         });
-        imageprofile.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
         final ImageView imageView = (ImageView) rowView.findViewById(R.id.imageView);
         TextView txtTeacherName = (TextView) rowView.findViewById(R.id.name);
         TextView txtCourse = (TextView) rowView.findViewById(R.id.course);
@@ -145,28 +170,29 @@ public class CustomListActivity extends ArrayAdapter<String>{
             @Override
             public void onClick(View v) {
 
-                if(isStoragePermissionGranted()) {
-                    Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-                    zoomImageFromThumb(zoombtn, getImageUri(context, bitmap));
-                    ImageView imageView1 = (ImageView) context.findViewById(R.id.expand_image);
+                    zoomImageFromThumb(zoombtn, teachers.get(position).getImage());
                     zoomout.setVisibility(View.VISIBLE);
-                }
+
             }
         });
         txtTeacherName.setText(teachers.get(position).getName());
-        Log.d(TAG, teachers.get(position).getName());
+
         txtCourse.setText("รายวิชา "+course[position]);
         txtSection.setText("Section "+section[position]);
-        imageView.setImageResource(teachers.get(position).getImageId());
+
+
+        Picasso.with(context).load(teachers.get(position).getImage()).into(imageView);
 
 
 
         return rowView;
     }
 
-    final String[] answer = {"1.สอนอย่างเป็นระบบ", "2.สอนให้คิดวิเคราะห์ วิจารณ์", "3.วิธีสอนให้น่าสนใจเเละน่าติดตาม", "4.จัดให้แสดงความคิดเห็น", "5.สามารถประเมินความเข้าใจ"};
-
-
+    final String[] answer = {"1.สอนอย่างเป็นระบบ", "2.สอนให้คิดวิเคราะห์ วิจารณ์", "3.วิธีสอนให้น่าสนใจเเละน่าติดตาม", "4.จัดให้แสดงความคิดเห็น", "5.สามารถประเมินความเข้าใจ",
+            "6.ทำให้เห็นความสัมพันธ์กับวิชาอื่นที่เกี่ยวข้อง", "7.ใช้สื่อและอุปกรณ์ช่วยสอนได้ดี","8.แนะนำแหล่งค้นคว้าข้อมูลเพิ่มเติมให้","1.ผู้สอนแจ้งวัตถุประสงค์และเนื้อหาตามเค้าโครงการสอนอย่างชัดเจน","2.ผู้สอนแจ้งเกณฑ์และวิธีประเมินผลล่วงหน้าชัดเจน",
+            "3.ผู้สอนเข้าสอนและเลิกสอนตรงเวลา","4.ผู้สอนมาสอนสม่ำเสมอ","5.ผู้สอนสอนเนื้อหาครบถ้วนและสอดคล้องตามเค้าโครงการสอน","6.ผู้สอนมีการเตรียมการสอนมาอย่างดี","7.ผู้สอนชี้แนะจุดมุ่งหมายหรือข้อสรุปที่เป็นเนื้อหาสาระสำคัญ",
+            "8.ผู้สอนแทรกเนื้อหาเกี่ยวกับคุณธรรมจริยธรรมในการเรียนการสอน","9.อาจารย์ให้คำปรึกษาและช่วยเหลือนักศึกษาในห้องฝึกปฏิบัติ","10.อาจารย์ตรวจงาน และให้ข้อคิดเห็นที่เป็นประโยชน์","11.อาจารย์ให้เวลานักศึกษาตลอดการปฏิบัติงาน","1.อุปกรณ์ช่วยสอนในห้องเรียนมีคุณภาพพร้อมใช้งาน",
+            "2.สภาพห้องเรียนหรือห้องปฏิบัติการมีคุณภาพพร้อมใช้งาน","3.จำนวนอุปกรณ์ในการเรียนการสอนเพียงพอและเหมาะสมต่อจำนวน","4.เจ้าหน้าที่อำนวยความสะดวกในการให้บริการ"};
 
     public void showResultAssess(HashMap<String,ArrayList<Question>> teacherresult,int position) {
 
@@ -175,7 +201,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
         dialog.setContentView(R.layout.result_answer);
         dialog.setTitle("สรุปผลการทำ");
         ListView lv = (ListView ) dialog.findViewById(R.id.list_result);
-        Log.d(TAG, "onClick: "+teacherresult.get(String.valueOf(position)).get(0).getAnswer());
+
 
         EditAssesListActivity adapter = new EditAssesListActivity(context,answer,teacherresult.get(String.valueOf(position)));
 
@@ -192,18 +218,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
         dialog.show();
     }
 
-
-
-    protected Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        Log.d(TAG, "getImageUri: "+path);
-        return Uri.parse(path);
-    }//cast bitmap to uri
-
-
-    protected   void zoomImageFromThumb(final View thumbView, Uri uri) {
+    protected   void zoomImageFromThumb(final View thumbView, String uri) {
         // If there's an animation in progress, cancel it
         // immediately and proceed with this one.
 
@@ -352,9 +367,6 @@ public class CustomListActivity extends ArrayAdapter<String>{
             }
         });
     }//zoom image
-
-
-
 
     public  boolean isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {

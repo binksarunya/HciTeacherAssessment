@@ -10,8 +10,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_height="210dp"
-        android:background="@drawable/dialog_shape">
+        android:layout_height="210dp">
 
         <LinearLayout
 

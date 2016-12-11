@@ -1,12 +1,14 @@
 package com.example.maaster.teacherassessment;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.DrawableRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,15 +24,19 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.maaster.teacherassessment.Model.Constance;
 import com.example.maaster.teacherassessment.Model.Course;
+import com.example.maaster.teacherassessment.Model.MongoDBConnection;
 import com.example.maaster.teacherassessment.Model.Question;
 import com.example.maaster.teacherassessment.Model.Student;
 import com.example.maaster.teacherassessment.Model.Teacher;
+import com.mongodb.BasicDBList;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
+import java.util.LinkedList;
 
 public class TeacherListActivity extends AppCompatActivity {
 
@@ -44,10 +50,10 @@ public class TeacherListActivity extends AppCompatActivity {
     private ImageView iv, imageView;
     private boolean checkfirst =true;
     private boolean checkassessmentcomplete = false;
+    private int count = 0;
     private int position;
     private static HashMap<String,ArrayList<Question>> TeacherResult;
-
-
+    private boolean check;
 
     Integer[] imageId = {
             R.drawable.im_1,
@@ -86,7 +92,6 @@ public class TeacherListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Teacher Assessment");
         TeacherResult=new HashMap<String, ArrayList<Question>>();
-        Log.d(TAG, "onClick: "+TeacherResult.isEmpty());
         context = getBaseContext();
         teachers = new ArrayList<>();
         courses = new ArrayList<>();
@@ -95,17 +100,21 @@ public class TeacherListActivity extends AppCompatActivity {
         student.setCourses(courses);
         checkfirst = getIntent().getExtras().getBoolean("checkfirst");
 
-
-
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         try {
             position = getIntent().getExtras().getInt("position");
+
             questions = new ArrayList<>();
             questions = getIntent().getExtras().getParcelableArrayList("question");
+            check = getIntent().getExtras().getBoolean("check");
             int position = getIntent().getExtras().getInt("position");
+            coursetmp= getIntent().getExtras().getParcelable("coursetmp");
             courses.get(position).setQuestions(questions);
+            coursetmp.setQuestions(questions);
             Intent intent = getIntent();
-            TeacherResult =(HashMap<String, ArrayList<Question>>) intent.getSerializableExtra("kuy");
+            TeacherResult = (HashMap<String, ArrayList<Question>>) intent.getSerializableExtra("kuy");
             TeacherResult.put(String.valueOf(position),questions);
             Log.d(TAG, "onClickafter: "+TeacherResult.get(String.valueOf(position)).get(0).getAnswer());
 
@@ -113,16 +122,18 @@ public class TeacherListActivity extends AppCompatActivity {
         } catch (Exception e) {
 
             e.printStackTrace();
-            Log.d(TAG, "Fuckyou");
-            TeacherResult=new HashMap<String, ArrayList<Question>>();
+
         }
         if(checkfirst==true) {
             showStudentDialog(student);
         }
+        Log.d("check", "onCreate: "+check);
 
-
-
-        getTeacherFromDB();
+        if(check) {
+            getTeacherFromMongoDB();
+        } else {
+            getTeacherFromDB();
+        }
         getData();
 
         for (int i = 0; i < courses.size() ; i++) {
@@ -137,30 +148,121 @@ public class TeacherListActivity extends AppCompatActivity {
             }
         }
 
-        if(checkassessmentcomplete==true){
+        if(checkassessmentcomplete){
             showComplete(student);
 
         }
 
 
+    }
 
+
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (!Constance.isNetworkAvailable(this))
+            showSnack();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // register connection status listener
+        if (!Constance.isNetworkAvailable(this))
+            showSnack();
 
     }
 
     public void getTeacherFromDB() {
+        String url[] = {"http://www.cs.tu.ac.th/uploads/articles_icon/1446541817.jpg",
+                        "http://www.cs.tu.ac.th/uploads/articles_icon/1446542136.jpg",
+                        "http://www.cs.tu.ac.th/uploads/articles_icon/1446601639.jpg",
+                        "http://www.cs.tu.ac.th/uploads/articles_icon/1467772704.jpg"};
 
-
-        for (int i = 0; i <4 ; i++) {
-            Teacher teacher = new Teacher(name[i]);
-            teacher.setImageId(imageId[i]);
+        for (int j = 0; j <4 ; j++) {
+            Teacher teacher = new Teacher(name[j]);
+            teacher.setImage(url[j]);
             teachers.add(teacher);
 
         }
+
     }
+
+    public void getTeacherFromMongoDB() {
+        ArrayList<Teacher> teacherArrayList = new ArrayList<>();
+        MongoDBConnection mongoDBConnection = new MongoDBConnection(Constance.IP_ADDRESS, "Teacher", "Asessment");
+        DBCursor cursor = mongoDBConnection.getCursor();
+
+        ArrayList<Course> courseList = new ArrayList<>();
+
+        while (cursor.hasNext()) {
+
+            DBObject object = cursor.next();
+
+            Teacher teacher = new Teacher((String) object.get("name"));
+            teacher.setImage((String) object.get("image"));
+            BasicDBList list = (BasicDBList) object.get("course");
+
+            for (int i = 0; i <list.size() ; i++) {
+                DBObject dbObject = (DBObject) list.get(i);
+
+                String nameCourse = (String) dbObject.get("name");
+                String section = (String) dbObject.get("section");
+
+                Course course = new Course(nameCourse, section);
+                teacher.addCourse(course);
+            }
+
+            teacherArrayList.add(teacher);
+            courseList.clear();
+        }
+
+        ArrayList<String> nameString = new ArrayList<>();
+        ArrayList<String> sectionString = new ArrayList<>();
+        ArrayList<String> courseString = new ArrayList<>();
+
+        teachers = new ArrayList<>();
+        for (int i = 0; i < teacherArrayList.size(); i++) {
+            for (int j = 0; j < teacherArrayList.get(i).getCourses().size(); j++) {
+                for (int k = 0; k < student.getCourses().size(); k++) {
+                    if(student.getCourses().get(k).getName().equalsIgnoreCase(teacherArrayList.get(i).getCourses().get(j).getName()) &&
+                            student.getCourses().get(k).getSection().equalsIgnoreCase(teacherArrayList.get(i).getCourses().get(j).getSection())) {
+
+                        count++;
+
+                        teachers.add(teacherArrayList.get(i));
+                        Log.d("pun", "getTeacherFromMongoDB: " + student.getCourses().get(k).getName());
+                        Log.d("pun", "getTeacherFromMongoDB: " + student.getCourses().get(k).getSection());
+                        nameString.add(teacherArrayList.get(i).getName());
+                        courseString.add(student.getCourses().get(k).getName());
+                        sectionString.add(student.getCourses().get(k).getSection());
+
+                    }
+                }
+            }
+        }
+
+        courseName = new String[courseString.size()];
+        section = new String[sectionString.size()];
+        name = new String[nameString.size()];
+        Log.d(TAG, "getTeacherFromMongoDB: "+ student.getCourses().size());
+
+        for (int i = 0; i < courseString.size() ; i++) {
+            courseName[i] = courseString.get(i);
+            section[i] = sectionString.get(i);
+            name[i] = nameString.get(i);
+        }
+
+
+    }
+
 
     public void getData(){
 
-        CustomListActivity adapter = new CustomListActivity(TeacherListActivity.this,teachers,name,courseName,section,student,TeacherResult,courses);
+        CustomListActivity adapter = new CustomListActivity(TeacherListActivity.this,teachers,name,courseName,section,student,TeacherResult,courses,check);
         final ListView list = (ListView)findViewById(R.id.list);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -194,7 +296,31 @@ public class TeacherListActivity extends AppCompatActivity {
 
     }
 
+    private void showSnack() {
+        String message="";
+        int color = 0;
+
+        message = "ไม่มีการเชื่อมต่อเครือข่ายกับข้อมูลอิเตอร์เน็ต";
+        color = Color.WHITE;
+
+
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.expand_image), message, Snackbar.LENGTH_LONG);
+
+        View sbView = snackbar.getView();
+        sbView.setAlpha((float) 0.8);
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
+    }
+
     public void onClickLogout(View view){
+
+        if (!Constance.isNetworkAvailable(this)){
+            showSnack();
+            return;
+        }
+
 
         if(checkassessmentcomplete==false){
             showNoComplete();
@@ -205,6 +331,11 @@ public class TeacherListActivity extends AppCompatActivity {
     }
 
     public void checkLogout() {
+
+        if (!Constance.isNetworkAvailable(this)) {
+            showSnack();
+            return;
+        }
         final Dialog welcomedialog= new Dialog(this);
         welcomedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         welcomedialog.setContentView(R.layout.no_complete_dialog);
@@ -223,6 +354,8 @@ public class TeacherListActivity extends AppCompatActivity {
 
                 welcomedialog.dismiss();
                 Intent intent = new Intent(TeacherListActivity.this, LoginActivity.class);
+                ProgressDialog pd = new ProgressDialog(context);
+                pd.setMessage("กำลังออกจากระบบ");
                 startActivity(intent);
             }
         });
@@ -249,7 +382,7 @@ public class TeacherListActivity extends AppCompatActivity {
         TextView complete = (TextView)welcomedialog.findViewById(R.id.tltle) ;
         TextView studentname = (TextView)welcomedialog.findViewById(R.id.detail);
 
-        complete.setText("ท่ายังประเมินอาจารย์ไม่ครบ");
+        complete.setText("ท่านยังประเมินอาจารย์ไม่ครบ");
         studentname.setText("ท่านต้องการออกจากระบบหรือไม่");
         complete.setTextSize(18);
         studentname.setTextSize(15);
@@ -260,6 +393,8 @@ public class TeacherListActivity extends AppCompatActivity {
 
                 welcomedialog.dismiss();
                 Intent intent = new Intent(TeacherListActivity.this, LoginActivity.class);
+                ProgressDialog pd = new ProgressDialog(context);
+                pd.setMessage("กำลังออกจากระบบ");
                 startActivity(intent);
             }
         });
@@ -316,22 +451,7 @@ public class TeacherListActivity extends AppCompatActivity {
     }
 
 
-    public void onComplete(View view){
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.edit_dialog);
-        ListView lv = (ListView ) dialog.findViewById(R.id.lv);
-        TextView nametxt = (TextView)findViewById(R.id.name);
-        String teachername = name[position];
-        Log.d("teachername", "onComplete: "+teachername);
-        String Questionstr[] = new String[questions.size()];
-        for(int i=0;i<Questionstr.length;i++){
-            Questionstr[i]=TeacherResult.get(teachername).get(i).getDetail();
-        }
-        ShowCompleteListActivity adapter = new ShowCompleteListActivity(TeacherListActivity.this,Questionstr,TeacherResult,teachername);
-        lv.setAdapter(adapter);
-        dialog.show();
-    }
+
 
 
 
