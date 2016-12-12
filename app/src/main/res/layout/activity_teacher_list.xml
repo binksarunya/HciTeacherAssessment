@@ -23,12 +23,12 @@
             android:paddingLeft="18dp">
 
 
-                <ImageView
-                    android:onClick="openManual"
-                    android:layout_marginLeft="@dimen/_80sdp"
-                    android:layout_width="@dimen/_35sdp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/question_icon" />
+            <ImageView
+                android:onClick="openManual"
+                android:layout_marginLeft="@dimen/_60sdp"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/question_icon" />
 
 
         </android.support.v7.widget.Toolbar>

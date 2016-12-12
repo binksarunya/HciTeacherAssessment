@@ -19,7 +19,7 @@ import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
 
 public class Constance {
 
-    public static final String IP_ADDRESS = "mongodb://10.0.2.2:27017";
+    public static final String IP_ADDRESS = "mongodb://192.168.1.39:27017";
 
     public static final boolean isNetworkAvailable(final Context context) {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
