@@ -481,7 +481,28 @@ public class AssessmentActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 dialog.dismiss();
-                editAsessAnswer(position);
+                Log.d("position", "onItemClick: " + position);
+                if(position==0) {
+                    Log.d("punn", "onItemClick: ");
+                }
+                else if(position>0&&position<9) {
+                    position-=1;
+                    editAsessAnswer(position);
+                }
+                else if(position==9) {
+                    Log.d("punn", "onItemClick: ");
+                }
+                else if(position>9 && position<=21) {
+                    position-=2;
+                    editAsessAnswer(position);
+                }
+                else if (position==21) {
+                    Log.d("punn", "onItemClick: ");
+                }
+                else if(position>21) {
+                    position-=3;
+                    editAsessAnswer(position);
+                }
 
             }
         });
@@ -497,20 +518,29 @@ public class AssessmentActivity extends AppCompatActivity {
     }
 
 
-    public void editAsessAnswer(final int postion) {
+    public void editAsessAnswer(int position) {
+
 
         backIcon = (Button) findViewById(R.id.back_icon);
         backIcon.setVisibility(View.INVISIBLE);
+
         LinearLayout layout = (LinearLayout) findViewById(R.id.complete_layout);
         layout.setVisibility(View.INVISIBLE);
+
         Button button = (Button) findViewById(R.id.finish);
         button.setVisibility(View.VISIBLE);
+
         TextView textView = (TextView) findViewById(R.id.article_text);
-        textView.setText(questions.get(postion).getDetail());
+        textView.setText(questions.get(position).getDetail());
+
         TextView textView1 = (TextView) findViewById(R.id.article_num);
-        textView1.setText(questions.get(postion).getNo()+"/"+questions.size());
+        textView1.setText(questions.get(position).getNo()+"/"+questions.size());
+
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
-        ((RadioButton)radioGroup.getChildAt(questions.get(postion).getAnswer())).setChecked(true);
+        ((RadioButton)radioGroup.getChildAt(0)).setChecked(true);
+        ((RadioButton)radioGroup.getChildAt(1)).setChecked(true);
+        ((RadioButton)radioGroup.getChildAt(questions.get(position).getAnswer())).setChecked(true);
+       /* final int
         for (int i = 0; i < radioGroup.getChildCount() ; i++) {
             final int j = i;
             radioGroup.getChildAt(j).setOnClickListener(new View.OnClickListener() {
@@ -520,7 +550,7 @@ public class AssessmentActivity extends AppCompatActivity {
                 }
             });
         }
-
+*/
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
