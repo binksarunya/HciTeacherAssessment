@@ -23,6 +23,16 @@
             android:src="@drawable/icon_app"
             android:layout_gravity="center"/>
 
+        <TextView
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Teacher Assessment"
+            android:textSize="@dimen/_25sdp"
+            android:layout_gravity="center"
+
+            />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -117,10 +127,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/_30sdp"
+
             >
 
           <Button
+              android:layout_marginTop="@dimen/_20sdp"
               android:onClick="openListTeacher"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -131,32 +142,6 @@
               />
 
         </LinearLayout>
-
-
-
     </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/connection"
-        android:visibility="invisible"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_28sdp"
-        android:background="@drawable/connection_shape"
-        android:alpha="20"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <TextView
-            android:padding="@dimen/_5sdp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="ไม่มีการเชื่อมต่อเครือข่าย"
-            android:textColor="#ffff"/>
-
-
-    </RelativeLayout>
-
 
 </RelativeLayout>

@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="ผลการประเมิน"
-            android:textSize="@dimen/_18sdp"/>
+            android:textSize="@dimen/_23sdp"/>
 
 
     </LinearLayout>

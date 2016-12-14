@@ -66,7 +66,6 @@ public class LoginActivity extends Activity  {
         courses = new ArrayList<>();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build(); StrictMode.setThreadPolicy(policy);
 
-        final RelativeLayout layout = (RelativeLayout) findViewById(R.id.connection);
 
         final EditText idText = (EditText) findViewById(R.id.student_id_text);
         idText.addTextChangedListener(new TextWatcher() {
@@ -129,7 +128,7 @@ public class LoginActivity extends Activity  {
 
 
         Snackbar snackbar = Snackbar
-                .make(findViewById(R.id.connection), message, Snackbar.LENGTH_LONG);
+                .make(findViewById(R.id.student_id_text), message, Snackbar.LENGTH_LONG);
 
         View sbView = snackbar.getView();
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);

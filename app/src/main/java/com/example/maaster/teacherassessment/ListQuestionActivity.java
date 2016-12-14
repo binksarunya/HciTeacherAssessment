@@ -24,7 +24,7 @@ public class ListQuestionActivity extends ArrayAdapter<String> {
     private final Context contxt;
     private  String questionsDetail[];
     private ArrayList<Question> questions;
-    private  String points[];
+    private  String rate[];
 
     public ListQuestionActivity(Activity context, String questionsDetail[], ArrayList<Question> questions) {
         super(context, R.layout.question_list_single,questionsDetail);
@@ -34,6 +34,8 @@ public class ListQuestionActivity extends ArrayAdapter<String> {
         this.questions = questions;
 
     }
+
+
 
     @NonNull
     @Override

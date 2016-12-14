@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/logout_btn"
             android:id="@+id/accept"
-            android:textSize="22sp"
+            android:textSize="@dimen/_16sdp"
 
             android:layout_marginBottom="22dp"
             android:layout_alignParentBottom="true"

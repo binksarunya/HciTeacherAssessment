@@ -27,23 +27,18 @@ import static com.example.maaster.teacherassessment.R.id.course;
  * Created by Demos on 11/26/2016.
  */
 
-public class ShowCompleteListActivity extends ArrayAdapter<String> {
+public class DialogRate extends ArrayAdapter<String> {
     private final Activity context;
-    private  String questionsDetail[];
-
-    private ArrayList<Question> questions;
-    private  String points[];
+    private String rate[];
+    private String text[];
 
 
-    public ShowCompleteListActivity(Activity context, String questionsDetail[],HashMap<String,ArrayList<Question>> teacherresult,String teachername) {
-        super(context, R.layout.question_list_single,questionsDetail);
+    public DialogRate(Activity context, String text[], String rate[]) {
+        super(context, R.layout.question_list_single,text);
         this.context=context;
-        this.questionsDetail=questionsDetail;
-        this.questions = teacherresult.get(teachername);
-        this.points=new String[teacherresult.get(teachername).size()];
-        for (int i=0;i<points.length;i++){
-            points[i]=String.valueOf(questions.get(i).getAnswer()+1);
-        }
+        this.rate = rate;
+        this.text = text;
+
 
     }
 
@@ -52,10 +47,11 @@ public class ShowCompleteListActivity extends ArrayAdapter<String> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView= inflater.inflate(R.layout.question_list_single, null, true);
-        TextView question = (TextView)rowView.findViewById(R.id.question);
-        TextView point = (TextView)rowView.findViewById(R.id.point);
-        point.setText(points[position]);
-        question.setText("  "+questionsDetail[position]);
+        TextView textView = (TextView) context.findViewById(R.id.question);
+        TextView rateText = (TextView) context.findViewById(R.id.point);
+
+        textView.setText(text[position]);
+        rateText.setText(rate[position]);
 
         return rowView;
     }

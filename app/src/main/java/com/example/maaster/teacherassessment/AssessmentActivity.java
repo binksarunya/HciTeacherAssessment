@@ -91,7 +91,7 @@ public class AssessmentActivity extends AppCompatActivity {
     private Activity context;
     private Context contxt;
     private static HashMap<String,ArrayList<Question>> TeacherResult;
-    private boolean check;
+    private boolean check, dialogCheck;
 
 
     @Override
@@ -107,6 +107,8 @@ public class AssessmentActivity extends AppCompatActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#D94130")));
         createQuestion();
 
+
+
         teacher =  getIntent().getExtras().getParcelable("teacher");
         student = getIntent().getExtras().getParcelable("student");
         courses = getIntent().getExtras().getParcelableArrayList("course");
@@ -114,6 +116,12 @@ public class AssessmentActivity extends AppCompatActivity {
         course = courses.get(position);
         check = getIntent().getExtras().getBoolean("check");
 
+        dialogCheck = getIntent().getExtras().getBoolean("dialog");
+
+        if (dialogCheck) {
+
+        }
+        showRateDialog();
 
         LinearLayout layout = (LinearLayout) findViewById(R.id.part_layout);
         layout.setVisibility(View.VISIBLE);
@@ -173,6 +181,29 @@ public class AssessmentActivity extends AppCompatActivity {
             }
         });
 
+
+
+    }
+
+    String text[] = {"5", "4", "3", "2", "1"};
+    String rate[] = {"ดีมาก", "ดี", "ปานกลาง", "พอใช้", "ปรัปรุง"};
+
+    public void showRateDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.question_option_dialog);
+        ListView listView = (ListView) dialog.findViewById(R.id.lv_rate);
+        DialogRate dialogRate = new DialogRate(this, text , rate);
+        listView.setAdapter(dialogRate);
+        dialog.show();
+
+        Button button = (Button) dialog.findViewById(R.id.assessment);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
 
 
     }
@@ -432,7 +463,7 @@ public class AssessmentActivity extends AppCompatActivity {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.comfirm_dialog);
-        dialog.setTitle("สรุปผลการทำ");
+        dialog.setTitle("ยืนยันการประเมิน");
         //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         ListView lv = (ListView ) dialog.findViewById(R.id.lv_confirm);
         EditAssesListActivity adapter = new EditAssesListActivity(this,answerLsit,questions);
@@ -451,6 +482,7 @@ public class AssessmentActivity extends AppCompatActivity {
                 intent.putExtra("coursetmp",course);
                 intent.putExtra("teachername",teacher.getName());
                 intent.putExtra("checkfirst",false);
+                intent.putExtra("dialog", false);
                 course.setQuestions(questions);
                 TeacherResult.put(String.valueOf(position),questions);
                 Log.d(TAG, "onClickbeforesend: "+TeacherResult.get(String.valueOf(position)).get(0).getAnswer());
@@ -474,6 +506,7 @@ public class AssessmentActivity extends AppCompatActivity {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.edit_dialog);
+        dialog.setTitle("เลือกข้อที่ต้องการแก้ไข");
         ListView lv = (ListView ) dialog.findViewById(R.id.lv);
         EditAssesListActivity adapter = new EditAssesListActivity(this,answerLsit,questions);
         lv.setAdapter(adapter);
@@ -574,13 +607,18 @@ public class AssessmentActivity extends AppCompatActivity {
         final Dialog welcomedialog= new Dialog(this);
         welcomedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         welcomedialog.setContentView(R.layout.no_complete_dialog);
-        TextView complete = (TextView)welcomedialog.findViewById(R.id.tltle) ;
+        TextView complete = (TextView)welcomedialog.findViewById(R.id.title_dialog) ;
         TextView studentname = (TextView)welcomedialog.findViewById(R.id.detail);
+        TextView sub = (TextView) welcomedialog.findViewById(R.id.subtitle);
 
         complete.setText("ท่านยังประเมินอาจารย์ไม่ครบ");
-        studentname.setText("กรุณาประเมินอาจารย์ให้ครบก่อนกลับสู่หน้าหลัก");
+        studentname.setText("ท่านต้องการกลับสู่หน้าหลักหรือไม่");
+        sub.setText("*ระบบจะไม่บันทึกข้อมูลการประเมิน");
         complete.setTextSize(18);
-        studentname.setTextSize(15);
+        studentname.setTextSize(18);
+        sub.setTextSize(15);
+
+        sub.setTextColor(Color.RED);
 
         Button abtn = (Button)welcomedialog.findViewById(R.id.accept_logout);
         abtn.setOnClickListener(new View.OnClickListener() {

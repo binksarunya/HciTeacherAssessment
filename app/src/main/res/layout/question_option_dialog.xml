@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:text="ยืนยันการประเมิน"
+        android:text="ระดับการประเมิน"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         android:textSize="@dimen/_23sdp"
@@ -15,7 +15,7 @@
         android:paddingLeft="17dp" />
 
     <ListView
-        android:id="@+id/lv_confirm"
+        android:id="@+id/lv_rate"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_160sdp" />
 
@@ -28,33 +28,13 @@
         android:layout_gravity="center_horizontal">
 
 
-        <Button
-            android:text="ยกเลิก"
-            android:layout_height="wrap_content"
-            android:background="@drawable/logout_btn"
-            android:id="@+id/button3"
-            android:textSize="16sp"
-            android:textColor="@android:color/background_light"
-            android:layout_alignBaseline="@+id/button2"
-            android:layout_alignBottom="@+id/button2"
-            android:layout_toLeftOf="@+id/button2"
-            android:layout_toStartOf="@+id/button2"
-            android:layout_weight="1"
-            android:layout_margin="13dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_width="80dp"
-            android:visibility="visible" />
+
 
         <Button
-            android:text="ยืนยัน"
+            android:text="ตกลง"
             android:layout_height="wrap_content"
             android:background="@drawable/logout_btn"
-            android:id="@+id/button2"
+            android:id="@+id/assessment"
             android:textSize="16sp"
             android:textColor="@android:color/background_light"
             android:layout_centerVertical="true"

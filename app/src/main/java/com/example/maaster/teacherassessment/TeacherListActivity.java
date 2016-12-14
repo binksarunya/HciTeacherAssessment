@@ -107,6 +107,7 @@ public class TeacherListActivity extends AppCompatActivity {
 
         student.setCourses(courses);
         checkfirst = getIntent().getExtras().getBoolean("checkfirst");
+        checkDialog = getIntent().getExtras().getBoolean("dialog");
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -125,7 +126,7 @@ public class TeacherListActivity extends AppCompatActivity {
             TeacherResult = (HashMap<String, ArrayList<Question>>) intent.getSerializableExtra("kuy");
             TeacherResult.put(String.valueOf(position),questions);
             Log.d(TAG, "onClickafter: "+TeacherResult.get(String.valueOf(position)).get(0).getAnswer());
-
+            checkDialog = getIntent().getExtras().getBoolean("dialog");
 
         } catch (Exception e) {
 
@@ -267,10 +268,11 @@ public class TeacherListActivity extends AppCompatActivity {
 
     }
 
+    private boolean checkDialog =true;
 
     public void getData(){
 
-        CustomListActivity adapter = new CustomListActivity(TeacherListActivity.this,teachers,name,courseName,section,student,TeacherResult,courses,check);
+        CustomListActivity adapter = new CustomListActivity(TeacherListActivity.this,teachers,name,courseName,section,student,TeacherResult,courses,check,checkDialog);
         final ListView list = (ListView)findViewById(R.id.list);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -347,7 +349,7 @@ public class TeacherListActivity extends AppCompatActivity {
         final Dialog welcomedialog= new Dialog(this);
         welcomedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         welcomedialog.setContentView(R.layout.no_complete_dialog);
-        TextView complete = (TextView)welcomedialog.findViewById(R.id.tltle) ;
+        TextView complete = (TextView)welcomedialog.findViewById(R.id.title_dialog) ;
         TextView studentname = (TextView)welcomedialog.findViewById(R.id.detail);
 
         complete.setText("ท่านต้องการออกจากระบบหรือไม่");
@@ -387,7 +389,7 @@ public class TeacherListActivity extends AppCompatActivity {
         final Dialog welcomedialog= new Dialog(this);
         welcomedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         welcomedialog.setContentView(R.layout.no_complete_dialog);
-        TextView complete = (TextView)welcomedialog.findViewById(R.id.tltle) ;
+        TextView complete = (TextView)welcomedialog.findViewById(R.id.title_dialog) ;
         TextView studentname = (TextView)welcomedialog.findViewById(R.id.detail);
 
         complete.setText("ท่านยังประเมินอาจารย์ไม่ครบ");
