@@ -102,6 +102,10 @@
                 android:id="@+id/linearLayout">
 
                 <TextView
+                    android:shadowColor="@color/text_shadow"
+                    android:shadowDx="1"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
                     android:onClick="showAllQuestion"
                     android:id="@+id/article_num"
                     android:layout_width="wrap_content"

@@ -16,7 +16,7 @@
             android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/studentnameTextview"
+            android:id="@+id/guide"
             android:gravity="center"
             android:textSize="18sp"
             android:layout_marginTop="14dp"
@@ -34,24 +34,14 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
-        <TextView
-            android:visibility="visible"
-            android:text="TextView"
-            android:layout_height="wrap_content"
-            android:id="@+id/studentIdTextview"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:layout_width="300dp"
-            android:layout_above="@+id/accept"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="13dp" />
+
 
         <Button
             android:text="ตกลง"
             android:layout_width="@dimen/_90sdp"
             android:layout_height="wrap_content"
             android:background="@drawable/logout_btn"
-            android:id="@+id/accept"
+            android:id="@+id/guid_button"
             android:textSize="@dimen/_16sdp"
 
             android:layout_marginBottom="22dp"

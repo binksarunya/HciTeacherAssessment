@@ -141,7 +141,11 @@ public class TeacherListActivity extends AppCompatActivity {
         }
         if(checkfirst==true) {
             showStudentDialog(student);
+
         }
+
+
+
 
         if(check) {
             getTeacherFromMongoDB();
@@ -290,6 +294,25 @@ public class TeacherListActivity extends AppCompatActivity {
 
     }
 
+    public void showManualDialog(){
+        final Dialog welcomedialog= new Dialog(this);
+        welcomedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        welcomedialog.setContentView(R.layout.manual_guid_dialog);
+        TextView studentname = (TextView)welcomedialog.findViewById(R.id.guide);
+        studentname.setText("ท่านสามารถดูวิธีใช้จากเมนูด้านบน");
+
+        Button acceptbtn = (Button)welcomedialog.findViewById(R.id.guid_button);
+        acceptbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                welcomedialog.dismiss();
+            }
+        });
+
+        welcomedialog.show();
+
+    }
 
     public void showStudentDialog(Student student){
         final Dialog welcomedialog= new Dialog(this);
@@ -297,6 +320,8 @@ public class TeacherListActivity extends AppCompatActivity {
         welcomedialog.setContentView(R.layout.welcome_dialog);
         TextView studentname = (TextView)welcomedialog.findViewById(R.id.studentnameTextview);
         TextView studentid = (TextView)welcomedialog.findViewById(R.id.studentIdTextview);
+        TextView wel = (TextView) welcomedialog.findViewById(R.id.textView8);
+        wel.setText("ยินดีต้อนรับ");
         studentname.setText(student.getName());
         studentid.setText("รหัสนักศึกษา "+student.getId());
         Button acceptbtn = (Button)welcomedialog.findViewById(R.id.accept);
@@ -305,6 +330,7 @@ public class TeacherListActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 welcomedialog.dismiss();
+                showManualDialog();
             }
         });
 

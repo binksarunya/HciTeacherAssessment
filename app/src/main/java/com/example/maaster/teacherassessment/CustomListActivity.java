@@ -21,6 +21,7 @@ import android.graphics.drawable.Icon;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.provider.MediaStore;
 
@@ -36,6 +37,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -70,7 +72,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
     private int position;
     private HashMap<String,ArrayList<Question>> teacherresult;
     private ImageView zoomout;
-    private boolean check ,dialogCheck;
+    private boolean check, dialogCheck, loding = true ;
 
 
 
@@ -155,9 +157,21 @@ public class CustomListActivity extends ArrayAdapter<String>{
                     intent.putExtra("check", check);
 
                     intent.putExtra("dialog", dialogCheck);
-                    ProgressDialog pd = new ProgressDialog(context);
+                   final ProgressDialog pd = new ProgressDialog(context);
                     pd.setMessage("กำลังเข้าสู่การประเมิน");
                     pd.show();
+                    new CountDownTimer(1900, 1700) {
+                        @Override
+                        public void onTick(long l) {}
+                        @Override
+                        public void onFinish() {
+
+                            pd.dismiss();
+                        }
+                    }.start();
+
+
+
                     context.startActivity(intent);
                 }
 

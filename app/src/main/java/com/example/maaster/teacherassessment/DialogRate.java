@@ -52,7 +52,7 @@ public class DialogRate extends ArrayAdapter<String> {
 
 
         textView.setText(text[position]);
-        rateText.setText(rate[position]);
+        rateText.setText("");
 
         return rowView;
     }

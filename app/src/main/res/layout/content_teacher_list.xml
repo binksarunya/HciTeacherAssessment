@@ -78,6 +78,7 @@
                 android:layout_height="@dimen/_270sdp">
 
                 <ListView
+                    android:fadeScrollbars="false"
                     android:layout_width="match_parent"
                     android:id="@+id/list"
                     android:divider="@android:color/transparent"

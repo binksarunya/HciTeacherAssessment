@@ -117,9 +117,7 @@ public class AssessmentActivity extends AppCompatActivity {
         check = getIntent().getExtras().getBoolean("check");
         dialogCheck = getIntent().getExtras().getBoolean("dialog");
         Log.d(TAG, "check Rate  "+dialogCheck );
-        if (dialogCheck) {
-            showRateDialog();
-        }
+
 
 
         LinearLayout layout = (LinearLayout) findViewById(R.id.part_layout);
@@ -133,7 +131,9 @@ public class AssessmentActivity extends AppCompatActivity {
 
         new CountDownTimer(1900, 1500) {
             @Override
-            public void onTick(long l) {}
+            public void onTick(long l) {if (dialogCheck) {
+                showRateDialog();
+            }}
             @Override
             public void onFinish() {
 
@@ -187,7 +187,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
 
     public void showRateDialog() {
-        String text[] = {"5", "4", "3", "2", "1"};
+        String text[] = {"5 = ดีมาก", "4 = ดี", "3 = ปานกลาง", "2 = พอใช้", "1 = ปรับปรุง"};
         String rate[] = {"ดีมาก", "ดี", "ปานกลาง", "พอใช้", "ปรับปรุง"};
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -592,7 +592,7 @@ public class AssessmentActivity extends AppCompatActivity {
 
     }
 
-    @Override
+   /* @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK ) {
             //preventing default implementation previous to android.os.Build.VERSION_CODES.ECLAIR
@@ -600,8 +600,18 @@ public class AssessmentActivity extends AppCompatActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
+    }*/
 
+    @Override
+    public void onBackPressed() {
+        showNoComplete();
+
+        if(checkBack) {
+            finish();
+        }
+
+    }
+    boolean checkBack ;
     public void showNoComplete() {
         final Dialog welcomedialog= new Dialog(this);
         welcomedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -620,16 +630,27 @@ public class AssessmentActivity extends AppCompatActivity {
         sub.setTextColor(Color.RED);
 
         Button abtn = (Button)welcomedialog.findViewById(R.id.accept_logout);
+        abtn.setText("ตกลง");
         abtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                checkBack = true;
                 welcomedialog.dismiss();
+                onBackPressed();
+
             }
         });
 
         Button cancelbtn = (Button)welcomedialog.findViewById(R.id.cacel_logout);
-        cancelbtn.setVisibility(View.GONE);
+        cancelbtn.setVisibility(View.VISIBLE);
+        cancelbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkBack = false;
+                welcomedialog.dismiss();
+            }
+        });
         welcomedialog.show();
 
     }

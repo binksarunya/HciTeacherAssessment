@@ -47,8 +47,8 @@
         <activity
             android:name=".ManualActivity"
             android:label="@string/title_activity_manual"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
+            android:theme="@style/AppTheme.NoActionBar"
+            android:noHistory="false"/>
 
     </application>
 
