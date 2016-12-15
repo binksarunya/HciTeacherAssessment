@@ -38,6 +38,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
+
 public class TeacherListActivity extends AppCompatActivity {
 
     private Student student;
@@ -54,6 +56,7 @@ public class TeacherListActivity extends AppCompatActivity {
     private int position;
     private static HashMap<String,ArrayList<Question>> TeacherResult;
     private boolean check;
+    private boolean checkDialog =true;
 
     final String[] answerLsit = {"ส่วนที่ 1 ข้อคำถามกลางของมหาวิทยาลัย", "1.สอนอย่างเป็นระบบ", "2.สอนให้คิดวิเคราะห์ วิจารณ์", "3.วิธีสอนให้น่าสนใจเเละน่าติดตาม", "4.จัดให้แสดงความคิดเห็น", "5.สามารถประเมินความเข้าใจ",
             "6.ทำให้เห็นความสัมพันธ์กับวิชาอื่นที่เกี่ยวข้อง", "7.ใช้สื่อและอุปกรณ์ช่วยสอนได้ดี","8.แนะนำแหล่งค้นคว้าข้อมูลเพิ่มเติมให้","ส่วนที่ 2 ข้อคำถามของคณะ/หน่วยงาน", "1.ผู้สอนแจ้งวัตถุประสงค์และเนื้อหาตามเค้าโครงการสอนอย่างชัดเจน","2.ผู้สอนแจ้งเกณฑ์และวิธีประเมินผล ล่วงหน้าชัดเจน",
@@ -107,7 +110,9 @@ public class TeacherListActivity extends AppCompatActivity {
 
         student.setCourses(courses);
         checkfirst = getIntent().getExtras().getBoolean("checkfirst");
-        checkDialog = getIntent().getExtras().getBoolean("dialog");
+        ;
+
+        Log.d(TAG, "check Rate  "+checkDialog );
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -127,6 +132,7 @@ public class TeacherListActivity extends AppCompatActivity {
             TeacherResult.put(String.valueOf(position),questions);
             Log.d(TAG, "onClickafter: "+TeacherResult.get(String.valueOf(position)).get(0).getAnswer());
             checkDialog = getIntent().getExtras().getBoolean("dialog");
+            Log.d(TAG, "check Rate  "+checkDialog );
 
         } catch (Exception e) {
 
@@ -268,7 +274,7 @@ public class TeacherListActivity extends AppCompatActivity {
 
     }
 
-    private boolean checkDialog =true;
+
 
     public void getData(){
 

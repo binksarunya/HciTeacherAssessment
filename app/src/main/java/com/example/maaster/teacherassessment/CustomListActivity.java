@@ -95,6 +95,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
 
 
 
+
     }
     private void showSnack() {
         String message="";
@@ -152,6 +153,7 @@ public class CustomListActivity extends ArrayAdapter<String>{
                     intent.putExtra("position", position);
                     intent.putExtra("teacherresult",teacherresult);
                     intent.putExtra("check", check);
+
                     intent.putExtra("dialog", dialogCheck);
                     ProgressDialog pd = new ProgressDialog(context);
                     pd.setMessage("กำลังเข้าสู่การประเมิน");

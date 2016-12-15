@@ -46,9 +46,10 @@ public class DialogRate extends ArrayAdapter<String> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        View rowView= inflater.inflate(R.layout.question_list_single, null, true);
-        TextView textView = (TextView) context.findViewById(R.id.question);
-        TextView rateText = (TextView) context.findViewById(R.id.point);
+        View rowView= inflater.inflate(R.layout.question_option_list_single, null, true);
+        TextView textView = (TextView) rowView.findViewById(R.id.question2);
+        TextView rateText = (TextView) rowView.findViewById(R.id.point2);
+
 
         textView.setText(text[position]);
         rateText.setText(rate[position]);

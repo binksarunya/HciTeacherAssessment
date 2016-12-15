@@ -115,13 +115,12 @@ public class AssessmentActivity extends AppCompatActivity {
         position = getIntent().getExtras().getInt("position");
         course = courses.get(position);
         check = getIntent().getExtras().getBoolean("check");
-
         dialogCheck = getIntent().getExtras().getBoolean("dialog");
-
+        Log.d(TAG, "check Rate  "+dialogCheck );
         if (dialogCheck) {
-
+            showRateDialog();
         }
-        showRateDialog();
+
 
         LinearLayout layout = (LinearLayout) findViewById(R.id.part_layout);
         layout.setVisibility(View.VISIBLE);
@@ -185,18 +184,17 @@ public class AssessmentActivity extends AppCompatActivity {
 
     }
 
-    String text[] = {"5", "4", "3", "2", "1"};
-    String rate[] = {"ดีมาก", "ดี", "ปานกลาง", "พอใช้", "ปรัปรุง"};
+
 
     public void showRateDialog() {
+        String text[] = {"5", "4", "3", "2", "1"};
+        String rate[] = {"ดีมาก", "ดี", "ปานกลาง", "พอใช้", "ปรับปรุง"};
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.question_option_dialog);
         ListView listView = (ListView) dialog.findViewById(R.id.lv_rate);
         DialogRate dialogRate = new DialogRate(this, text , rate);
         listView.setAdapter(dialogRate);
-        dialog.show();
-
         Button button = (Button) dialog.findViewById(R.id.assessment);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,6 +202,7 @@ public class AssessmentActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+        dialog.show();
 
 
     }

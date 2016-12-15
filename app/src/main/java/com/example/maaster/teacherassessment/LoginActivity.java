@@ -228,6 +228,7 @@ public class LoginActivity extends Activity  {
             intent.putExtra("student", student);
             intent.putParcelableArrayListExtra("course", courses);
             intent.putExtra("checkfirst",true);
+
             intent.putExtra("check", check);
 
             ProgressDialog pd = new ProgressDialog(this);
