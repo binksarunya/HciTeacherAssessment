@@ -550,7 +550,7 @@ public class AssessmentActivity extends AppCompatActivity {
     }
 
 
-    public void editAsessAnswer(int position) {
+    public void editAsessAnswer(final int position) {
 
 
         backIcon = (Button) findViewById(R.id.back_icon);
@@ -566,30 +566,30 @@ public class AssessmentActivity extends AppCompatActivity {
         textView.setText(questions.get(position).getDetail());
 
         TextView textView1 = (TextView) findViewById(R.id.article_num);
-        textView1.setText(questions.get(position).getNo()+"/"+questions.size());
+        textView1.setText(questions.get(position).getNo() + "/" + questions.size());
 
         radioGroup = (RadioGroup) findViewById(R.id.radio_group);
-        ((RadioButton)radioGroup.getChildAt(0)).setChecked(true);
-        ((RadioButton)radioGroup.getChildAt(1)).setChecked(true);
-        ((RadioButton)radioGroup.getChildAt(questions.get(position).getAnswer())).setChecked(true);
-       /* final int
-        for (int i = 0; i < radioGroup.getChildCount() ; i++) {
+        ((RadioButton) radioGroup.getChildAt(0)).setChecked(true);
+        ((RadioButton) radioGroup.getChildAt(1)).setChecked(true);
+        ((RadioButton) radioGroup.getChildAt(questions.get(position).getAnswer())).setChecked(true);
+
+        for (int i = 0; i < radioGroup.getChildCount(); i++) {
             final int j = i;
             radioGroup.getChildAt(j).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    questions.get(postion).setAnswer(j);
+                    questions.get(position).setAnswer(j);
                 }
             });
-        }
-*/
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                completeAssess();
-            }
-        });
 
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    completeAssess();
+                }
+            });
+
+        }
     }
 
    /* @Override
