@@ -167,6 +167,8 @@ public class LoginActivity extends Activity  {
             if(check) {
 
                 createStudent();
+            } else {
+                createStudentNoDB();
             }
 
             if(student == null){
@@ -330,29 +332,51 @@ public class LoginActivity extends Activity  {
 
     }
 
+    public void createStudentNoDB() {
+
+        checkId = false;
+        checkPass = false;
+        
+        TextView studetIdTextView = (TextView) findViewById(R.id.student_id_text);
+        TextView passwordTextView = (TextView) findViewById(R.id.passwaord_text);
+
+        if(studetIdTextView.getText().toString().equalsIgnoreCase("5709680044")) {
+            Log.d("pun", "createStudentNoDB: ");
+            checkId = true;
+
+            if (passwordTextView.getText().toString().equalsIgnoreCase("12345")) {
+
+                checkPass = true;
+
+                String[] course = {
+                        "CS374",
+                        "CS374",
+                        "CS342",
+                        "CS223"
+                };
+
+                String[] section = {
+                        "40001",
+                        "40002",
+                        "60001",
+                        "20001"
+                };
+
+
+                for (int i = 0; i < 4; i++) {
+                    Course courseStudent = new Course(course[i], section[i]);
+                    courses.add(courseStudent);
+                }
+
+                student = new Student("ปัณวรรธน์ นกเกตุ", "5709680044", courses, "1234");
+            }
+        } else {
+            student = null;
+        }
+    }
+
     public void loginNoDB(View view) {
 
-        String[] course = {
-                "CS374",
-                "CS374",
-                "CS342",
-                "CS223"
-        } ;
-
-        String[] section = {
-                "40001",
-                "40002",
-                "60001",
-                "20001"
-        } ;
-
-
-        for (int i = 0; i < 4 ; i++) {
-            Course courseStudent= new Course(course[i], section[i]);
-            courses.add(courseStudent);
-        }
-
-        student = new Student("ปัณวรรธน์ นกเกตุ", "5709680044", courses, "1234");
         check = false;
     }
 
