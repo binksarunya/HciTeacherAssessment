@@ -110,7 +110,7 @@ public class TeacherListActivity extends AppCompatActivity {
 
         student.setCourses(courses);
         checkfirst = getIntent().getExtras().getBoolean("checkfirst");
-        ;
+        /*20*/
 
         Log.d(TAG, "check Rate  "+checkDialog );
 
