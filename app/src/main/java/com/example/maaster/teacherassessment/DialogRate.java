@@ -24,7 +24,7 @@ import java.util.HashMap;
 import static com.example.maaster.teacherassessment.R.id.course;
 
 /**
- * Created by Demos on 11/26/2016.
+ * Created by Demos on 11/26/2016. fix
  */
 
 public class DialogRate extends ArrayAdapter<String> {
